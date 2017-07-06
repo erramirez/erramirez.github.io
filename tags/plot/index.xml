@@ -9,6 +9,24 @@
     <atom:link href="/tags/plot/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
+      <title>Testing</title>
+      <link>/2017/07/05/testing/</link>
+      <pubDate>Wed, 05 Jul 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/2017/07/05/testing/</guid>
+      <description>
+
+&lt;p&gt;heloo&lt;/p&gt;
+
+&lt;p&gt;#hello&lt;/p&gt;
+
+&lt;h2 id=&#34;helloooo&#34;&gt;helloooo&lt;/h2&gt;
+
+&lt;p&gt;&lt;strong&gt;bye&lt;/strong&gt;&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
       <title>Hello R Markdown</title>
       <link>/2015/07/23/hello-r-markdown/</link>
       <pubDate>Thu, 23 Jul 2015 21:13:14 -0500</pubDate>
