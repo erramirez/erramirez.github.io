@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Notes on Ernesto Ramirez</title>
+    <link>/note/index.xml</link>
+    <description>Recent content in Notes on Ernesto Ramirez</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 04 Jul 2017 00:00:00 +0000</lastBuildDate>
+    <atom:link href="/note/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Note - Fun on the Fourth</title>
+      <link>/note/2017/07/04/fun-on-the-fourth/</link>
+      <pubDate>Tue, 04 Jul 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/note/2017/07/04/fun-on-the-fourth/</guid>
+      <description>&lt;p&gt;I couldn&amp;rsquo;t &lt;a href=&#34;https://www.fitbit.com/sleep/2017-07-04/15129172765&#34;&gt;sleep&lt;/a&gt; so I did some work getting this site up and running then headed out for some actual running at one of my favorite spots in LA, Griffith Park.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;/images/hollywood-2017-07-04.jpg&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;/images/griffith-2017-07-04.jpg&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;iframe height=&#39;450&#39; width=&#39;800&#39; frameborder=&#39;0&#39; allowtransparency=&#39;true&#39; scrolling=&#39;no&#39; src=&#39;https://www.strava.com/activities/1067207284/embed/05f24fc2da35c6713ec14f4dbedd0e98454d9b60&#39;&gt;&lt;/iframe&gt;
+
+&lt;p&gt;&lt;em&gt;this is a test of a note&lt;/em&gt;&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>
