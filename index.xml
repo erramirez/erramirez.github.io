@@ -679,6 +679,195 @@ Example: Some sort of insight as to why people do something, don&amp;rsquo;t do 
     </item>
     
     <item>
+      <title></title>
+      <link>/cv/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/cv/</guid>
+      <description>&lt;!doctype html&gt;
+&lt;html&gt;
+&lt;head&gt;
+  &lt;meta charset=utf-8 /&gt;
+  &lt;title&gt; Ernesto Ramirez, PhD&lt;/title&gt;
+  &lt;link href=&#34;media/cv-screen.css&#34; type=&#34;text/css&#34; rel=&#34;stylesheet&#34; media=&#34;screen&#34;&gt;
+  &lt;link href=&#34;media/cv-print.css&#34; type=&#34;text/css&#34; rel=&#34;stylesheet&#34; media=&#34;print&#34;&gt;
+
+  &lt;!-- imports --&gt;
+  &lt;link rel=&#34;stylesheet&#34; href=&#34;//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css&#34;&gt;
+  &lt;link href=&#39;http://fonts.googleapis.com/css?family=Open+Sans:400,300,700&#39; rel=&#39;stylesheet&#39; type=&#39;text/css&#39;&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;div id=&#34;main&#34;&gt;
+    &lt;div id=&#34;content&#34;&gt;
+    &lt;h1 id=&#34;ernesto-ramirez-phd&#34;&gt;Ernesto Ramirez, PhD&lt;/h1&gt;
+&lt;p&gt;Personal Data, Public Health, Behavior Science&lt;/p&gt;
+
+&lt;div id=&#34;webaddress&#34;&gt;
+&lt;i class=&#34;fa fa-envelope&#34;&gt;&lt;/i&gt; &lt;a href=&#34;mailto:er.ramirez@gmail.com&#34;&gt;er.ramirez@gmail.com&lt;/a&gt;
+|
+&lt;i class=&#34;fa fa-phone&#34; aria-hidden=&#34;true&#34;&gt;&lt;/i&gt; 480-225-0002
+|
+&lt;i class=&#34;fa fa-laptop&#34;&gt;&lt;/i&gt; &lt;a href=&#34;http://ernestoramirez.com&#34;&gt;ernestoramirez.com&lt;/a&gt;
+|
+&lt;i class=&#34;fa fa-twitter&#34;&gt;&lt;/i&gt; &lt;a href=&#34;http://twitter.com/eramirez&#34;&gt;@eramirez&lt;/a&gt;
+|
+&lt;i class=&#34;fa fa-file-pdf-o&#34;&gt;&lt;/i&gt; &lt;a href=&#34;http://ernestoramirez.com/resume.pdf&#34;&gt;Printable version&lt;/a&gt;
+&lt;/div&gt;
+
+&lt;h2 id=&#34;current&#34;&gt;Current&lt;/h2&gt;
+
+&lt;p&gt;Helping build the future of health behavior research by improving consumer device and application data flow.&lt;/p&gt;
+
+&lt;h2 id=&#34;employment&#34;&gt;Employment&lt;/h2&gt;
+
+&lt;p&gt;&lt;code class=&#34;highlighter-rouge&#34;&gt;2016-&lt;/code&gt; &lt;strong&gt;Director of Research &amp; Development, Fitabase / Small Steps Labs, LLC&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Leading new feature development and special projects for Fitabase, a data management and analytical tool wearble devices deployed in research studies and healthcare innovation projects.   &lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&#34;highlighter-rouge&#34;&gt;2014-2106&lt;/code&gt; &lt;strong&gt;Program Director, Quantified Self Labs&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Co-led the direction of Quantified Self Public Health program (funded by the Robert Wood Johnson Foundation). Managed the Quantified Self Public Health Symposium, bringing together multiple stakeholders in government, academia, and industry. Led program development for the Quantified Self Global and European Conferences. Conducted research on self-tracking and communicated about Quantified Self at conferences and events.&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&#34;highlighter-rouge&#34;&gt;2012-14&lt;/code&gt;
+&lt;strong&gt;Community Organizer, Quantified Self Labs&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Coordinated the communication strategy for a worldwide network of meetup leaders. Managed speakers for multiple conferences. Edited and managed the &lt;a href=&#34;http://quantifiedself.com&#34;&gt;QuantifiedSelf.com&lt;/a&gt; website.&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&#34;highlighter-rouge&#34;&gt;2008-12&lt;/code&gt;
+&lt;strong&gt;Graduate Research Assistant, Center for Wireless and Population Health Systems (UCSD)&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Designed and coordinated field studies of wearable activity devices. Developed deployment and data analysis protocols for accelerometer, GPS, and other wearable bio-sensors for research studies. Conducted secondary data analysis, and coordinated peer-reviewed research articles. Co-taught undergraduate public health courses.&lt;/p&gt;
+
+&lt;h2 id=&#34;education&#34;&gt;Education&lt;/h2&gt;
+
+&lt;p&gt;&lt;code class=&#34;highlighter-rouge&#34;&gt;2008-16&lt;/code&gt;
+&lt;strong&gt;Ph.D.&lt;/strong&gt; Public Health (Health Behavior). &lt;em&gt;San Diego State University/University of California, San Diego&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Dissertation&lt;/strong&gt;: &lt;em&gt;Discretionary self-monitoring of physical activity: A mixed-methods study of behavior change technique use and historical physical activity&lt;/em&gt;. Designed and conducted a study of long-term users of physical activity trackers (Fitbit) using qualitative and quantitative data. Explored real-world behavior change techniques and their potential impact on activity behavior in 30 individuals.&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&#34;highlighter-rouge&#34;&gt;2005-08&lt;/code&gt;
+&lt;strong&gt;M.S.&lt;/strong&gt; Kinesiology (Exercise and Health Psychology). &lt;em&gt;Arizona State University&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&#34;highlighter-rouge&#34;&gt;1999-04&lt;/code&gt;
+&lt;strong&gt;B.S.&lt;/strong&gt; Finance. &lt;em&gt;Arizona State University&lt;/em&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;invited-talks&#34;&gt;Invited Talks&lt;/h2&gt;
+
+&lt;p&gt;&lt;code class=&#34;highlighter-rouge&#34;&gt;2016&lt;/code&gt;
+&lt;strong&gt;Innovations in Behavior Measurement&lt;/strong&gt; Mathematica Policy Research&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Innovations in Behavior Measurement&lt;/strong&gt; Agents of Change Summit&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&#34;highlighter-rouge&#34;&gt;2015&lt;/code&gt;
+&lt;strong&gt;Health Data from Wearables: Clinical Implications of the Quantified Self&lt;/strong&gt; American Medical Informatics Association Annual Conference (panelist)&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Quantified Self &amp;amp; Personal Data&lt;/strong&gt; Data and Innovation at the Climate-Health Nexus, White House Office of Science and Technology Policy&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Would Taylor Wear a Fitbit? Quantified Self in the Workplace and Beyond&lt;/strong&gt; California Association for Behavior Analysis Annual Conference&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&#34;highlighter-rouge&#34;&gt;2014&lt;/code&gt;
+&lt;strong&gt;Living With Data&lt;/strong&gt; California College of the Arts&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Patient with Chronic Illness: The New Self-Tracker?&lt;/strong&gt; Medicine X (Speaker &amp;amp; Panel Moderator)&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&#34;highlighter-rouge&#34;&gt;2013&lt;/code&gt;
+&lt;strong&gt;The Self-tracking Patient&lt;/strong&gt; Medicine X (Speaker &amp;amp; Panel Moderator)&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&#34;highlighter-rouge&#34;&gt;2012&lt;/code&gt;
+&lt;strong&gt;Know Thyself&lt;/strong&gt; Medicine X&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Quantified Self: A Pathway to Personal Health&lt;/strong&gt; Digital Health Communications Extravaganza (DHCX)&lt;/p&gt;
+
+&lt;h2 id=&#34;teaching&#34;&gt;Teaching&lt;/h2&gt;
+
+&lt;p&gt;&lt;code class=&#34;highlighter-rouge&#34;&gt;SDSU&lt;/code&gt;
+&lt;strong&gt;PH 101&lt;/strong&gt;: Introduction to Public Health&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;PH 302&lt;/strong&gt;: Epidemiology of Communicable and Chronic Disease&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&#34;highlighter-rouge&#34;&gt;ASU&lt;/code&gt;
+&lt;strong&gt;KIN 101&lt;/strong&gt;: Introduction to Kinesiology&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;KIN 352&lt;/strong&gt;: Psychosocial Aspects of Physical Activity&lt;/p&gt;
+
+&lt;h2 id=&#34;publications&#34;&gt;Publications&lt;/h2&gt;
+
+&lt;h3 id=&#34;journal-articles&#34;&gt;Journal Articles&lt;/h3&gt;
+
+&lt;p&gt;&lt;code class=&#34;highlighter-rouge&#34;&gt;2017&lt;/code&gt;
+&lt;p&gt;Kulinna PH, &lt;strong&gt;Ramirez ER&lt;/strong&gt;, Jahn JA, Cothran DJ, Burns RD, Kloeppel T. Predictors of Native American children&#39;s perceived status of health and physical shape. Journal of Applied Behavioral Research. 2017;00:e12089. https://doi.org/10.1111/jabr.12089.&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&#34;highlighter-rouge&#34;&gt;2013&lt;/code&gt;
+ &lt;strong&gt;Ramirez, E.&lt;/strong&gt; &amp;amp; Wipfli, B. (2013). Stress reactivity in humans and animals: two meta-analyses. International Journal of Exercise Science, 6(2), 7.&lt;/p&gt;
+
+&lt;p&gt;Li, I., Froehlich, J., Larsen, J.E., Grevet, C., &amp;amp; &lt;strong&gt;Ramirez, E.&lt;/strong&gt; (2013). Personal informatics in the wild. In CHI ’13 Extended Abstracts on Human Factors in Computing Systems. New York, New York, USA: ACM Press.&lt;/p&gt;
+
+&lt;p&gt;Wu, W., Dasgupta, S., &lt;strong&gt;Ramirez, E.R.&lt;/strong&gt;, Peterson, C. &amp;amp; Norman, G.J. Classifcation accuracies of physical activities using smartphone motion sensors. Journal of Medical Internet Research, 14(5), e130.&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&#34;highlighter-rouge&#34;&gt;2012&lt;/code&gt;
+&lt;strong&gt;Ramirez, E.R.&lt;/strong&gt;, Kulinna, P.H. &amp;amp; Cothran, D. (2012) Constructs of physical activity behaviour in children: The usefulness of social cognitive theory. Psychology of Sport and Exercise, 13(3), 303-310.&lt;/p&gt;
+
+&lt;p&gt;Carlson, J.A., Sallis, J.F., &lt;strong&gt;Ramirez, E.R.&lt;/strong&gt;, Patrick, K. &amp;amp; Norman, G.J. (2012). Physical activity and dietary behavior change in Internet-based weight loss interventions: Comparing two multiple-behavior change indices. Preventive Medicine, 54(1), 50-54.&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&#34;highlighter-rouge&#34;&gt;2011&lt;/code&gt;
+Marshall, S.J. &amp;amp; &lt;strong&gt;Ramirez, E.R.&lt;/strong&gt; (2011). Reducing sedentary behavior: A new paradigm for physical activity promotion. Journal of Lifestyle Medicine, 5(6), 518-530.&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&#34;highlighter-rouge&#34;&gt;2010&lt;/code&gt;
+&lt;strong&gt;Ramirez, E.R.&lt;/strong&gt;, Norman, G.J., Rosenberg, D., Kerr, J., Saelens, B., Durant, N. &amp;amp; Sallis, J. (2010) Adolescent screen time and rules to limit screen time in the home. Journal of Adolescent Health, 48(4), 379-385&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&#34;highlighter-rouge&#34;&gt;2009&lt;/code&gt;
+Adams, M.A., Marshall, S.J., Dillon, L., Caparosa, S., &lt;strong&gt;Ramirez, E.&lt;/strong&gt;, Phillips, J., &amp;amp; Norman, G. J. (2009). A theory-based framework for evaluating exergames as persuasive technology. In Proceedings of the 4th international Conference on Persuasive Technology (Claremont, California, April 26 - 29, 2009). Persuasive ‘09, vol. 350. ACM, New York, NY, 1-8.&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&#34;highlighter-rouge&#34;&gt;2008&lt;/code&gt;
+Kulinna, P.H., Jahn, J., Brusseau, T., Ferry, M., &amp;amp; &lt;strong&gt;Ramirez, E.&lt;/strong&gt; (2008). Physical Education Pilot Program Final Report.  Phoenix AZ: Tom Horne Superintendent of Public Instruction Arizona Department of Education.&lt;/p&gt;
+
+&lt;h3 id=&#34;posters--published-abstracts&#34;&gt;Posters / Published Abstracts&lt;/h3&gt;
+
+&lt;p&gt;&lt;code class=&#34;highlighter-rouge&#34;&gt;2012&lt;/code&gt;
+&lt;strong&gt;Ramirez, E.R.&lt;/strong&gt;, Peterson, C., Wu, W., &amp;amp; Norman, G.J. (2012). Accuracy of the Fitbit pedometer for self-paced and prescribed physical activity. Medicine &amp;amp; Science in Sports &amp;amp; Exercise, 44(5S), 648.&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&#34;highlighter-rouge&#34;&gt;2011&lt;/code&gt;
+&lt;strong&gt;Ramirez, E.R.&lt;/strong&gt;, Norman, G.J., Merchant, G., et al. (2011). Multi-behavioral determinants of weight loss in men and women. Annals of Behavioral Medicine, 41 (suppl), s101.&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&#34;highlighter-rouge&#34;&gt;2010&lt;/code&gt;
+&lt;strong&gt;Ramirez, E.R.&lt;/strong&gt;, Patrick, K., Griswold, W., et al. (2010). Context-aware intervention systems: Strengths and weakness of a new approach to health interventions. Poster presented at the mHealth Summit, Washington DC.&lt;/p&gt;
+
+&lt;p&gt;Kerr, J., Raab, F., &lt;strong&gt;Ramirez, E.R.&lt;/strong&gt;, Norman, G., &amp;amp; Patrick, K. Integrating multiple sensors to improve assessment of physical activity in time &amp;amp; space. ICPAPH, Toronto May 2010&lt;/p&gt;
+
+&lt;p&gt;Kerr, J., Raab, F., &lt;strong&gt;Ramirez, E.R.&lt;/strong&gt;, Norman, G., &amp;amp; Patrick, K. Development of a Physical Activity Location Measurement System (PALMS) and validation in young and old populations wearing GPS. Active Living Research Conference, San Diego, Feb 2010&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&#34;highlighter-rouge&#34;&gt;2009&lt;/code&gt;
+&lt;strong&gt;Ramirez, E.&lt;/strong&gt; Patrick, K., Norman, G. &amp;amp; Raab, F. (2009). Integrating Spatial Data Sources to Measure and Influence Physical Activity Behaviors: The Physical Activity Location Measurement System (PALMS). Poster presented at the International Conference on Diet and Physical Activity Measurement (ICDAM), Washington DC. 1.&lt;/p&gt;
+
+&lt;h3 id=&#34;book-chapters&#34;&gt;Book Chapters&lt;/h3&gt;
+
+&lt;p&gt;&lt;code class=&#34;highlighter-rouge&#34;&gt;2015&lt;/code&gt;
+Arredondo, E., &amp;amp; &lt;strong&gt;Ramirez, E.R. (2015)&lt;/strong&gt;. Physical Activity. In Introduction to Health Promotion &amp;amp; Behavioral Science in Public Health (p. 320). Cengage Learning.&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&#34;highlighter-rouge&#34;&gt;2013&lt;/code&gt;
+Norman, G.J., Kolodziejczyk, J.K., Hekler, E.B., &amp;amp; &lt;strong&gt;Ramirez, E.R.&lt;/strong&gt; (2013). How to Deliver Physical Activity Messages. In ACSM’s Behavioral Aspects of Physical Activity and Exercise (p. 336). Lippincott Williams &amp;amp; Wilkins.&lt;/p&gt;
+
+&lt;h2 id=&#34;awards&#34;&gt;Awards&lt;/h2&gt;
+&lt;p&gt;&lt;code class=&#34;highlighter-rouge&#34;&gt;2010&lt;/code&gt; 	NIH Minority Supplement, Social and Mobile Approaches to Weight Loss&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&#34;highlighter-rouge&#34;&gt;2008&lt;/code&gt;	NIH Minority Supplement, Physical Activity Location Measurement System&lt;/p&gt;
+
+
+&lt;!-- ### Footer
+
+Last updated: May 2013 --&gt;
+
+    &lt;/div&gt;
+  &lt;/div&gt;
+
+  &lt;div class=&#34;footer&#34;&gt;&lt;/div&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;
+</description>
+    </item>
+    
+    <item>
       <title>Colophon</title>
       <link>/colophon/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
