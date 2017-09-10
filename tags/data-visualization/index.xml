@@ -9,30 +9,12 @@
     <atom:link href="/tags/data-visualization/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
-      <title>Examining Variability in Physical Activity with R</title>
-      <link>/post/2017/09/10/examining-variability-in-physical-activity-with-r/</link>
+      <title>Examining Variability in Longitudinal Physical Activity Datawith R</title>
+      <link>/post/2017/09/10/examining-variability-in-physical-activity-data-with-r/</link>
       <pubDate>Sun, 10 Sep 2017 00:00:00 +0000</pubDate>
       
-      <guid>/post/2017/09/10/examining-variability-in-physical-activity-with-r/</guid>
-      <description>&lt;div id=&#34;TOC&#34;&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;#intro&#34;&gt;Intro&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;#the-eight-visualization-methods&#34;&gt;The Eight Visualization Methods&lt;/a&gt;&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;#but-first-the-data&#34;&gt;But First, the Data&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;#daily-steps&#34;&gt;1. Daily Steps&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;#phase-mean-and-phase-median-lines&#34;&gt;2. Phase Mean and Phase Median Lines&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;#daily-average-per-week-and-weekly-median&#34;&gt;3. Daily Average per Week and Weekly Median&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;#weekly-cumulative&#34;&gt;4. Weekly Cumulative&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;#proportion-of-baseline-mean-and-proportion-of-baseline-median&#34;&gt;5. Proportion of Baseline Mean and Proportion of Baseline Median&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;#day-moving-average&#34;&gt;6. 7-Day Moving Average&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;#confidence-intervals&#34;&gt;7. Confidence Intervals&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;#change-point-detection&#34;&gt;8. Change-point Detection&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;#wrapping-up&#34;&gt;Wrapping Up&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/div&gt;
-
-&lt;div id=&#34;intro&#34; class=&#34;section level2&#34;&gt;
+      <guid>/post/2017/09/10/examining-variability-in-physical-activity-data-with-r/</guid>
+      <description>&lt;div id=&#34;intro&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Intro&lt;/h2&gt;
 &lt;p&gt;As part of my regular work I keep a constant eye on the latest published research that involves the use of Fitbit activity tracking devices. Each new publication is gathered, read (sometimes skimmed), and tagged with appropriate meta-data for our &lt;a href=&#34;https://www.fitabase.com/research-library/&#34;&gt;Fitabase Research Library&lt;/a&gt;. It’s fun work, and it gives me a chance to peak into the every-expanding world of research and clinical use cases for consumer tracking devices and the data they can collect.&lt;/p&gt;
 &lt;p&gt;Earlier this summer, while I was traveling to a conference I came across an interesting paper published by a group from the University of South Florida that explored strategies for interpreting highly variable data from long-term use of a Fitbit. I’ll let them explain:&lt;/p&gt;
@@ -45,8 +27,8 @@ This paper presents seven tactics for managing the variability evident in some p
 &lt;/div&gt;
 &lt;div id=&#34;the-eight-visualization-methods&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;The Eight Visualization Methods&lt;/h2&gt;
-&lt;div id=&#34;but-first-the-data&#34; class=&#34;section level3&#34;&gt;
-&lt;h3&gt;But First, the Data&lt;/h3&gt;
+&lt;div id=&#34;the-data&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;The Data&lt;/h3&gt;
 &lt;p&gt;In the paper, they use approximately 180 days of daily step data from a Fitbit One that was worn by a participant in a previous study. It’s important to note that this data comes from an intervention study, with three phases: baseline, intervention phase 1, and intervention phase 2. Now, we don’t have access to their participant’s data, so I set out to use my own. Using our Fitabase platform I exported one year of daily step data, from 2016-05-12 to 2017-05-11. I also applied somewhat arbitrary cutoffs for the three phases: 30 days for “baseline”, 135 days for “intervention 1”, and 200 days for “intervention 2”.&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(tidyverse)
 library(scales)
