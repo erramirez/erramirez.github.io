@@ -2,8 +2,8 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>/post/2017/07/05/testing/</loc>
-    <lastmod>2017-07-05T00:00:00+00:00</lastmod>
+    <loc>/post/2017/09/10/examining-variability-in-physical-activity-with-r/</loc>
+    <lastmod>2017-09-10T00:00:00+00:00</lastmod>
   </url>
   
   <url>
@@ -52,10 +52,6 @@
   </url>
   
   <url>
-    <loc>/cv/</loc>
-  </url>
-  
-  <url>
     <loc>/categories/</loc>
     <priority>0</priority>
   </url>
@@ -65,13 +61,8 @@
   </url>
   
   <url>
-    <loc>/cv/</loc>
-    <priority>0</priority>
-  </url>
-  
-  <url>
     <loc>/tags/data-visualization/</loc>
-    <lastmod>2016-06-04T00:00:00+00:00</lastmod>
+    <lastmod>2017-09-10T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -83,7 +74,7 @@
   
   <url>
     <loc>/tags/fitbit/</loc>
-    <lastmod>2016-01-25T00:00:00+00:00</lastmod>
+    <lastmod>2017-09-10T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -93,7 +84,7 @@
   
   <url>
     <loc>/</loc>
-    <lastmod>2017-07-05T00:00:00+00:00</lastmod>
+    <lastmod>2017-09-10T00:00:00+00:00</lastmod>
   </url>
   
   <url>
@@ -110,13 +101,13 @@
   
   <url>
     <loc>/post/</loc>
-    <lastmod>2017-07-05T00:00:00+00:00</lastmod>
+    <lastmod>2017-09-10T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>/categories/r/</loc>
-    <lastmod>2016-06-04T00:00:00+00:00</lastmod>
+    <lastmod>2017-09-10T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -127,7 +118,7 @@
   
   <url>
     <loc>/tags/time-series/</loc>
-    <lastmod>2016-01-25T00:00:00+00:00</lastmod>
+    <lastmod>2017-09-10T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
