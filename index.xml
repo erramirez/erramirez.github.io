@@ -10,12 +10,98 @@
     <atom:link href="/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
+      <title>/now/</title>
+      <link>/now/</link>
+      <pubDate>Sun, 10 Sep 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/now/</guid>
+      <description>
+
+&lt;h2 id=&#34;current-life&#34;&gt;Current / Life&lt;/h2&gt;
+
+&lt;p&gt;The only news that matters here is that Laura and I are excited to welcome a new member to our little family next year.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;/images/babyramuilar.jpg&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;(you can see my mom &lt;a href=&#34;https://www.instagram.com/p/BYlmlXVHisH/?taken-by=erramirez&#34;&gt;freak out about it here&lt;/a&gt;)&lt;/p&gt;
+
+&lt;h2 id=&#34;current-work&#34;&gt;Current / Work&lt;/h2&gt;
+
+&lt;p&gt;We&amp;rsquo;re chugging along and working on support some really neat research and public projects. Can&amp;rsquo;t wait to get those announced soon. .&lt;/p&gt;
+
+&lt;p&gt;Still working on this &lt;em&gt;side&lt;/em&gt; project where I am developing an example code library for analyzing Fitabase data with R. Adding bits and pieces when I have time so it&amp;rsquo;s not moving as fast as I want, but hopefully getting it our the door soon.&lt;/p&gt;
+
+&lt;h2 id=&#34;exercise-health&#34;&gt;Exercise / Health&lt;/h2&gt;
+
+&lt;p&gt;Laura and I had a fantastic time racing Hood to Coast with our friends in Portland. It was our fourth HTC adventure, and our fastest race to date. I also clocked in a decent 5K time the weekend after at the 3rd Annual HBD LA 5K.&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;Next Race&lt;/em&gt;: Chistmas Run 10K (December)&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Current Weight&lt;/strong&gt;: 160&lt;br /&gt;
+&lt;strong&gt;Goal Weight&lt;/strong&gt;: 155&lt;/p&gt;
+
+&lt;h2 id=&#34;reading&#34;&gt;Reading&lt;/h2&gt;
+
+&lt;p&gt;I&amp;rsquo;ve finished the currently available Expanse Series books and am looking forward to seeing how the authors wrap it up over the final two books. Bummed I have to wait though.&lt;/p&gt;
+
+&lt;p&gt;Currently I&amp;rsquo;m reading &lt;a href=&#34;https://www.goodreads.com/book/show/34017126-the-stone-sky&#34;&gt;The Stone Sky&lt;/a&gt;, which is Book 3 in the Broken Earth Trilogy. Nearly done and it&amp;rsquo;s fantastic. I&amp;rsquo;ll be sad to see this end, but so glad it exists in the world.&lt;/p&gt;
+
+&lt;h2 id=&#34;listening-music&#34;&gt;Listening / Music&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;New Kesha&lt;/li&gt;
+&lt;li&gt;Raury&lt;/li&gt;
+&lt;li&gt;Donnie Trumpet and the Social Experiment&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;listening-podcasts&#34;&gt;Listening / Podcasts&lt;/h2&gt;
+
+&lt;p&gt;&lt;strong&gt;Weekly Rotation&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;http://maximumfun.org/shows/jordan-jesse-go&#34;&gt;Jordan, Jesse, Go&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://maximumfun.org/shows/my-brother-my-brother-and-me&#34;&gt;My Brother, My Brother, and Me&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://maximumfun.org/shows/stop-podcasting-yourself&#34;&gt;Stop Podcasting Yourself&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://maximumfun.org/shows/judge-john-hodgman&#34;&gt;Judge John Hodgman&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://www.feralaudio.com/show/doughboys/&#34;&gt;The Dough Boys&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://pardcast.com/&#34;&gt;Never Not Funny&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;Sporadically&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;http://maximumfun.org/shows/bullseye&#34;&gt;Bullseye&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://maximumfun.org/shows/the-turnaround&#34;&gt;The Turnaround&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://www.earwolf.com/show/comedy-bang-bang/&#34;&gt;Comedy Bang Bang&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
+    
+    <item>
       <title>Examining Variability in Physical Activity Data with R</title>
       <link>/post/2017/09/10/examining-variability-in-physical-activity-data-with-r/</link>
       <pubDate>Sun, 10 Sep 2017 00:00:00 +0000</pubDate>
       
       <guid>/post/2017/09/10/examining-variability-in-physical-activity-data-with-r/</guid>
-      <description>&lt;div id=&#34;intro&#34; class=&#34;section level2&#34;&gt;
+      <description>&lt;div id=&#34;TOC&#34;&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;#intro&#34;&gt;Intro&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#the-eight-visualization-methods&#34;&gt;The Eight Visualization Methods&lt;/a&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;#the-data&#34;&gt;The Data&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#daily-steps&#34;&gt;1. Daily Steps&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#phase-mean-and-phase-median-lines&#34;&gt;2. Phase Mean and Phase Median Lines&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#daily-average-per-week-and-weekly-median&#34;&gt;3. Daily Average per Week and Weekly Median&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#weekly-cumulative&#34;&gt;4. Weekly Cumulative&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#proportion-of-baseline-mean-and-proportion-of-baseline-median&#34;&gt;5. Proportion of Baseline Mean and Proportion of Baseline Median&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#day-moving-average&#34;&gt;6. 7-Day Moving Average&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#confidence-intervals&#34;&gt;7. Confidence Intervals&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#change-point-detection&#34;&gt;8. Change-point Detection&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#wrapping-up&#34;&gt;Wrapping Up&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+
+&lt;div id=&#34;intro&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Intro&lt;/h2&gt;
 &lt;p&gt;As part of my regular work I keep a constant eye on the latest published research that involves the use of Fitbit activity tracking devices. Each new publication is gathered, read (sometimes skimmed), and tagged with appropriate meta-data for our &lt;a href=&#34;https://www.fitabase.com/research-library/&#34;&gt;Fitabase Research Library&lt;/a&gt;. It’s fun work, and it gives me a chance to peak into the every-expanding world of research and clinical use cases for consumer tracking devices and the data they can collect.&lt;/p&gt;
 &lt;p&gt;Earlier this summer, while I was traveling to a conference I came across an interesting paper published by a group from the University of South Florida that explored strategies for interpreting highly variable data from long-term use of a Fitbit. I’ll let them explain:&lt;/p&gt;
@@ -561,72 +647,6 @@ changepoint_plot&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;More broadly, I hope this this just another gentle push for our research community to share more code and examples alongside their published work. Sharing is caring folks!&lt;/p&gt;
 &lt;p&gt;As always, comments and edits are welcome. Feel free to submit a pull request or issue on Github, or just &lt;a href=&#34;http://www.twitter.com/eramriez&#34;&gt;ping me on twitter&lt;/a&gt;.&lt;/p&gt;
 &lt;/div&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>/now/</title>
-      <link>/now/</link>
-      <pubDate>Tue, 04 Jul 2017 00:00:00 +0000</pubDate>
-      
-      <guid>/now/</guid>
-      <description>
-
-&lt;h2 id=&#34;current-work&#34;&gt;Current / Work&lt;/h2&gt;
-
-&lt;p&gt;We just wrapped up our Spring/Summer conference season, and I&amp;rsquo;m glad to be home where I can focus on core features, developing new relationships, and growing business.&lt;/p&gt;
-
-&lt;p&gt;One of my most exciting &lt;em&gt;side&lt;/em&gt; projects is developing an example code library for analyzing Fitabase data with R. Should be online before the end of July (if I get over my nervousness about making it public).&lt;/p&gt;
-
-&lt;h2 id=&#34;current-life&#34;&gt;Current / Life&lt;/h2&gt;
-
-&lt;p&gt;Life is moving along nicely. We&amp;rsquo;re currently in the market for a new car, as my 2003 Hyundai is about to die. &lt;em&gt;Seriously&lt;/em&gt;. We asked a dealership to give us a quote on it as a trade-in and within 5 minutes they said, &amp;ldquo;Just donate it.&amp;rdquo;&lt;/p&gt;
-
-&lt;p&gt;Starting to get antsy for our upcoming family vacation to Kauai. October can&amp;rsquo;t come fast enough.&lt;/p&gt;
-
-&lt;h2 id=&#34;exercise-health&#34;&gt;Exercise / Health&lt;/h2&gt;
-
-&lt;p&gt;I just wrapped up my &amp;ldquo;biggest&amp;rdquo; week running since 2015, with a total of 40mi ran. I&amp;rsquo;m trying to be more consistent and stick to a polarized training schedule (80% easy / 20% hard), but mostly I&amp;rsquo;m just winging it.&lt;/p&gt;
-
-&lt;p&gt;&lt;em&gt;Next Race&lt;/em&gt;: Hood to Coast (Oregon)&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Current Weight&lt;/strong&gt;: 166&lt;br /&gt;
-&lt;strong&gt;Goal Weight&lt;/strong&gt;: 155&lt;/p&gt;
-
-&lt;p&gt;I am trying to find the time, energy, and mostly, the motivation to start adding more strength-building exercises into my daily schedule. The gym isn&amp;rsquo;t doing it for me.&lt;/p&gt;
-
-&lt;h2 id=&#34;reading&#34;&gt;Reading&lt;/h2&gt;
-
-&lt;p&gt;&lt;a href=&#34;https://www.goodreads.com/book/show/28053798-babylon-s-ashes&#34;&gt;Bablyon&amp;rsquo;s Ashes&lt;/a&gt; (Book 6 of the Expanse Series)&lt;/p&gt;
-
-&lt;h2 id=&#34;listening-music&#34;&gt;Listening / Music&lt;/h2&gt;
-
-&lt;ul&gt;
-&lt;li&gt;Hunting down all Chance The Rapper guest appearances&lt;/li&gt;
-&lt;li&gt;Riz MC&lt;/li&gt;
-&lt;li&gt;Open Mike Eagle&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&#34;listening-podcasts&#34;&gt;Listening / Podcasts&lt;/h2&gt;
-
-&lt;p&gt;&lt;strong&gt;Weekly Rotation&lt;/strong&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;http://maximumfun.org/shows/jordan-jesse-go&#34;&gt;Jordan, Jesse, Go&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;http://maximumfun.org/shows/my-brother-my-brother-and-me&#34;&gt;My Brother, My Brother, and Me&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;http://maximumfun.org/shows/stop-podcasting-yourself&#34;&gt;Stop Podcasting Yourself&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;http://maximumfun.org/shows/judge-john-hodgman&#34;&gt;Judge John Hodgman&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;http://www.feralaudio.com/show/doughboys/&#34;&gt;The Dough Boys&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;http://pardcast.com/&#34;&gt;Never Not Funny&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;strong&gt;Sporadically&lt;/strong&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;http://maximumfun.org/shows/bullseye&#34;&gt;Bullseye&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;http://maximumfun.org/shows/the-turnaround&#34;&gt;The Turnaround&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;http://www.earwolf.com/show/comedy-bang-bang/&#34;&gt;Comedy Bang Bang&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
 </description>
     </item>
     
