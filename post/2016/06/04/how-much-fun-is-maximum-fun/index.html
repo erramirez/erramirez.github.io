@@ -47,28 +47,17 @@
 
 
 <main>
-
-
-<h2 id="intro">Intro</h2>
-
-<p>I&rsquo;m a big consumer of podcasts. Ever since I started living on my own while in graduate school I&rsquo;ve found that having funny and interesting people in my ears helps me get through the day. Even now that I&rsquo;m cohabiting with my wife I haven&rsquo;t left my trusty podcasts behind. They&rsquo;re great for the long commutes back and forth to San Diego, for reducing my stress while stuck in LA traffic, and for making my laugh while I cook, clean, and exercise.</p>
-
-<p>I&rsquo;m a fan and donor (support the things you love!) of one podcast network in particular, <a href="http://www.maximumfun.org">Maximum Fun</a>, so much so that I&rsquo;m a semi-regular participant in their Facebook group and subreddit. Recently, someone in the Facebook group asked for some data about the network, in particular the number of shows that have been published, in order to visualize the growth of the network. As someone who&rsquo;s keen to keep my data analysis skills fresh and nimble I took this as an opportunity to dive back into R. Here&rsquo;s what I&rsquo;ve done so far:</p>
-
-<h2 id="gathering-data-from-an-rss-feed">Gathering Data from an RSS Feed</h2>
-
-<p>Podcasts are unique in that they&rsquo;re basically just a simple feed of audio files. That feed has data embedded into it that we can access and save. I&rsquo;m pretty new to web-scrapping, but I was able to find a really nice example of <a href="https://gist.github.com/izahn/5785265">how to scrape an RSS feed in R here</a>. I adapted that to scrape and save data from each of the podcasts in the Maximum Fun network. Here&rsquo;s an example:</p>
-
-<pre><code class="language-r">library(RCurl)
-</code></pre>
-
-<pre><code>## Loading required package: methods
-</code></pre>
-
-<pre><code>## Loading required package: bitops
-</code></pre>
-
-<pre><code class="language-r">library(XML)
+<div id="intro" class="section level2">
+<h2>Intro</h2>
+<p>I’m a big consumer of podcasts. Ever since I started living on my own while in graduate school I’ve found that having funny and interesting people in my ears helps me get through the day. Even now that I’m cohabiting with my wife I haven’t left my trusty podcasts behind. They’re great for the long commutes back and forth to San Diego, for reducing my stress while stuck in LA traffic, and for making my laugh while I cook, clean, and exercise.</p>
+<p>I’m a fan and donor (support the things you love!) of one podcast network in particular, <a href="http://www.maximumfun.org">Maximum Fun</a>, so much so that I’m a semi-regular participant in their Facebook group and subreddit. Recently, someone in the Facebook group asked for some data about the network, in particular the number of shows that have been published, in order to visualize the growth of the network. As someone who’s keen to keep my data analysis skills fresh and nimble I took this as an opportunity to dive back into R. Here’s what I’ve done so far:</p>
+</div>
+<div id="gathering-data-from-an-rss-feed" class="section level2">
+<h2>Gathering Data from an RSS Feed</h2>
+<p>Podcasts are unique in that they’re basically just a simple feed of audio files. That feed has data embedded into it that we can access and save. I’m pretty new to web-scrapping, but I was able to find a really nice example of <a href="https://gist.github.com/izahn/5785265">how to scrape an RSS feed in R here</a>. I adapted that to scrape and save data from each of the podcasts in the Maximum Fun network. Here’s an example:</p>
+<pre class="r"><code>library(RCurl)</code></pre>
+<pre><code>## Loading required package: bitops</code></pre>
+<pre class="r"><code>library(XML)
 
 options(stringsAsFactors = FALSE)
 
@@ -81,109 +70,87 @@ doc &lt;- xmlParse(script)
 ## find the names of the item nodes
 
 ## Extract some information from each node in the rss feed
-titles &lt;- xpathSApply(doc,'//item/title',xmlValue)
-date &lt;- xpathSApply(doc,'//item/pubDate',xmlValue)
-duration &lt;- xpathSApply(doc,'//item/itunes:duration',xmlValue)
+titles &lt;- xpathSApply(doc,&#39;//item/title&#39;,xmlValue)
+date &lt;- xpathSApply(doc,&#39;//item/pubDate&#39;,xmlValue)
+duration &lt;- xpathSApply(doc,&#39;//item/itunes:duration&#39;,xmlValue)
 
 # create data frame with important variables
 Adventurezone &lt;- data.frame(titles, date, duration)
 
 # create unique identifier
-Adventurezone$id &lt;- &quot;The Adventure Zone&quot;
-</code></pre>
-
-<p>I probably could have created a function to run through all the shows, but instead I used that chunk for every show. It was actually useful as a few of the shows had missing episodes or titles and durations that didn&rsquo;t match up.</p>
-
-<p>Once I had all the data scrapped from the feeds I was able to combine it into one dataset of 4,202 episodes from 25 different shows. The date/duration variables were pretty messy so I noodled around a bit and cleaned them up into something manageable. I&rsquo;ve saved that final data in <a href="https://dl.dropboxusercontent.com/u/2513399/MaximumFun.rdata">Rdata</a> and <a href="https://dl.dropboxusercontent.com/u/2513399/MaximumFun.csv">.csv</a> formats if you want to play with them yourself. I&rsquo;m loading the RData file here:</p>
-
-<pre><code class="language-r">load(url(&quot;https://dl.dropboxusercontent.com/u/2513399/MaximumFun.rdata&quot;))
-</code></pre>
-
-<h2 id="visualizations">Visualizations</h2>
-
-<p>Once we have all the data in a good format creating visualizations is actually pretty easy! Let&rsquo;s start with a simple bar chart that plots the number of shows per month:</p>
-
-<pre><code class="language-r">library(ggplot2)
+Adventurezone$id &lt;- &quot;The Adventure Zone&quot;</code></pre>
+<p>I probably could have created a function to run through all the shows, but instead I used that chunk for every show. It was actually useful as a few of the shows had missing episodes or titles and durations that didn’t match up.</p>
+<p>Once I had all the data scrapped from the feeds I was able to combine it into one dataset of 4,202 episodes from 25 different shows. The date/duration variables were pretty messy so I noodled around a bit and cleaned them up into something manageable. I’ve saved that final data in <a href="https://dl.dropboxusercontent.com/u/2513399/MaximumFun.rdata">Rdata</a> and <a href="https://dl.dropboxusercontent.com/u/2513399/MaximumFun.csv">.csv</a> formats if you want to play with them yourself. I’m loading the RData file here:</p>
+<pre class="r"><code>load(url(&quot;https://www.dropbox.com/s/5l94kzc54s177uh/MaximumFun.rdata?dl=1&quot;))</code></pre>
+</div>
+<div id="visualizations" class="section level2">
+<h2>Visualizations</h2>
+<p>Once we have all the data in a good format creating visualizations is actually pretty easy! Let’s start with a simple bar chart that plots the number of shows per month:</p>
+<pre class="r"><code>library(ggplot2)
 library(scales)
 # simple bar chart with sum of number of shows per month
 mf.stacked.bar &lt;- ggplot(MaximumFun, aes(monthyear)) + geom_bar() +
   labs(title = &quot;Number of Shows on Maximum Fun per Month&quot;, x = &quot;Year - Month&quot;, y = &quot;Number of Shows Published&quot;) +
   theme(axis.text.x = element_text(angle = 90, hjust = 1, size = 6))
-mf.stacked.bar
-</code></pre>
-
-<p><img src="/figure/source/2016-06-04-how-much-fun-is-maximum-fun/unnamed-chunk-3-1.png" alt="plot of chunk unnamed-chunk-3" /></p>
-
-<p>That&rsquo;s not bad, but what if we wanted to know which shows were on the network over time? We can use the &ldquo;id&rdquo; variable we created in the initial data scrapping process to label each show. This visualization needs a better color palette to better differentiate between each show, but I&rsquo;ll leave it here for now:</p>
-
-<pre><code class="language-r">library(ggplot2)
+mf.stacked.bar</code></pre>
+<p><img src="/post/2016-06-04-how-much-fun-is-maximum-fun_files/figure-html/barchart-1.png" width="672" /></p>
+<p>That’s not bad, but what if we wanted to know which shows were on the network over time? We can use the “id” variable we created in the initial data scrapping process to label each show. This visualization needs a better color palette to better differentiate between each show, but I’ll leave it here for now:</p>
+<pre class="r"><code>library(ggplot2)
 library(scales)
 # add in color to represent the shows
 # needs a better color palette
 mf.stacked.bar2 &lt;- ggplot(MaximumFun, aes(monthyear, fill = id)) + geom_bar() +
   labs(title = &quot;Number of Shows on Maximum Fun per Month&quot;, x = &quot;Year - Month&quot;, y = &quot;Number of Shows Published&quot;) +
   theme(axis.text.x = element_text(angle = 90, hjust = 1, size = 6), legend.position=&quot;bottom&quot;)
-mf.stacked.bar2
-</code></pre>
-
-<p><img src="/figure/source/2016-06-04-how-much-fun-is-maximum-fun/unnamed-chunk-4-1.png" alt="plot of chunk unnamed-chunk-4" /></p>
-
-<p>What can we find out about each show? Let&rsquo;s start with visualizing the total number of hours each podcast has published:</p>
-
-<pre><code class="language-r">library(ggplot2)
+mf.stacked.bar2</code></pre>
+<p><img src="/post/2016-06-04-how-much-fun-is-maximum-fun_files/figure-html/barchart_shows-1.png" width="672" /></p>
+<p>What can we find out about each show? Let’s start with visualizing the total number of hours each podcast has published:</p>
+<pre class="r"><code>library(ggplot2)
 library(scales)
 mf.stacked.bar4 &lt;- ggplot(MaximumFun, aes(id, (showlength/60))) + geom_bar(stat=&quot;identity&quot;) +
   labs(title = &quot;Total Duration of Each Show on Maximum Fun&quot;, x = &quot;Show&quot;, y = &quot;Total Number of Hours&quot;) +
   theme(axis.text.x = element_text(angle = 90, hjust = 1))
-mf.stacked.bar4
-</code></pre>
-
-<p><img src="/figure/source/2016-06-04-how-much-fun-is-maximum-fun/unnamed-chunk-5-1.png" alt="plot of chunk unnamed-chunk-5" /></p>
-
+mf.stacked.bar4</code></pre>
+<pre><code>## Warning: Removed 32 rows containing missing values (position_stack).</code></pre>
+<p><img src="/post/2016-06-04-how-much-fun-is-maximum-fun_files/figure-html/show_hours-1.png" width="672" /></p>
 <p>How about the number of episodes per show?</p>
-
-<pre><code class="language-r"># simple bar chart for total number of episodes per show
+<pre class="r"><code># simple bar chart for total number of episodes per show
 mf.stacked.bar5 &lt;- ggplot(MaximumFun, aes(id)) + geom_bar() +
   labs(title = &quot;Number of Episode of each Show on Maximum Fun&quot;, x = &quot;Show&quot;, y = &quot;Total Number of Episodes&quot;) +
   theme(axis.text.x = element_text(angle = 90, hjust = 1))
-mf.stacked.bar5
-</code></pre>
-
-<p><img src="/figure/source/2016-06-04-how-much-fun-is-maximum-fun/unnamed-chunk-6-1.png" alt="plot of chunk unnamed-chunk-6" /></p>
-
+mf.stacked.bar5</code></pre>
+<p><img src="/post/2016-06-04-how-much-fun-is-maximum-fun_files/figure-html/show_episodes-1.png" width="672" /></p>
 <p>I also got around to reformatting the data so that we could look at the number of shows and amount of content produced by Maximum Fun over time. To do that we first have to create a new dataset that aggregates some of the information:</p>
-
-<pre><code class="language-r">library(plyr)
+<pre class="r"><code>library(plyr)
 # number of shows on the network over time
 MaxFunShows &lt;- ddply(MaximumFun, c(&quot;monthyear&quot;), summarise,
-                           'NumberofShows' = length(unique(id)),
-                           'DurationofShows' = sum(showlength, na.rm=TRUE)
-)
-</code></pre>
-
+                           &#39;NumberofShows&#39; = length(unique(id)),
+                           &#39;DurationofShows&#39; = sum(showlength, na.rm=TRUE)
+)</code></pre>
+<pre><code>## Loading required package: lubridate</code></pre>
+<pre><code>## 
+## Attaching package: &#39;lubridate&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:plyr&#39;:
+## 
+##     here</code></pre>
+<pre><code>## The following object is masked from &#39;package:base&#39;:
+## 
+##     date</code></pre>
 <p>Then we can make plots just like the ones we have above!</p>
-
-<pre><code class="language-r">mf.stacked.bar5 &lt;- ggplot(MaxFunShows, aes(monthyear, NumberofShows)) + geom_bar(stat=&quot;identity&quot;) +
+<pre class="r"><code>mf.stacked.bar5 &lt;- ggplot(MaxFunShows, aes(monthyear, NumberofShows)) + geom_bar(stat=&quot;identity&quot;) +
   labs(title = &quot;Number of Shows on Maximum Fun over time&quot;, x = &quot;Date&quot;, y = &quot;Number of Shows on the Network&quot;) +
   theme(axis.text.x = element_text(angle = 90, hjust = 1, size = 6))
-mf.stacked.bar5
-</code></pre>
-
-<p><img src="/figure/source/2016-06-04-how-much-fun-is-maximum-fun/unnamed-chunk-8-1.png" alt="plot of chunk unnamed-chunk-8" /></p>
-
+mf.stacked.bar5</code></pre>
+<p><img src="/post/2016-06-04-how-much-fun-is-maximum-fun_files/figure-html/barchart_number_shows-1.png" width="672" /></p>
 <p>What about the amount of content over time?</p>
-
-<pre><code class="language-r">mf.stacked.bar5 &lt;- ggplot(MaxFunShows, aes(monthyear, (DurationofShows/60))) + geom_bar(stat=&quot;identity&quot;) +
+<pre class="r"><code>mf.stacked.bar5 &lt;- ggplot(MaxFunShows, aes(monthyear, (DurationofShows/60))) + geom_bar(stat=&quot;identity&quot;) +
   labs(title = &quot;Amount of Content Produced (in hours) by Maximum Fun over time&quot;, x = &quot;Date&quot;, y = &quot;Hours&quot;) +
   theme(axis.text.x = element_text(angle = 90, hjust = 1, size = 6))
-mf.stacked.bar5
-</code></pre>
-
-<p><img src="/figure/source/2016-06-04-how-much-fun-is-maximum-fun/unnamed-chunk-9-1.png" alt="plot of chunk unnamed-chunk-9" /></p>
-
-<p>Unfortunately, this doesn&rsquo;t include some of the great shows that have moved on to be either independtly operated or part of another network, but it&rsquo;s still a pretty good approximation of the growth over time.</p>
-
-<p>I&rsquo;ll probably keep noodling around with this data. Probably a lot more I can do with visualizing particular shows and the network as a whole. If you have ideas <a href="http://twitter.com/eramirez">get in touch</a>!</p>
+mf.stacked.bar5</code></pre>
+<p><img src="/post/2016-06-04-how-much-fun-is-maximum-fun_files/figure-html/barchart_networkhours-1.png" width="672" /></p>
+<p>Unfortunately, this doesn’t include some of the great shows that have moved on to be either independtly operated or part of another network, but it’s still a pretty good approximation of the growth over time.</p>
+<p>I’ll probably keep noodling around with this data. Probably a lot more I can do with visualizing particular shows and the network as a whole. If you have ideas <a href="http://twitter.com/eramirez">get in touch</a>!</p>
+</div>
 
 </main>
 

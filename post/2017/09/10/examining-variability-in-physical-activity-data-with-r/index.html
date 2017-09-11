@@ -109,7 +109,7 @@ Daily_Steps &lt;- Daily_Steps %&gt;%
 <div id="daily-steps" class="section level3">
 <h3>1. Daily Steps</h3>
 <p>Pretty simple here, let’s just visualize the daily steps taken with days along the <em>x</em>-axis and total steps on the <em>y</em>.</p>
-<p>In this plot, and the plots that follow I attempted to use similar formatting to what was presented in the article. They’re pretty minimal so I went with <code>theme_tufte</code> from the excellent <a href="https://github.com/jrnold/ggthemes">ggthemes package</a>.</p>
+<p>In this plot, and the plots that follow I attempted to use similar formatting to what was presented in the article. They’re pretty minimal so I went with <code>theme_bw</code> and then made a few adjustments. Originally, I used <code>theme_tufte</code> from the excellent <a href="https://github.com/jrnold/ggthemes">ggthemes package</a>, but found it’s handling of axis lines a bit restrictive.</p>
 <pre class="r"><code># generate a line+points plot to show one year of daily step data
 # add some formatting to match journal article 
 
@@ -243,7 +243,7 @@ for (i in 1:53) { #set length of function to 1:number of weeks in the data set
 # get rid of trailing NA entries from week 53
 Daily_Steps_7DayWeek &lt;- bind_rows(Daily_Steps_list) %&gt;% 
   filter(ActivityDay &lt;= &quot;2017-05-11&quot;)</code></pre>
-<p>So now, we have two data sets that reflect two different ways to explore weeks in our data. Now comes the fun part - visualizing it! I personally like calendar weeks (isoweek / method one above), as they make conceptual sense when we’re talking about dates so I’ll use that data as the basis for creating the plots. First, we have to create the summarized data set so we have the daily mean, median and standard deviation per week. We do have to keep in mind here that not all weeks will have seven days as obervations may have started/ended in the middle of a week (in this data week 1 only has 4 days).</p>
+<p>So now, we have two data sets that reflect two different ways to explore weeks in our data. Now comes the fun part - visualizing it! I personally like calendar weeks (isoweek / method one above), as they make conceptual sense when we’re talking about dates so I’ll use that data as the basis for creating the plots. First, we have to create the summarized data set so we have the daily mean, median and standard deviation per week. We do have to keep in mind here that not all weeks will have seven days as observations may have started/ended in the middle of a week (in this data week 1 only has 4 days).</p>
 <pre class="r"><code># summarize data by week number
 # append observation variable to summarized weekly data
 # Baseline = Weeks 1-5
@@ -344,7 +344,7 @@ Weekly_Cumulative</code></pre>
 </div>
 <div id="proportion-of-baseline-mean-and-proportion-of-baseline-median" class="section level3">
 <h3>5. Proportion of Baseline Mean and Proportion of Baseline Median</h3>
-<p>In these visualizations we want to see how daily steps compared to the the mean and median of the baseline value. First we create a small data setbased on our previously created <code>observation_data</code> (see Phase Mean/Median above) that contains our baseline mean and median value, and then create our proportion data sets. After that straightforward process it’s relatively simple to generate the plots using much of the same code we’ve used previously. We also use the “end” of the baseline phase (in number of days) to create a new “days” variable so that the Intervention 1 phase starts at “day 1”.</p>
+<p>In these visualizations we want to see how daily steps compared to the the mean and median of the baseline value. First we create a small data set based on our previously created <code>observation_data</code> (see Phase Mean/Median above) that contains our baseline mean and median value, and then create our proportion data sets. After that straightforward process it’s relatively simple to generate the plots using much of the same code we’ve used previously. We also use the “end” of the baseline phase (in number of days) to create a new “days” variable so that the Intervention 1 phase starts at “day 1”.</p>
 <p><em>Note</em>. I had some trouble figuring out how to properly apply a logarithmic scale to the y-axis, but a quick trip in to Stack Overflow helped me find <code>scale_y_log10</code> and use it here.</p>
 <pre class="r"><code># create a dataframe of just data from the &quot;baseline&quot; phase
 baseline_values &lt;- observation_data %&gt;% 
@@ -496,7 +496,7 @@ Intervention2_28 &lt;- Daily_Steps %&gt;%
 SMA_Data &lt;- bind_rows(Baseline_28, Intervention1_28, Intervention2_28)
 write_csv(SMA_Data, &quot;~/Downloads/SMA_Data.csv&quot;)</code></pre>
 <p>After copying the “last 28” days data into the SMA application and setting the number of iterations to 20,000, the resulting output is saved as a .txt file. You can access that <a href="https://github.com/erramirez/datascience/blob/master/sevenways/SMA_Data_Output.txt">output here</a>.</p>
-<p>We can then take those 95% CI values from the oputput for each phase and add them to the observation_date data set we created for the phase means/medians plots. Then we append those values to the full Daily_Steps data set and plot it!</p>
+<p>We can then take those 95% CI values from the output for each phase and add them to the observation_date data set we created for the phase means/medians plots. Then we append those values to the full Daily_Steps data set and plot it!</p>
 <pre class="r"><code># add 95% CI values as lowe/upper CI variables
 observation_data$lowerCI &lt;- c(7211.57, 11247.89, 12070.50)
 observation_data$upperCI &lt;- c(9480.32, 14303.11, 15935.50)
@@ -534,7 +534,7 @@ CI_plot</code></pre>
 <div id="change-point-detection" class="section level3">
 <h3>8. Change-point Detection</h3>
 <p>Change-point detection is a very interesting method for determining when significant changes occur in time series data. Here we use the <code>changepoint</code> package and the <code>cpt.mean</code> function to detect the significant changes in the mean. The authors use <em>binnary segmentation</em> and limit the number of detectable change points to be equal to the number of phase changes (2), and I apply the same methods here. We then plot those changes with horizontal dashed lines that represent the mean values for each detected significant state. I also include the default changepoint plot here for comparison.</p>
-<p>Unsurpisingly, we don’t see any agreement with the observed changepoints as determined by the analysis and the phase changes. This is due to the arbritrary definition of our phases here, but that is not to say this changepoint method is without merit. With a “real” obsered baseline/invtervention one could use this simple analtyical technique and quick visualization to see if changes in intervention(s) actually makes a significant difference in the outcome.</p>
+<p>Unsurprisingly, we don’t see any agreement with the observed changepoints as determined by the analysis and the phase changes. This is due to the arbitrary definition of our phases here, but that is not to say this changepoint method is without merit. With a “real” observed baseline/intervention one could use this simple analytical technique and quick visualization to see if changes in intervention(s) actually makes a significant difference in the outcome.</p>
 <p>I’ll also noted, that one of the more interesting uses of changepoint detection is to run this analysis “live” on data as it is created, thus being able to have a more automated way to understand significant changes in outcomes as you’re measuring them. Something that may be useful for just-in-time interventions or more personalized measurement studies. I found <a href="https://blog.twitter.com/engineering/en_us/a/2014/breakout-detection-in-the-wild.html">this blog post from the Twitter engineering group</a> to be very helpful when I was wrapping my head around this methodology.</p>
 <pre class="r"><code>#install.packages(&quot;changepoint&quot;)
 library(changepoint)
@@ -607,7 +607,7 @@ changepoint_plot</code></pre>
 </div>
 <div id="wrapping-up" class="section level2">
 <h2>Wrapping Up</h2>
-<p>Well, that was fun! I know I learned a lot more about using ggplot, and some anaytical methods, that can be used for examining time series data. I’m lucky to have <em>a lot</em> of time series data at my disposal to play around with these visualization methods and I hope this can be useful for you as well.</p>
+<p>Well, that was fun! I know I learned a lot more about using ggplot, and some analytic methods, that can be used for examining time series data. I’m lucky to have <em>a lot</em> of time series data at my disposal to play around with these visualization methods and I hope this can be useful for you as well.</p>
 <p>More broadly, I hope this this just another gentle push for our research community to share more code and examples alongside their published work. Sharing is caring folks!</p>
 <p>As always, comments and edits are welcome. Feel free to submit a pull request or issue on Github, or just <a href="http://www.twitter.com/eramriez">ping me on twitter</a>.</p>
 </div>

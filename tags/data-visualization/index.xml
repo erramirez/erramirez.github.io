@@ -76,7 +76,7 @@ Daily_Steps &amp;lt;- Daily_Steps %&amp;gt;%
 &lt;div id=&#34;daily-steps&#34; class=&#34;section level3&#34;&gt;
 &lt;h3&gt;1. Daily Steps&lt;/h3&gt;
 &lt;p&gt;Pretty simple here, let’s just visualize the daily steps taken with days along the &lt;em&gt;x&lt;/em&gt;-axis and total steps on the &lt;em&gt;y&lt;/em&gt;.&lt;/p&gt;
-&lt;p&gt;In this plot, and the plots that follow I attempted to use similar formatting to what was presented in the article. They’re pretty minimal so I went with &lt;code&gt;theme_tufte&lt;/code&gt; from the excellent &lt;a href=&#34;https://github.com/jrnold/ggthemes&#34;&gt;ggthemes package&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;In this plot, and the plots that follow I attempted to use similar formatting to what was presented in the article. They’re pretty minimal so I went with &lt;code&gt;theme_bw&lt;/code&gt; and then made a few adjustments. Originally, I used &lt;code&gt;theme_tufte&lt;/code&gt; from the excellent &lt;a href=&#34;https://github.com/jrnold/ggthemes&#34;&gt;ggthemes package&lt;/a&gt;, but found it’s handling of axis lines a bit restrictive.&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# generate a line+points plot to show one year of daily step data
 # add some formatting to match journal article 
 
@@ -210,7 +210,7 @@ for (i in 1:53) { #set length of function to 1:number of weeks in the data set
 # get rid of trailing NA entries from week 53
 Daily_Steps_7DayWeek &amp;lt;- bind_rows(Daily_Steps_list) %&amp;gt;% 
   filter(ActivityDay &amp;lt;= &amp;quot;2017-05-11&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;So now, we have two data sets that reflect two different ways to explore weeks in our data. Now comes the fun part - visualizing it! I personally like calendar weeks (isoweek / method one above), as they make conceptual sense when we’re talking about dates so I’ll use that data as the basis for creating the plots. First, we have to create the summarized data set so we have the daily mean, median and standard deviation per week. We do have to keep in mind here that not all weeks will have seven days as obervations may have started/ended in the middle of a week (in this data week 1 only has 4 days).&lt;/p&gt;
+&lt;p&gt;So now, we have two data sets that reflect two different ways to explore weeks in our data. Now comes the fun part - visualizing it! I personally like calendar weeks (isoweek / method one above), as they make conceptual sense when we’re talking about dates so I’ll use that data as the basis for creating the plots. First, we have to create the summarized data set so we have the daily mean, median and standard deviation per week. We do have to keep in mind here that not all weeks will have seven days as observations may have started/ended in the middle of a week (in this data week 1 only has 4 days).&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# summarize data by week number
 # append observation variable to summarized weekly data
 # Baseline = Weeks 1-5
@@ -311,7 +311,7 @@ Weekly_Cumulative&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;div id=&#34;proportion-of-baseline-mean-and-proportion-of-baseline-median&#34; class=&#34;section level3&#34;&gt;
 &lt;h3&gt;5. Proportion of Baseline Mean and Proportion of Baseline Median&lt;/h3&gt;
-&lt;p&gt;In these visualizations we want to see how daily steps compared to the the mean and median of the baseline value. First we create a small data setbased on our previously created &lt;code&gt;observation_data&lt;/code&gt; (see Phase Mean/Median above) that contains our baseline mean and median value, and then create our proportion data sets. After that straightforward process it’s relatively simple to generate the plots using much of the same code we’ve used previously. We also use the “end” of the baseline phase (in number of days) to create a new “days” variable so that the Intervention 1 phase starts at “day 1”.&lt;/p&gt;
+&lt;p&gt;In these visualizations we want to see how daily steps compared to the the mean and median of the baseline value. First we create a small data set based on our previously created &lt;code&gt;observation_data&lt;/code&gt; (see Phase Mean/Median above) that contains our baseline mean and median value, and then create our proportion data sets. After that straightforward process it’s relatively simple to generate the plots using much of the same code we’ve used previously. We also use the “end” of the baseline phase (in number of days) to create a new “days” variable so that the Intervention 1 phase starts at “day 1”.&lt;/p&gt;
 &lt;p&gt;&lt;em&gt;Note&lt;/em&gt;. I had some trouble figuring out how to properly apply a logarithmic scale to the y-axis, but a quick trip in to Stack Overflow helped me find &lt;code&gt;scale_y_log10&lt;/code&gt; and use it here.&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# create a dataframe of just data from the &amp;quot;baseline&amp;quot; phase
 baseline_values &amp;lt;- observation_data %&amp;gt;% 
@@ -463,7 +463,7 @@ Intervention2_28 &amp;lt;- Daily_Steps %&amp;gt;%
 SMA_Data &amp;lt;- bind_rows(Baseline_28, Intervention1_28, Intervention2_28)
 write_csv(SMA_Data, &amp;quot;~/Downloads/SMA_Data.csv&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;After copying the “last 28” days data into the SMA application and setting the number of iterations to 20,000, the resulting output is saved as a .txt file. You can access that &lt;a href=&#34;https://github.com/erramirez/datascience/blob/master/sevenways/SMA_Data_Output.txt&#34;&gt;output here&lt;/a&gt;.&lt;/p&gt;
-&lt;p&gt;We can then take those 95% CI values from the oputput for each phase and add them to the observation_date data set we created for the phase means/medians plots. Then we append those values to the full Daily_Steps data set and plot it!&lt;/p&gt;
+&lt;p&gt;We can then take those 95% CI values from the output for each phase and add them to the observation_date data set we created for the phase means/medians plots. Then we append those values to the full Daily_Steps data set and plot it!&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# add 95% CI values as lowe/upper CI variables
 observation_data$lowerCI &amp;lt;- c(7211.57, 11247.89, 12070.50)
 observation_data$upperCI &amp;lt;- c(9480.32, 14303.11, 15935.50)
@@ -501,7 +501,7 @@ CI_plot&lt;/code&gt;&lt;/pre&gt;
 &lt;div id=&#34;change-point-detection&#34; class=&#34;section level3&#34;&gt;
 &lt;h3&gt;8. Change-point Detection&lt;/h3&gt;
 &lt;p&gt;Change-point detection is a very interesting method for determining when significant changes occur in time series data. Here we use the &lt;code&gt;changepoint&lt;/code&gt; package and the &lt;code&gt;cpt.mean&lt;/code&gt; function to detect the significant changes in the mean. The authors use &lt;em&gt;binnary segmentation&lt;/em&gt; and limit the number of detectable change points to be equal to the number of phase changes (2), and I apply the same methods here. We then plot those changes with horizontal dashed lines that represent the mean values for each detected significant state. I also include the default changepoint plot here for comparison.&lt;/p&gt;
-&lt;p&gt;Unsurpisingly, we don’t see any agreement with the observed changepoints as determined by the analysis and the phase changes. This is due to the arbritrary definition of our phases here, but that is not to say this changepoint method is without merit. With a “real” obsered baseline/invtervention one could use this simple analtyical technique and quick visualization to see if changes in intervention(s) actually makes a significant difference in the outcome.&lt;/p&gt;
+&lt;p&gt;Unsurprisingly, we don’t see any agreement with the observed changepoints as determined by the analysis and the phase changes. This is due to the arbitrary definition of our phases here, but that is not to say this changepoint method is without merit. With a “real” observed baseline/intervention one could use this simple analytical technique and quick visualization to see if changes in intervention(s) actually makes a significant difference in the outcome.&lt;/p&gt;
 &lt;p&gt;I’ll also noted, that one of the more interesting uses of changepoint detection is to run this analysis “live” on data as it is created, thus being able to have a more automated way to understand significant changes in outcomes as you’re measuring them. Something that may be useful for just-in-time interventions or more personalized measurement studies. I found &lt;a href=&#34;https://blog.twitter.com/engineering/en_us/a/2014/breakout-detection-in-the-wild.html&#34;&gt;this blog post from the Twitter engineering group&lt;/a&gt; to be very helpful when I was wrapping my head around this methodology.&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;#install.packages(&amp;quot;changepoint&amp;quot;)
 library(changepoint)
@@ -574,7 +574,7 @@ changepoint_plot&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;div id=&#34;wrapping-up&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Wrapping Up&lt;/h2&gt;
-&lt;p&gt;Well, that was fun! I know I learned a lot more about using ggplot, and some anaytical methods, that can be used for examining time series data. I’m lucky to have &lt;em&gt;a lot&lt;/em&gt; of time series data at my disposal to play around with these visualization methods and I hope this can be useful for you as well.&lt;/p&gt;
+&lt;p&gt;Well, that was fun! I know I learned a lot more about using ggplot, and some analytic methods, that can be used for examining time series data. I’m lucky to have &lt;em&gt;a lot&lt;/em&gt; of time series data at my disposal to play around with these visualization methods and I hope this can be useful for you as well.&lt;/p&gt;
 &lt;p&gt;More broadly, I hope this this just another gentle push for our research community to share more code and examples alongside their published work. Sharing is caring folks!&lt;/p&gt;
 &lt;p&gt;As always, comments and edits are welcome. Feel free to submit a pull request or issue on Github, or just &lt;a href=&#34;http://www.twitter.com/eramriez&#34;&gt;ping me on twitter&lt;/a&gt;.&lt;/p&gt;
 &lt;/div&gt;
@@ -587,28 +587,17 @@ changepoint_plot&lt;/code&gt;&lt;/pre&gt;
       <pubDate>Sat, 04 Jun 2016 00:00:00 +0000</pubDate>
       
       <guid>/post/2016/06/04/how-much-fun-is-maximum-fun/</guid>
-      <description>
-
-&lt;h2 id=&#34;intro&#34;&gt;Intro&lt;/h2&gt;
-
-&lt;p&gt;I&amp;rsquo;m a big consumer of podcasts. Ever since I started living on my own while in graduate school I&amp;rsquo;ve found that having funny and interesting people in my ears helps me get through the day. Even now that I&amp;rsquo;m cohabiting with my wife I haven&amp;rsquo;t left my trusty podcasts behind. They&amp;rsquo;re great for the long commutes back and forth to San Diego, for reducing my stress while stuck in LA traffic, and for making my laugh while I cook, clean, and exercise.&lt;/p&gt;
-
-&lt;p&gt;I&amp;rsquo;m a fan and donor (support the things you love!) of one podcast network in particular, &lt;a href=&#34;http://www.maximumfun.org&#34;&gt;Maximum Fun&lt;/a&gt;, so much so that I&amp;rsquo;m a semi-regular participant in their Facebook group and subreddit. Recently, someone in the Facebook group asked for some data about the network, in particular the number of shows that have been published, in order to visualize the growth of the network. As someone who&amp;rsquo;s keen to keep my data analysis skills fresh and nimble I took this as an opportunity to dive back into R. Here&amp;rsquo;s what I&amp;rsquo;ve done so far:&lt;/p&gt;
-
-&lt;h2 id=&#34;gathering-data-from-an-rss-feed&#34;&gt;Gathering Data from an RSS Feed&lt;/h2&gt;
-
-&lt;p&gt;Podcasts are unique in that they&amp;rsquo;re basically just a simple feed of audio files. That feed has data embedded into it that we can access and save. I&amp;rsquo;m pretty new to web-scrapping, but I was able to find a really nice example of &lt;a href=&#34;https://gist.github.com/izahn/5785265&#34;&gt;how to scrape an RSS feed in R here&lt;/a&gt;. I adapted that to scrape and save data from each of the podcasts in the Maximum Fun network. Here&amp;rsquo;s an example:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;library(RCurl)
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;pre&gt;&lt;code&gt;## Loading required package: methods
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;pre&gt;&lt;code&gt;## Loading required package: bitops
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;library(XML)
+      <description>&lt;div id=&#34;intro&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Intro&lt;/h2&gt;
+&lt;p&gt;I’m a big consumer of podcasts. Ever since I started living on my own while in graduate school I’ve found that having funny and interesting people in my ears helps me get through the day. Even now that I’m cohabiting with my wife I haven’t left my trusty podcasts behind. They’re great for the long commutes back and forth to San Diego, for reducing my stress while stuck in LA traffic, and for making my laugh while I cook, clean, and exercise.&lt;/p&gt;
+&lt;p&gt;I’m a fan and donor (support the things you love!) of one podcast network in particular, &lt;a href=&#34;http://www.maximumfun.org&#34;&gt;Maximum Fun&lt;/a&gt;, so much so that I’m a semi-regular participant in their Facebook group and subreddit. Recently, someone in the Facebook group asked for some data about the network, in particular the number of shows that have been published, in order to visualize the growth of the network. As someone who’s keen to keep my data analysis skills fresh and nimble I took this as an opportunity to dive back into R. Here’s what I’ve done so far:&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;gathering-data-from-an-rss-feed&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Gathering Data from an RSS Feed&lt;/h2&gt;
+&lt;p&gt;Podcasts are unique in that they’re basically just a simple feed of audio files. That feed has data embedded into it that we can access and save. I’m pretty new to web-scrapping, but I was able to find a really nice example of &lt;a href=&#34;https://gist.github.com/izahn/5785265&#34;&gt;how to scrape an RSS feed in R here&lt;/a&gt;. I adapted that to scrape and save data from each of the podcasts in the Maximum Fun network. Here’s an example:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(RCurl)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## Loading required package: bitops&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(XML)
 
 options(stringsAsFactors = FALSE)
 
@@ -621,109 +610,87 @@ doc &amp;lt;- xmlParse(script)
 ## find the names of the item nodes
 
 ## Extract some information from each node in the rss feed
-titles &amp;lt;- xpathSApply(doc,&#39;//item/title&#39;,xmlValue)
-date &amp;lt;- xpathSApply(doc,&#39;//item/pubDate&#39;,xmlValue)
-duration &amp;lt;- xpathSApply(doc,&#39;//item/itunes:duration&#39;,xmlValue)
+titles &amp;lt;- xpathSApply(doc,&amp;#39;//item/title&amp;#39;,xmlValue)
+date &amp;lt;- xpathSApply(doc,&amp;#39;//item/pubDate&amp;#39;,xmlValue)
+duration &amp;lt;- xpathSApply(doc,&amp;#39;//item/itunes:duration&amp;#39;,xmlValue)
 
 # create data frame with important variables
 Adventurezone &amp;lt;- data.frame(titles, date, duration)
 
 # create unique identifier
-Adventurezone$id &amp;lt;- &amp;quot;The Adventure Zone&amp;quot;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;I probably could have created a function to run through all the shows, but instead I used that chunk for every show. It was actually useful as a few of the shows had missing episodes or titles and durations that didn&amp;rsquo;t match up.&lt;/p&gt;
-
-&lt;p&gt;Once I had all the data scrapped from the feeds I was able to combine it into one dataset of 4,202 episodes from 25 different shows. The date/duration variables were pretty messy so I noodled around a bit and cleaned them up into something manageable. I&amp;rsquo;ve saved that final data in &lt;a href=&#34;https://dl.dropboxusercontent.com/u/2513399/MaximumFun.rdata&#34;&gt;Rdata&lt;/a&gt; and &lt;a href=&#34;https://dl.dropboxusercontent.com/u/2513399/MaximumFun.csv&#34;&gt;.csv&lt;/a&gt; formats if you want to play with them yourself. I&amp;rsquo;m loading the RData file here:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;load(url(&amp;quot;https://dl.dropboxusercontent.com/u/2513399/MaximumFun.rdata&amp;quot;))
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h2 id=&#34;visualizations&#34;&gt;Visualizations&lt;/h2&gt;
-
-&lt;p&gt;Once we have all the data in a good format creating visualizations is actually pretty easy! Let&amp;rsquo;s start with a simple bar chart that plots the number of shows per month:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;library(ggplot2)
+Adventurezone$id &amp;lt;- &amp;quot;The Adventure Zone&amp;quot;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;I probably could have created a function to run through all the shows, but instead I used that chunk for every show. It was actually useful as a few of the shows had missing episodes or titles and durations that didn’t match up.&lt;/p&gt;
+&lt;p&gt;Once I had all the data scrapped from the feeds I was able to combine it into one dataset of 4,202 episodes from 25 different shows. The date/duration variables were pretty messy so I noodled around a bit and cleaned them up into something manageable. I’ve saved that final data in &lt;a href=&#34;https://dl.dropboxusercontent.com/u/2513399/MaximumFun.rdata&#34;&gt;Rdata&lt;/a&gt; and &lt;a href=&#34;https://dl.dropboxusercontent.com/u/2513399/MaximumFun.csv&#34;&gt;.csv&lt;/a&gt; formats if you want to play with them yourself. I’m loading the RData file here:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;load(url(&amp;quot;https://www.dropbox.com/s/5l94kzc54s177uh/MaximumFun.rdata?dl=1&amp;quot;))&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;visualizations&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Visualizations&lt;/h2&gt;
+&lt;p&gt;Once we have all the data in a good format creating visualizations is actually pretty easy! Let’s start with a simple bar chart that plots the number of shows per month:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(ggplot2)
 library(scales)
 # simple bar chart with sum of number of shows per month
 mf.stacked.bar &amp;lt;- ggplot(MaximumFun, aes(monthyear)) + geom_bar() +
   labs(title = &amp;quot;Number of Shows on Maximum Fun per Month&amp;quot;, x = &amp;quot;Year - Month&amp;quot;, y = &amp;quot;Number of Shows Published&amp;quot;) +
   theme(axis.text.x = element_text(angle = 90, hjust = 1, size = 6))
-mf.stacked.bar
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;&lt;img src=&#34;/figure/source/2016-06-04-how-much-fun-is-maximum-fun/unnamed-chunk-3-1.png&#34; alt=&#34;plot of chunk unnamed-chunk-3&#34; /&gt;&lt;/p&gt;
-
-&lt;p&gt;That&amp;rsquo;s not bad, but what if we wanted to know which shows were on the network over time? We can use the &amp;ldquo;id&amp;rdquo; variable we created in the initial data scrapping process to label each show. This visualization needs a better color palette to better differentiate between each show, but I&amp;rsquo;ll leave it here for now:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;library(ggplot2)
+mf.stacked.bar&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;/post/2016-06-04-how-much-fun-is-maximum-fun_files/figure-html/barchart-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;That’s not bad, but what if we wanted to know which shows were on the network over time? We can use the “id” variable we created in the initial data scrapping process to label each show. This visualization needs a better color palette to better differentiate between each show, but I’ll leave it here for now:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(ggplot2)
 library(scales)
 # add in color to represent the shows
 # needs a better color palette
 mf.stacked.bar2 &amp;lt;- ggplot(MaximumFun, aes(monthyear, fill = id)) + geom_bar() +
   labs(title = &amp;quot;Number of Shows on Maximum Fun per Month&amp;quot;, x = &amp;quot;Year - Month&amp;quot;, y = &amp;quot;Number of Shows Published&amp;quot;) +
   theme(axis.text.x = element_text(angle = 90, hjust = 1, size = 6), legend.position=&amp;quot;bottom&amp;quot;)
-mf.stacked.bar2
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;&lt;img src=&#34;/figure/source/2016-06-04-how-much-fun-is-maximum-fun/unnamed-chunk-4-1.png&#34; alt=&#34;plot of chunk unnamed-chunk-4&#34; /&gt;&lt;/p&gt;
-
-&lt;p&gt;What can we find out about each show? Let&amp;rsquo;s start with visualizing the total number of hours each podcast has published:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;library(ggplot2)
+mf.stacked.bar2&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;/post/2016-06-04-how-much-fun-is-maximum-fun_files/figure-html/barchart_shows-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;What can we find out about each show? Let’s start with visualizing the total number of hours each podcast has published:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(ggplot2)
 library(scales)
 mf.stacked.bar4 &amp;lt;- ggplot(MaximumFun, aes(id, (showlength/60))) + geom_bar(stat=&amp;quot;identity&amp;quot;) +
   labs(title = &amp;quot;Total Duration of Each Show on Maximum Fun&amp;quot;, x = &amp;quot;Show&amp;quot;, y = &amp;quot;Total Number of Hours&amp;quot;) +
   theme(axis.text.x = element_text(angle = 90, hjust = 1))
-mf.stacked.bar4
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;&lt;img src=&#34;/figure/source/2016-06-04-how-much-fun-is-maximum-fun/unnamed-chunk-5-1.png&#34; alt=&#34;plot of chunk unnamed-chunk-5&#34; /&gt;&lt;/p&gt;
-
+mf.stacked.bar4&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## Warning: Removed 32 rows containing missing values (position_stack).&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;/post/2016-06-04-how-much-fun-is-maximum-fun_files/figure-html/show_hours-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;How about the number of episodes per show?&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;# simple bar chart for total number of episodes per show
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# simple bar chart for total number of episodes per show
 mf.stacked.bar5 &amp;lt;- ggplot(MaximumFun, aes(id)) + geom_bar() +
   labs(title = &amp;quot;Number of Episode of each Show on Maximum Fun&amp;quot;, x = &amp;quot;Show&amp;quot;, y = &amp;quot;Total Number of Episodes&amp;quot;) +
   theme(axis.text.x = element_text(angle = 90, hjust = 1))
-mf.stacked.bar5
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;&lt;img src=&#34;/figure/source/2016-06-04-how-much-fun-is-maximum-fun/unnamed-chunk-6-1.png&#34; alt=&#34;plot of chunk unnamed-chunk-6&#34; /&gt;&lt;/p&gt;
-
+mf.stacked.bar5&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;/post/2016-06-04-how-much-fun-is-maximum-fun_files/figure-html/show_episodes-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;I also got around to reformatting the data so that we could look at the number of shows and amount of content produced by Maximum Fun over time. To do that we first have to create a new dataset that aggregates some of the information:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;library(plyr)
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(plyr)
 # number of shows on the network over time
 MaxFunShows &amp;lt;- ddply(MaximumFun, c(&amp;quot;monthyear&amp;quot;), summarise,
-                           &#39;NumberofShows&#39; = length(unique(id)),
-                           &#39;DurationofShows&#39; = sum(showlength, na.rm=TRUE)
-)
-&lt;/code&gt;&lt;/pre&gt;
-
+                           &amp;#39;NumberofShows&amp;#39; = length(unique(id)),
+                           &amp;#39;DurationofShows&amp;#39; = sum(showlength, na.rm=TRUE)
+)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## Loading required package: lubridate&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## 
+## Attaching package: &amp;#39;lubridate&amp;#39;&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## The following object is masked from &amp;#39;package:plyr&amp;#39;:
+## 
+##     here&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## The following object is masked from &amp;#39;package:base&amp;#39;:
+## 
+##     date&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Then we can make plots just like the ones we have above!&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;mf.stacked.bar5 &amp;lt;- ggplot(MaxFunShows, aes(monthyear, NumberofShows)) + geom_bar(stat=&amp;quot;identity&amp;quot;) +
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;mf.stacked.bar5 &amp;lt;- ggplot(MaxFunShows, aes(monthyear, NumberofShows)) + geom_bar(stat=&amp;quot;identity&amp;quot;) +
   labs(title = &amp;quot;Number of Shows on Maximum Fun over time&amp;quot;, x = &amp;quot;Date&amp;quot;, y = &amp;quot;Number of Shows on the Network&amp;quot;) +
   theme(axis.text.x = element_text(angle = 90, hjust = 1, size = 6))
-mf.stacked.bar5
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;&lt;img src=&#34;/figure/source/2016-06-04-how-much-fun-is-maximum-fun/unnamed-chunk-8-1.png&#34; alt=&#34;plot of chunk unnamed-chunk-8&#34; /&gt;&lt;/p&gt;
-
+mf.stacked.bar5&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;/post/2016-06-04-how-much-fun-is-maximum-fun_files/figure-html/barchart_number_shows-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;What about the amount of content over time?&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;mf.stacked.bar5 &amp;lt;- ggplot(MaxFunShows, aes(monthyear, (DurationofShows/60))) + geom_bar(stat=&amp;quot;identity&amp;quot;) +
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;mf.stacked.bar5 &amp;lt;- ggplot(MaxFunShows, aes(monthyear, (DurationofShows/60))) + geom_bar(stat=&amp;quot;identity&amp;quot;) +
   labs(title = &amp;quot;Amount of Content Produced (in hours) by Maximum Fun over time&amp;quot;, x = &amp;quot;Date&amp;quot;, y = &amp;quot;Hours&amp;quot;) +
   theme(axis.text.x = element_text(angle = 90, hjust = 1, size = 6))
-mf.stacked.bar5
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;&lt;img src=&#34;/figure/source/2016-06-04-how-much-fun-is-maximum-fun/unnamed-chunk-9-1.png&#34; alt=&#34;plot of chunk unnamed-chunk-9&#34; /&gt;&lt;/p&gt;
-
-&lt;p&gt;Unfortunately, this doesn&amp;rsquo;t include some of the great shows that have moved on to be either independtly operated or part of another network, but it&amp;rsquo;s still a pretty good approximation of the growth over time.&lt;/p&gt;
-
-&lt;p&gt;I&amp;rsquo;ll probably keep noodling around with this data. Probably a lot more I can do with visualizing particular shows and the network as a whole. If you have ideas &lt;a href=&#34;http://twitter.com/eramirez&#34;&gt;get in touch&lt;/a&gt;!&lt;/p&gt;
+mf.stacked.bar5&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;/post/2016-06-04-how-much-fun-is-maximum-fun_files/figure-html/barchart_networkhours-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;Unfortunately, this doesn’t include some of the great shows that have moved on to be either independtly operated or part of another network, but it’s still a pretty good approximation of the growth over time.&lt;/p&gt;
+&lt;p&gt;I’ll probably keep noodling around with this data. Probably a lot more I can do with visualizing particular shows and the network as a whole. If you have ideas &lt;a href=&#34;http://twitter.com/eramirez&#34;&gt;get in touch&lt;/a&gt;!&lt;/p&gt;
+&lt;/div&gt;
 </description>
     </item>
     
@@ -733,177 +700,127 @@ mf.stacked.bar5
       <pubDate>Mon, 25 Jan 2016 00:00:00 +0000</pubDate>
       
       <guid>/post/2016/01/25/visualizing-time-series-data/</guid>
-      <description>
-
-&lt;p&gt;When working with human behavior you&amp;rsquo;ll almost always have to deal with data that is formatted as a time series. Briefly, time series data corresponds with repeated measures of a variable (or multiple variables) at consistent intervals over a period.&lt;/p&gt;
-
-&lt;p&gt;At the Center for Wireless and Population Health Systems, we&amp;rsquo;re consistently dealing with physical activity data collected from accelerometers worn by study participants. These measurement devices sample human locomotion at various rates over periods lasting days, weeks, or even longer. There are a variety of methods to process and analyze accelerometer data, but we know any good statistician will use a variety of visualization techniques so become familiar with the data and understand it better. This document is meant to be an introduction to different methods for visualizing time series data. By no means does it cover &lt;em&gt;every&lt;/em&gt; method, but it should get you started and give you some ideas for additional techniques.&lt;/p&gt;
-
-&lt;h2 id=&#34;the-data&#34;&gt;The Data&lt;/h2&gt;
-
-&lt;p&gt;The data used in these examples was collected as part of my doctoral dissertation research. The physical activity data was gathered from participants who used a Fitbit activity tracker to measure their physical activity. Access to historical data was granted by participants and downloaded using &lt;a href=&#34;http://fitabase.com&#34;&gt;Fitabase&lt;/a&gt;. A variety of data was made available, but for this example we&amp;rsquo;ll be focusing on steps.&lt;/p&gt;
-
-&lt;p&gt;As my dissertation analysis is ongoing, I&amp;rsquo;m using my own Fitbit data here for this example.&lt;/p&gt;
-
-&lt;h2 id=&#34;step-data&#34;&gt;Step Data&lt;/h2&gt;
-
+      <description>&lt;div id=&#34;introduction&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Introduction&lt;/h1&gt;
+&lt;p&gt;When working with human behavior you’ll almost always have to deal with data that is formatted as a time series. Briefly, time series data corresponds with repeated measures of a variable (or multiple variables) at consistent intervals over a period.&lt;/p&gt;
+&lt;p&gt;At the Center for Wireless and Population Health Systems, we’re consistently dealing with physical activity data collected from accelerometers worn by study participants. These measurement devices sample human locomotion at various rates over periods lasting days, weeks, or even longer. There are a variety of methods to process and analyze accelerometer data, but we know any good statistician will use a variety of visualization techniques so become familiar with the data and understand it better. This document is meant to be an introduction to different methods for visualizing time series data. By no means does it cover &lt;em&gt;every&lt;/em&gt; method, but it should get you started and give you some ideas for additional techniques.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;the-data&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;The Data&lt;/h1&gt;
+&lt;p&gt;The data used in this example was collected as part of my doctoral dissertation research. The physical activity data was gathered from participants who used a Fitbit activity tracker to measure their physical activity. Access to historical data was granted by participants and downloaded using &lt;a href=&#34;http://fitabase.com&#34;&gt;Fitabase&lt;/a&gt;. A variety of data was made available, but for this example we’ll be focusing on steps.&lt;/p&gt;
+&lt;p&gt;As my dissertation analysis is ongoing, I’m using my own Fitbit data here for this example.&lt;/p&gt;
+&lt;div id=&#34;step-data&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Step Data&lt;/h2&gt;
 &lt;p&gt;I downloaded my step data over a two-year period from Jan. 1, 2012 to Jan. 1, 2014. Two data files will be used in this analysis (click to download the data sets):&lt;/p&gt;
-
-&lt;ol&gt;
-&lt;li&gt;&lt;a href=&#34;https://dl.dropboxusercontent.com/u/2513399/ER_FitbitDailySteps_2012.csv&#34;&gt;Daily Steps&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://dl.dropboxusercontent.com/u/2513399/ER_FitbitMinuteSteps_2012.csv&#34;&gt;Minute-Level Steps&lt;/a&gt;&lt;/li&gt;
+&lt;ol style=&#34;list-style-type: decimal&#34;&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.dropbox.com/s/n4a398int2ffig9/ER_FitbitDailySteps_2012.csv?d1=1&#34;&gt;Daily Steps&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.dropbox.com/s/csmddz7o6sfny52/ER_FitbitMinuteSteps_2012.csv?dl=1&#34;&gt;Minute-Level Steps&lt;/a&gt;&lt;/li&gt;
 &lt;/ol&gt;
-
 &lt;p&gt;The &lt;strong&gt;Daily Steps&lt;/strong&gt; file contains 366 observations of the total amount of steps recorded for each day in 2012 (2012 was a leap year). The &lt;strong&gt;Minute-Level Steps&lt;/strong&gt; file contains 527,040 observations (1,440 minutes per hour, 24 hours, 366 days) of the total steps recorded per minute for 2012.&lt;/p&gt;
-
-&lt;p&gt;Let&amp;rsquo;s load &amp;lsquo;em up.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;DailySteps &amp;lt;- read.csv(&amp;quot;https://dl.dropboxusercontent.com/u/2513399/ER_FitbitDailySteps_2012.csv&amp;quot;)
-MinuteSteps &amp;lt;- read.csv(&amp;quot;https://dl.dropboxusercontent.com/u/2513399/ER_FitbitMinuteSteps_2012.csv&amp;quot;)
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h2 id=&#34;cleaning-the-data&#34;&gt;Cleaning the data&lt;/h2&gt;
-
-&lt;p&gt;So the data is loaded and a quick glance indicates that the date and date/time vectors were imported as &lt;em&gt;factors&lt;/em&gt;. That&amp;rsquo;s all well and good for most things, but we&amp;rsquo;re going to want dates as dates and times as times for visualization purposes. Let&amp;rsquo;s get those corrected. I like using the &lt;a href=&#34;https://cran.r-project.org/web/packages/lubridate/index.html&#34;&gt;lubridate package&lt;/a&gt; as it handles dates and times very easily. The &lt;em&gt;ActivityDay&lt;/em&gt; vector is in mm/dd/yyyy format so we can use the &lt;em&gt;mdy&lt;/em&gt; function from lubridate to change it into a POSIXct variable.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;library(lubridate)
+&lt;p&gt;Let’s load ’em up.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;DailySteps &amp;lt;- read.csv(&amp;quot;https://www.dropbox.com/s/n4a398int2ffig9/ER_FitbitDailySteps_2012.csv?dl=1&amp;quot;)
+MinuteSteps &amp;lt;- read.csv(&amp;quot;https://www.dropbox.com/s/csmddz7o6sfny52/ER_FitbitMinuteSteps_2012.csv?dl=1&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;cleaning-the-data&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Cleaning the data&lt;/h1&gt;
+&lt;p&gt;So the data is loaded and a quick glance indicates that the date and date/time vectors were imported as &lt;em&gt;factors&lt;/em&gt;. That’s all well and good for most things, but we’re going to want dates as dates and times as times for visualization purposes. Let’s get those corrected. I like using the &lt;a href=&#34;https://cran.r-project.org/web/packages/lubridate/index.html&#34;&gt;lubridate package&lt;/a&gt; as it handles dates and times very easily. The &lt;em&gt;ActivityDay&lt;/em&gt; vector is in mm/dd/yyyy format so we can use the &lt;em&gt;mdy&lt;/em&gt; function from lubridate to change it into a POSIXct variable.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(lubridate)
 DailySteps$Date &amp;lt;- mdy(DailySteps$ActivityDay)
-DailySteps$Date &amp;lt;- as.Date(DailySteps$Date)
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;The minute-level data is a bit trickier. The &lt;em&gt;ActivityMinute&lt;/em&gt; vector is formatted for date/time in mm/dd/yyyy hh:mm:ss AM/PM. This isn&amp;rsquo;t super useful for instance, when we want to plot the minute-by-minute steps for a full day of data. So let&amp;rsquo;s do some reformatting to clean it up.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;MinuteSteps$ActivityMinute &amp;lt;- mdy_hms(as.character(MinuteSteps$ActivityMinute))
+DailySteps$Date &amp;lt;- as.Date(DailySteps$Date)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The minute-level data is a bit trickier. The &lt;em&gt;ActivityMinute&lt;/em&gt; vector is formatted for date/time in mm/dd/yyyy hh:mm:ss AM/PM. This isn’t super useful for instance, when we want to plot the minute-by-minute steps for a full day of data. So let’s do some reformatting to clean it up.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;MinuteSteps$ActivityMinute &amp;lt;- mdy_hms(as.character(MinuteSteps$ActivityMinute)) 
 MinuteSteps$Date &amp;lt;- as.Date(MinuteSteps$ActivityMinute, format = &amp;quot;%Y-%m-%d  %H:%M:%S&amp;quot;)
 MinuteSteps$Time &amp;lt;- format(as.POSIXct(strptime(MinuteSteps$ActivityMinute, &amp;quot;%Y-%m-%d  %H:%M:%S&amp;quot;,tz=&amp;quot;&amp;quot;)) ,format = &amp;quot;%H:%M&amp;quot;)
-MinuteSteps$Time &amp;lt;- as.POSIXct(MinuteSteps$Time, format = &amp;quot;%H:%M&amp;quot;)
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Why four steps to create two variables? Well, we want to make the date, a date variable, and we also want to strip the time to it&amp;rsquo;s own variable. strptime can do that, but it returns a character vector, which ggplot won&amp;rsquo;t like when use it as a scale. We have to convert that time character vector back into POSIXct and by doing so we assign it an arbitrary date. If you don&amp;rsquo;t assign it in the function then it will automatically assign today&amp;rsquo;s date.&lt;/p&gt;
-
-&lt;p&gt;#Fist Level Visualization - Bars &amp;amp; Lines&lt;/p&gt;
-
-&lt;h2 id=&#34;bar-plots&#34;&gt;Bar Plots&lt;/h2&gt;
-
-&lt;p&gt;I find bar plots a bit easier to read when dealing with aggregated data such as daily step counts. This might be because I envision the volume of the bar to contain the total amount of steps for that day. So let&amp;rsquo;s make a quick bar plot of the Daily Steps.&lt;/p&gt;
-
-&lt;p&gt;Before we begin we&amp;rsquo;ll need to load two packages: &lt;strong&gt;ggplot2&lt;/strong&gt; and &lt;strong&gt;scales&lt;/strong&gt;&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;library(ggplot2)
+MinuteSteps$Time &amp;lt;- as.POSIXct(MinuteSteps$Time, format = &amp;quot;%H:%M&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Why four steps to create two variables? Well, we want to make the date, a date variable, and we also want to strip the time to it’s own variable. strptime can do that, but it returns a character vector, which ggplot won’t like when use it as a scale. We have to convert that time character vector back into POSIXct and by doing so we assign it an arbritrary date. If you don’t asssign it in the function then it will automatically assign today’s date.&lt;/p&gt;
+&lt;div id=&#34;bar-plots&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Bar Plots&lt;/h2&gt;
+&lt;p&gt;I find bar plots a bit easier to read when dealing with aggregated data such as daily step counts. This might be because I envision the volume of the bar to contain the total amount of steps for that day. So let’s make a quick bar plot of the Daily Steps.&lt;/p&gt;
+&lt;p&gt;Before we begin we’ll need to load two packages: &lt;strong&gt;ggplot2&lt;/strong&gt; and &lt;strong&gt;scales&lt;/strong&gt;&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(ggplot2)
 library(scales)
-DailyStepsPlot &amp;lt;- ggplot(DailySteps, aes(x=Date, y=StepTotal)) #This will base plot which we&#39;ll manipulate.
+DailyStepsPlot &amp;lt;- ggplot(DailySteps, aes(x=Date, y=StepTotal)) #This will base plot which we&amp;#39;ll manipulate.
 
-DailyStepsPlot + geom_bar(stat=&amp;quot;identity&amp;quot;) + scale_x_date(breaks=date_breaks(&amp;quot;1 month&amp;quot;))
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;&lt;img src=&#34;/figure/source/VisualizingTimeSeriesData/unnamed-chunk-4-1.png&#34; alt=&#34;plot of chunk unnamed-chunk-4&#34; /&gt;&lt;/p&gt;
-
-&lt;p&gt;##Line Plots
-What about a line plot (with added points)?&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&#34;/figure/source/VisualizingTimeSeriesData/unnamed-chunk-5-1.png&#34; alt=&#34;plot of chunk unnamed-chunk-5&#34; /&gt;&lt;/p&gt;
-
-&lt;h2 id=&#34;multiple-line-plots&#34;&gt;Multiple Line Plots&lt;/h2&gt;
-
-&lt;p&gt;Line plots aren&amp;rsquo;t that great when you have a continuous data set that spans over 500,000 observations. For a data set that large we&amp;rsquo;re typically trying to look into patterns. A good way to do that is to plot the data one level up, such as per day in this case.&lt;/p&gt;
-
-&lt;p&gt;We&amp;rsquo;ll plot each day on the same canvas with each line set to a transparency of alpha = .05. I also cut down the line size so that patterns might be seen in the resulting banding.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;ggplot(MinuteSteps, aes(x=Time, y=Steps, group=Date)) +
-  geom_path(size=.5, alpha = 0.05, colour=&amp;quot;blue&amp;quot;) +
-  scale_x_datetime(breaks=date_breaks(&amp;quot;2 hour&amp;quot;), labels=date_format(&amp;quot;%H:%M&amp;quot;))
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;&lt;img src=&#34;/figure/source/VisualizingTimeSeriesData/unnamed-chunk-6-1.png&#34; alt=&#34;plot of chunk unnamed-chunk-6&#34; /&gt;&lt;/p&gt;
-
+DailyStepsPlot + geom_bar(stat=&amp;quot;identity&amp;quot;) + scale_x_date(breaks=date_breaks(&amp;quot;1 month&amp;quot;))&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;/post/2016-02-23-visualizing-time-series-data_files/figure-html/bar_plot-1.png&#34; width=&#34;960&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;line-plots&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Line Plots&lt;/h2&gt;
+&lt;p&gt;What about a line plot (with added points)?&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;DailyStepsPlot + geom_line(colour=&amp;quot;blue&amp;quot;) + geom_point(colour=&amp;quot;blue4&amp;quot;) + scale_x_date(breaks=date_breaks(&amp;quot;3 month&amp;quot;))&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;/post/2016-02-23-visualizing-time-series-data_files/figure-html/linepoint_plot-1.png&#34; width=&#34;960&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;multiple-line-plots&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Multiple Line Plots&lt;/h2&gt;
+&lt;p&gt;Line plots aren’t that great when you have a continuous data set that spans over 500,000 observations. For a data set that large we’re typically trying to look into patterns. A good way to do that is to plot the data one level up, such as per day in this case.&lt;/p&gt;
+&lt;p&gt;We’ll plot each day on the same canvas with each line set to a transparency of alpha = .05. I also cut down the line size so that patterns might be seen in the resulting banding.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;ggplot(MinuteSteps, aes(x=Time, y=Steps, group=Date)) + 
+  geom_path(size=.5, alpha = 0.05, colour=&amp;quot;blue&amp;quot;) + 
+  scale_x_datetime(breaks=date_breaks(&amp;quot;2 hour&amp;quot;), labels=date_format(&amp;quot;%H:%M&amp;quot;))&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;/post/2016-02-23-visualizing-time-series-data_files/figure-html/multiple_lines-1.png&#34; width=&#34;960&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;You can see some clear banding at 120 steps/min or so and another a bit lower around 75 steps/min. It also appears that there a few days with periods of high activity (&amp;gt;150 steps/min) just past 6PM (18:00). But, could it be clearer?&lt;/p&gt;
-
-&lt;h2 id=&#34;scatterplot&#34;&gt;Scatterplot&lt;/h2&gt;
-
-&lt;p&gt;When using the line graph, multiple lines can obscure the patterns we&amp;rsquo;re trying to tease out by introducing a bit of visual noise. Let&amp;rsquo;s reduce the noise by taking away the lines and using just points in a scatterplot.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;ggplot(MinuteSteps, aes(x=Time, y=Steps, group=Date)) +
-  geom_point(size=.5, alpha = 0.1, colour=&amp;quot;blue&amp;quot;) +
-  scale_x_datetime(breaks=date_breaks(&amp;quot;2 hour&amp;quot;), labels=date_format(&amp;quot;%H:%M&amp;quot;))
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;&lt;img src=&#34;/figure/source/VisualizingTimeSeriesData/unnamed-chunk-7-1.png&#34; alt=&#34;plot of chunk unnamed-chunk-7&#34; /&gt;&lt;/p&gt;
-
-&lt;h2 id=&#34;grouping-data-multiple-lines-facets-wrapping&#34;&gt;Grouping Data (Multiple Lines &amp;amp; Facets Wrapping)&lt;/h2&gt;
-
-&lt;p&gt;So we&amp;rsquo;ve plotted every day, and we&amp;rsquo;ve plotted every minute in our data. We&amp;rsquo;ve teased out a few simple patterns, but what about other distinctions in the data?&lt;/p&gt;
-
-&lt;p&gt;One of the methods common in physical activity data analysis is to explore differences across different days of the week. Are individuals more active on certain days of the week? How about the difference between weekdays and weekend days?&lt;/p&gt;
-
-&lt;p&gt;To be able to create visualizations that help us understand these potential differences we&amp;rsquo;ll have to do a bit of work on the data.&lt;/p&gt;
-
-&lt;p&gt;First, let&amp;rsquo;s create a &lt;em&gt;Day&lt;/em&gt; variable for our Daily data set. Again, we&amp;rsquo;re turning to the &lt;strong&gt;lubridate&lt;/strong&gt; package. Lubridate has function called &lt;strong&gt;&lt;em&gt;wday&lt;/em&gt;&lt;/strong&gt; which will return the day of the week.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;DailySteps$Day &amp;lt;- wday(DailySteps$Date, label = TRUE) # we use labels=true here to return day labels instead of numeric values.
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Let&amp;rsquo;s see if we can plot differences between days:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;ggplot(DailySteps, aes(x=Date, y=StepTotal, group=Day, colour=Day)) + geom_path() + geom_point() + scale_x_date(breaks=date_breaks(&amp;quot;1 month&amp;quot;))
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;&lt;img src=&#34;/figure/source/VisualizingTimeSeriesData/unnamed-chunk-9-1.png&#34; alt=&#34;plot of chunk unnamed-chunk-9&#34; /&gt;&lt;/p&gt;
-
-&lt;p&gt;Well, that&amp;rsquo;s a mess. What if we graph each day individually? We can do this by calling creating multiple facets of the same plot.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;ggplot(DailySteps, aes(x=Date, y=StepTotal, colour=Day)) +
-  geom_path() +
-  geom_point() +
-  scale_x_date(breaks=date_breaks(&amp;quot;1 month&amp;quot;)) +
+&lt;/div&gt;
+&lt;div id=&#34;scatterplot&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Scatterplot&lt;/h2&gt;
+&lt;p&gt;When using the line graph, multiple lines can obscure the patterns we’re trying to tease out by introducing a bit of visual noise. Let’s reduce the noise by taking away the lines and using just points in a scatterplot.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;ggplot(MinuteSteps, aes(x=Time, y=Steps, group=Date)) + 
+  geom_point(size=.5, alpha = 0.1, colour=&amp;quot;blue&amp;quot;) + 
+  scale_x_datetime(breaks=date_breaks(&amp;quot;2 hour&amp;quot;), labels=date_format(&amp;quot;%H:%M&amp;quot;))&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;/post/2016-02-23-visualizing-time-series-data_files/figure-html/scatterplot-1.png&#34; width=&#34;960&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;grouping-daily-data-multiple-lines-facets-wrapping&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Grouping Daily Data (Multiple Lines &amp;amp; Facets Wrapping)&lt;/h2&gt;
+&lt;p&gt;So we’ve plotted every day, and we’ve plotted every minute in our data. We’ve teased out a few simple patterns, but what about other distinctions in the data?&lt;/p&gt;
+&lt;p&gt;One of the methods common in physical activity data analysis is to explore differences across different days of the week. Are individuals more active on certain days of the week? How about the difference between weekdays and weeekend days?&lt;/p&gt;
+&lt;p&gt;To be able to create visualizations that help us understand these potential differences we’ll have to do a bit of work on the data.&lt;/p&gt;
+&lt;p&gt;First, let’s create a &lt;em&gt;Day&lt;/em&gt; variable for our Daily data set. Again, we’re turning to the &lt;strong&gt;lubridate&lt;/strong&gt; package. Lubridate has function called &lt;strong&gt;&lt;em&gt;wday&lt;/em&gt;&lt;/strong&gt; which will return the day of the week.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;DailySteps$Day &amp;lt;- wday(DailySteps$Date, label = TRUE) # we use labels=true here to return day labels instead of numeric values. &lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Let’s see if we can plot differences between days:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;ggplot(DailySteps, aes(x=Date, y=StepTotal, group=Day, colour=Day)) + geom_path() + geom_point() + scale_x_date(breaks=date_breaks(&amp;quot;1 month&amp;quot;))&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;/post/2016-02-23-visualizing-time-series-data_files/figure-html/alldays_lineplot-1.png&#34; width=&#34;960&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;Well, that’s a mess. What if we graph each day individually? We can do this by calling creating multiple facets of the same plot.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;ggplot(DailySteps, aes(x=Date, y=StepTotal, colour=Day)) + 
+  geom_path() + 
+  geom_point() + 
+  scale_x_date(breaks=date_breaks(&amp;quot;1 month&amp;quot;)) + 
   facet_grid(Day ~.) +
-  theme(legend.position=&amp;quot;none&amp;quot;)
-&lt;/code&gt;&lt;/pre&gt;
+  theme(legend.position=&amp;quot;none&amp;quot;) &lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;/post/2016-02-23-visualizing-time-series-data_files/figure-html/alldays_facet-1.png&#34; width=&#34;960&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;That’s a bit better, but I personally think the week starts on Monday, not Sunday. Let’s fix that in our data.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;DailySteps$Day2 &amp;lt;- factor(DailySteps$Day, levels = c(&amp;quot;Mon&amp;quot;, &amp;quot;Tues&amp;quot;, &amp;quot;Wed&amp;quot;, &amp;quot;Thurs&amp;quot;, &amp;quot;Fri&amp;quot;, &amp;quot;Sat&amp;quot;, &amp;quot;Sun&amp;quot;))
 
-&lt;p&gt;&lt;img src=&#34;/figure/source/VisualizingTimeSeriesData/unnamed-chunk-10-1.png&#34; alt=&#34;plot of chunk unnamed-chunk-10&#34; /&gt;&lt;/p&gt;
-
-&lt;p&gt;That&amp;rsquo;s a bit better, but I personally think the week starts on Monday, not Sunday. Let&amp;rsquo;s fix that in our data.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;DailySteps$Day2 &amp;lt;- factor(DailySteps$Day, levels = c(&amp;quot;Mon&amp;quot;, &amp;quot;Tues&amp;quot;, &amp;quot;Wed&amp;quot;, &amp;quot;Thurs&amp;quot;, &amp;quot;Fri&amp;quot;, &amp;quot;Sat&amp;quot;, &amp;quot;Sun&amp;quot;))
-
-ggplot(DailySteps, aes(x=Date, y=StepTotal, colour=Day2)) +
-  geom_path() +
-  geom_point() +
-  scale_x_date(breaks=date_breaks(&amp;quot;1 month&amp;quot;)) +
+ggplot(DailySteps, aes(x=Date, y=StepTotal, colour=Day2)) + 
+  geom_path() + 
+  geom_point() + 
+  scale_x_date(breaks=date_breaks(&amp;quot;1 month&amp;quot;)) + 
   facet_grid(Day2 ~.) +
-  theme(legend.position=&amp;quot;none&amp;quot;)
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;&lt;img src=&#34;/figure/source/VisualizingTimeSeriesData/unnamed-chunk-11-1.png&#34; alt=&#34;plot of chunk unnamed-chunk-11&#34; /&gt;&lt;/p&gt;
-
-&lt;p&gt;Okay, that was fun. But let&amp;rsquo;s get to the minute data. We&amp;rsquo;re basically going to do the same type of processing on the minute level data to get day of the week and then we&amp;rsquo;ll create a few different plots.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;MinuteSteps$Day &amp;lt;- wday(MinuteSteps$Date, label = TRUE)
-MinuteSteps$Day2 &amp;lt;- factor(DailySteps$Day, levels = c(&amp;quot;Mon&amp;quot;, &amp;quot;Tues&amp;quot;, &amp;quot;Wed&amp;quot;, &amp;quot;Thurs&amp;quot;, &amp;quot;Fri&amp;quot;, &amp;quot;Sat&amp;quot;, &amp;quot;Sun&amp;quot;))
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;As you might be able to guess, plotting all the minute-level data points, even when coloured by group, is a complete mess. We&amp;rsquo;ll start with a facetted plot.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;ggplot(MinuteSteps, aes(x=Time, y=Steps, colour=Day2)) +
-  geom_point(size=.5, alpha = 0.1) +
+  theme(legend.position=&amp;quot;none&amp;quot;) &lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;/post/2016-02-23-visualizing-time-series-data_files/figure-html/alldays_facet_M-S-1.png&#34; width=&#34;960&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;grouping-minute-data-multiple-lines-facets-wrapping&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Grouping Minute Data (Multiple Lines &amp;amp; Facets Wrapping)&lt;/h2&gt;
+&lt;p&gt;Okay, that was fun. But let’s get to the minute data. We’re basically going to do the same type of processing on the minute level data to get day of the week and then we’ll create a few different plots.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;MinuteSteps$Day &amp;lt;- wday(MinuteSteps$Date, label = TRUE) 
+MinuteSteps$Day2 &amp;lt;- factor(DailySteps$Day, levels = c(&amp;quot;Mon&amp;quot;, &amp;quot;Tues&amp;quot;, &amp;quot;Wed&amp;quot;, &amp;quot;Thurs&amp;quot;, &amp;quot;Fri&amp;quot;, &amp;quot;Sat&amp;quot;, &amp;quot;Sun&amp;quot;))&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;As you might be able to guess, plotting all the minute-level data points, even when coloured by group, is a complete mess. We’ll start with a facetted plot.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;ggplot(MinuteSteps, aes(x=Time, y=Steps, colour=Day2)) + 
+  geom_point(size=.5, alpha = 0.1) + 
   scale_x_datetime(breaks=date_breaks(&amp;quot;2 hour&amp;quot;), labels=date_format(&amp;quot;%H:%M&amp;quot;)) +
   facet_grid(Day2 ~.) +
-  theme(legend.position=&amp;quot;none&amp;quot;)
-&lt;/code&gt;&lt;/pre&gt;
+  theme(legend.position=&amp;quot;none&amp;quot;) &lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;/post/2016-02-23-visualizing-time-series-data_files/figure-html/minute_point_facet-1.png&#34; width=&#34;960&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;Well, that’s nice to look at, but still hard to understand any type of trends or patterns. Since we have so much data, we can probably better understand what’s going on by collapsing it. For instance, we might want to know what an “average Monday” might look like. That’s easy to do!&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;MinuteSteps.AvgDays &amp;lt;- aggregate(Steps ~ Time + Day2, MinuteSteps, mean)
 
-&lt;p&gt;&lt;img src=&#34;/figure/source/VisualizingTimeSeriesData/unnamed-chunk-13-1.png&#34; alt=&#34;plot of chunk unnamed-chunk-13&#34; /&gt;&lt;/p&gt;
-
-&lt;p&gt;Well, that&amp;rsquo;s nice to look at, but still hard to understand any type of trends or patterns. Since we have so much data, we can probably better understand what&amp;rsquo;s going on by collapsing it. For instance, we might want to know what an &amp;ldquo;average Monday&amp;rdquo; might look like. That&amp;rsquo;s easy to do!&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;MinuteSteps.AvgDays &amp;lt;- aggregate(Steps ~ Time + Day2, MinuteSteps, mean)
-
-ggplot(MinuteSteps.AvgDays, aes(x=Time, y=Steps, colour=Day2)) +
-  geom_path() +
+ggplot(MinuteSteps.AvgDays, aes(x=Time, y=Steps, colour=Day2)) + 
+  geom_path() + 
   scale_x_datetime(breaks=date_breaks(&amp;quot;2 hour&amp;quot;), labels=date_format(&amp;quot;%H:%M&amp;quot;)) +
   facet_grid(Day2 ~.) +
-  theme(legend.position=&amp;quot;none&amp;quot;)
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;&lt;img src=&#34;/figure/source/VisualizingTimeSeriesData/unnamed-chunk-14-1.png&#34; alt=&#34;plot of chunk unnamed-chunk-14&#34; /&gt;&lt;/p&gt;
+  theme(legend.position=&amp;quot;none&amp;quot;) &lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;/post/2016-02-23-visualizing-time-series-data_files/figure-html/minute_path_facet-1.png&#34; width=&#34;960&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
 </description>
     </item>
     

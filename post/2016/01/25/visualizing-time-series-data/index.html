@@ -47,177 +47,127 @@
 
 
 <main>
-
-
-<p>When working with human behavior you&rsquo;ll almost always have to deal with data that is formatted as a time series. Briefly, time series data corresponds with repeated measures of a variable (or multiple variables) at consistent intervals over a period.</p>
-
-<p>At the Center for Wireless and Population Health Systems, we&rsquo;re consistently dealing with physical activity data collected from accelerometers worn by study participants. These measurement devices sample human locomotion at various rates over periods lasting days, weeks, or even longer. There are a variety of methods to process and analyze accelerometer data, but we know any good statistician will use a variety of visualization techniques so become familiar with the data and understand it better. This document is meant to be an introduction to different methods for visualizing time series data. By no means does it cover <em>every</em> method, but it should get you started and give you some ideas for additional techniques.</p>
-
-<h2 id="the-data">The Data</h2>
-
-<p>The data used in these examples was collected as part of my doctoral dissertation research. The physical activity data was gathered from participants who used a Fitbit activity tracker to measure their physical activity. Access to historical data was granted by participants and downloaded using <a href="http://fitabase.com">Fitabase</a>. A variety of data was made available, but for this example we&rsquo;ll be focusing on steps.</p>
-
-<p>As my dissertation analysis is ongoing, I&rsquo;m using my own Fitbit data here for this example.</p>
-
-<h2 id="step-data">Step Data</h2>
-
+<div id="introduction" class="section level1">
+<h1>Introduction</h1>
+<p>When working with human behavior you’ll almost always have to deal with data that is formatted as a time series. Briefly, time series data corresponds with repeated measures of a variable (or multiple variables) at consistent intervals over a period.</p>
+<p>At the Center for Wireless and Population Health Systems, we’re consistently dealing with physical activity data collected from accelerometers worn by study participants. These measurement devices sample human locomotion at various rates over periods lasting days, weeks, or even longer. There are a variety of methods to process and analyze accelerometer data, but we know any good statistician will use a variety of visualization techniques so become familiar with the data and understand it better. This document is meant to be an introduction to different methods for visualizing time series data. By no means does it cover <em>every</em> method, but it should get you started and give you some ideas for additional techniques.</p>
+</div>
+<div id="the-data" class="section level1">
+<h1>The Data</h1>
+<p>The data used in this example was collected as part of my doctoral dissertation research. The physical activity data was gathered from participants who used a Fitbit activity tracker to measure their physical activity. Access to historical data was granted by participants and downloaded using <a href="http://fitabase.com">Fitabase</a>. A variety of data was made available, but for this example we’ll be focusing on steps.</p>
+<p>As my dissertation analysis is ongoing, I’m using my own Fitbit data here for this example.</p>
+<div id="step-data" class="section level2">
+<h2>Step Data</h2>
 <p>I downloaded my step data over a two-year period from Jan. 1, 2012 to Jan. 1, 2014. Two data files will be used in this analysis (click to download the data sets):</p>
-
-<ol>
-<li><a href="https://dl.dropboxusercontent.com/u/2513399/ER_FitbitDailySteps_2012.csv">Daily Steps</a></li>
-<li><a href="https://dl.dropboxusercontent.com/u/2513399/ER_FitbitMinuteSteps_2012.csv">Minute-Level Steps</a></li>
+<ol style="list-style-type: decimal">
+<li><a href="https://www.dropbox.com/s/n4a398int2ffig9/ER_FitbitDailySteps_2012.csv?d1=1">Daily Steps</a></li>
+<li><a href="https://www.dropbox.com/s/csmddz7o6sfny52/ER_FitbitMinuteSteps_2012.csv?dl=1">Minute-Level Steps</a></li>
 </ol>
-
 <p>The <strong>Daily Steps</strong> file contains 366 observations of the total amount of steps recorded for each day in 2012 (2012 was a leap year). The <strong>Minute-Level Steps</strong> file contains 527,040 observations (1,440 minutes per hour, 24 hours, 366 days) of the total steps recorded per minute for 2012.</p>
-
-<p>Let&rsquo;s load &lsquo;em up.</p>
-
-<pre><code class="language-r">DailySteps &lt;- read.csv(&quot;https://dl.dropboxusercontent.com/u/2513399/ER_FitbitDailySteps_2012.csv&quot;)
-MinuteSteps &lt;- read.csv(&quot;https://dl.dropboxusercontent.com/u/2513399/ER_FitbitMinuteSteps_2012.csv&quot;)
-</code></pre>
-
-<h2 id="cleaning-the-data">Cleaning the data</h2>
-
-<p>So the data is loaded and a quick glance indicates that the date and date/time vectors were imported as <em>factors</em>. That&rsquo;s all well and good for most things, but we&rsquo;re going to want dates as dates and times as times for visualization purposes. Let&rsquo;s get those corrected. I like using the <a href="https://cran.r-project.org/web/packages/lubridate/index.html">lubridate package</a> as it handles dates and times very easily. The <em>ActivityDay</em> vector is in mm/dd/yyyy format so we can use the <em>mdy</em> function from lubridate to change it into a POSIXct variable.</p>
-
-<pre><code class="language-r">library(lubridate)
+<p>Let’s load ’em up.</p>
+<pre class="r"><code>DailySteps &lt;- read.csv(&quot;https://www.dropbox.com/s/n4a398int2ffig9/ER_FitbitDailySteps_2012.csv?dl=1&quot;)
+MinuteSteps &lt;- read.csv(&quot;https://www.dropbox.com/s/csmddz7o6sfny52/ER_FitbitMinuteSteps_2012.csv?dl=1&quot;)</code></pre>
+</div>
+</div>
+<div id="cleaning-the-data" class="section level1">
+<h1>Cleaning the data</h1>
+<p>So the data is loaded and a quick glance indicates that the date and date/time vectors were imported as <em>factors</em>. That’s all well and good for most things, but we’re going to want dates as dates and times as times for visualization purposes. Let’s get those corrected. I like using the <a href="https://cran.r-project.org/web/packages/lubridate/index.html">lubridate package</a> as it handles dates and times very easily. The <em>ActivityDay</em> vector is in mm/dd/yyyy format so we can use the <em>mdy</em> function from lubridate to change it into a POSIXct variable.</p>
+<pre class="r"><code>library(lubridate)
 DailySteps$Date &lt;- mdy(DailySteps$ActivityDay)
-DailySteps$Date &lt;- as.Date(DailySteps$Date)
-</code></pre>
-
-<p>The minute-level data is a bit trickier. The <em>ActivityMinute</em> vector is formatted for date/time in mm/dd/yyyy hh:mm:ss AM/PM. This isn&rsquo;t super useful for instance, when we want to plot the minute-by-minute steps for a full day of data. So let&rsquo;s do some reformatting to clean it up.</p>
-
-<pre><code class="language-r">MinuteSteps$ActivityMinute &lt;- mdy_hms(as.character(MinuteSteps$ActivityMinute))
+DailySteps$Date &lt;- as.Date(DailySteps$Date)</code></pre>
+<p>The minute-level data is a bit trickier. The <em>ActivityMinute</em> vector is formatted for date/time in mm/dd/yyyy hh:mm:ss AM/PM. This isn’t super useful for instance, when we want to plot the minute-by-minute steps for a full day of data. So let’s do some reformatting to clean it up.</p>
+<pre class="r"><code>MinuteSteps$ActivityMinute &lt;- mdy_hms(as.character(MinuteSteps$ActivityMinute)) 
 MinuteSteps$Date &lt;- as.Date(MinuteSteps$ActivityMinute, format = &quot;%Y-%m-%d  %H:%M:%S&quot;)
 MinuteSteps$Time &lt;- format(as.POSIXct(strptime(MinuteSteps$ActivityMinute, &quot;%Y-%m-%d  %H:%M:%S&quot;,tz=&quot;&quot;)) ,format = &quot;%H:%M&quot;)
-MinuteSteps$Time &lt;- as.POSIXct(MinuteSteps$Time, format = &quot;%H:%M&quot;)
-</code></pre>
-
-<p>Why four steps to create two variables? Well, we want to make the date, a date variable, and we also want to strip the time to it&rsquo;s own variable. strptime can do that, but it returns a character vector, which ggplot won&rsquo;t like when use it as a scale. We have to convert that time character vector back into POSIXct and by doing so we assign it an arbitrary date. If you don&rsquo;t assign it in the function then it will automatically assign today&rsquo;s date.</p>
-
-<p>#Fist Level Visualization - Bars &amp; Lines</p>
-
-<h2 id="bar-plots">Bar Plots</h2>
-
-<p>I find bar plots a bit easier to read when dealing with aggregated data such as daily step counts. This might be because I envision the volume of the bar to contain the total amount of steps for that day. So let&rsquo;s make a quick bar plot of the Daily Steps.</p>
-
-<p>Before we begin we&rsquo;ll need to load two packages: <strong>ggplot2</strong> and <strong>scales</strong></p>
-
-<pre><code class="language-r">library(ggplot2)
+MinuteSteps$Time &lt;- as.POSIXct(MinuteSteps$Time, format = &quot;%H:%M&quot;)</code></pre>
+<p>Why four steps to create two variables? Well, we want to make the date, a date variable, and we also want to strip the time to it’s own variable. strptime can do that, but it returns a character vector, which ggplot won’t like when use it as a scale. We have to convert that time character vector back into POSIXct and by doing so we assign it an arbritrary date. If you don’t asssign it in the function then it will automatically assign today’s date.</p>
+<div id="bar-plots" class="section level2">
+<h2>Bar Plots</h2>
+<p>I find bar plots a bit easier to read when dealing with aggregated data such as daily step counts. This might be because I envision the volume of the bar to contain the total amount of steps for that day. So let’s make a quick bar plot of the Daily Steps.</p>
+<p>Before we begin we’ll need to load two packages: <strong>ggplot2</strong> and <strong>scales</strong></p>
+<pre class="r"><code>library(ggplot2)
 library(scales)
-DailyStepsPlot &lt;- ggplot(DailySteps, aes(x=Date, y=StepTotal)) #This will base plot which we'll manipulate.
+DailyStepsPlot &lt;- ggplot(DailySteps, aes(x=Date, y=StepTotal)) #This will base plot which we&#39;ll manipulate.
 
-DailyStepsPlot + geom_bar(stat=&quot;identity&quot;) + scale_x_date(breaks=date_breaks(&quot;1 month&quot;))
-</code></pre>
-
-<p><img src="/figure/source/VisualizingTimeSeriesData/unnamed-chunk-4-1.png" alt="plot of chunk unnamed-chunk-4" /></p>
-
-<p>##Line Plots
-What about a line plot (with added points)?</p>
-
-<p><img src="/figure/source/VisualizingTimeSeriesData/unnamed-chunk-5-1.png" alt="plot of chunk unnamed-chunk-5" /></p>
-
-<h2 id="multiple-line-plots">Multiple Line Plots</h2>
-
-<p>Line plots aren&rsquo;t that great when you have a continuous data set that spans over 500,000 observations. For a data set that large we&rsquo;re typically trying to look into patterns. A good way to do that is to plot the data one level up, such as per day in this case.</p>
-
-<p>We&rsquo;ll plot each day on the same canvas with each line set to a transparency of alpha = .05. I also cut down the line size so that patterns might be seen in the resulting banding.</p>
-
-<pre><code class="language-r">ggplot(MinuteSteps, aes(x=Time, y=Steps, group=Date)) +
-  geom_path(size=.5, alpha = 0.05, colour=&quot;blue&quot;) +
-  scale_x_datetime(breaks=date_breaks(&quot;2 hour&quot;), labels=date_format(&quot;%H:%M&quot;))
-</code></pre>
-
-<p><img src="/figure/source/VisualizingTimeSeriesData/unnamed-chunk-6-1.png" alt="plot of chunk unnamed-chunk-6" /></p>
-
+DailyStepsPlot + geom_bar(stat=&quot;identity&quot;) + scale_x_date(breaks=date_breaks(&quot;1 month&quot;))</code></pre>
+<p><img src="/post/2016-02-23-visualizing-time-series-data_files/figure-html/bar_plot-1.png" width="960" /></p>
+</div>
+<div id="line-plots" class="section level2">
+<h2>Line Plots</h2>
+<p>What about a line plot (with added points)?</p>
+<pre class="r"><code>DailyStepsPlot + geom_line(colour=&quot;blue&quot;) + geom_point(colour=&quot;blue4&quot;) + scale_x_date(breaks=date_breaks(&quot;3 month&quot;))</code></pre>
+<p><img src="/post/2016-02-23-visualizing-time-series-data_files/figure-html/linepoint_plot-1.png" width="960" /></p>
+</div>
+<div id="multiple-line-plots" class="section level2">
+<h2>Multiple Line Plots</h2>
+<p>Line plots aren’t that great when you have a continuous data set that spans over 500,000 observations. For a data set that large we’re typically trying to look into patterns. A good way to do that is to plot the data one level up, such as per day in this case.</p>
+<p>We’ll plot each day on the same canvas with each line set to a transparency of alpha = .05. I also cut down the line size so that patterns might be seen in the resulting banding.</p>
+<pre class="r"><code>ggplot(MinuteSteps, aes(x=Time, y=Steps, group=Date)) + 
+  geom_path(size=.5, alpha = 0.05, colour=&quot;blue&quot;) + 
+  scale_x_datetime(breaks=date_breaks(&quot;2 hour&quot;), labels=date_format(&quot;%H:%M&quot;))</code></pre>
+<p><img src="/post/2016-02-23-visualizing-time-series-data_files/figure-html/multiple_lines-1.png" width="960" /></p>
 <p>You can see some clear banding at 120 steps/min or so and another a bit lower around 75 steps/min. It also appears that there a few days with periods of high activity (&gt;150 steps/min) just past 6PM (18:00). But, could it be clearer?</p>
-
-<h2 id="scatterplot">Scatterplot</h2>
-
-<p>When using the line graph, multiple lines can obscure the patterns we&rsquo;re trying to tease out by introducing a bit of visual noise. Let&rsquo;s reduce the noise by taking away the lines and using just points in a scatterplot.</p>
-
-<pre><code class="language-r">ggplot(MinuteSteps, aes(x=Time, y=Steps, group=Date)) +
-  geom_point(size=.5, alpha = 0.1, colour=&quot;blue&quot;) +
-  scale_x_datetime(breaks=date_breaks(&quot;2 hour&quot;), labels=date_format(&quot;%H:%M&quot;))
-</code></pre>
-
-<p><img src="/figure/source/VisualizingTimeSeriesData/unnamed-chunk-7-1.png" alt="plot of chunk unnamed-chunk-7" /></p>
-
-<h2 id="grouping-data-multiple-lines-facets-wrapping">Grouping Data (Multiple Lines &amp; Facets Wrapping)</h2>
-
-<p>So we&rsquo;ve plotted every day, and we&rsquo;ve plotted every minute in our data. We&rsquo;ve teased out a few simple patterns, but what about other distinctions in the data?</p>
-
-<p>One of the methods common in physical activity data analysis is to explore differences across different days of the week. Are individuals more active on certain days of the week? How about the difference between weekdays and weekend days?</p>
-
-<p>To be able to create visualizations that help us understand these potential differences we&rsquo;ll have to do a bit of work on the data.</p>
-
-<p>First, let&rsquo;s create a <em>Day</em> variable for our Daily data set. Again, we&rsquo;re turning to the <strong>lubridate</strong> package. Lubridate has function called <strong><em>wday</em></strong> which will return the day of the week.</p>
-
-<pre><code class="language-r">DailySteps$Day &lt;- wday(DailySteps$Date, label = TRUE) # we use labels=true here to return day labels instead of numeric values.
-</code></pre>
-
-<p>Let&rsquo;s see if we can plot differences between days:</p>
-
-<pre><code class="language-r">ggplot(DailySteps, aes(x=Date, y=StepTotal, group=Day, colour=Day)) + geom_path() + geom_point() + scale_x_date(breaks=date_breaks(&quot;1 month&quot;))
-</code></pre>
-
-<p><img src="/figure/source/VisualizingTimeSeriesData/unnamed-chunk-9-1.png" alt="plot of chunk unnamed-chunk-9" /></p>
-
-<p>Well, that&rsquo;s a mess. What if we graph each day individually? We can do this by calling creating multiple facets of the same plot.</p>
-
-<pre><code class="language-r">ggplot(DailySteps, aes(x=Date, y=StepTotal, colour=Day)) +
-  geom_path() +
-  geom_point() +
-  scale_x_date(breaks=date_breaks(&quot;1 month&quot;)) +
+</div>
+<div id="scatterplot" class="section level2">
+<h2>Scatterplot</h2>
+<p>When using the line graph, multiple lines can obscure the patterns we’re trying to tease out by introducing a bit of visual noise. Let’s reduce the noise by taking away the lines and using just points in a scatterplot.</p>
+<pre class="r"><code>ggplot(MinuteSteps, aes(x=Time, y=Steps, group=Date)) + 
+  geom_point(size=.5, alpha = 0.1, colour=&quot;blue&quot;) + 
+  scale_x_datetime(breaks=date_breaks(&quot;2 hour&quot;), labels=date_format(&quot;%H:%M&quot;))</code></pre>
+<p><img src="/post/2016-02-23-visualizing-time-series-data_files/figure-html/scatterplot-1.png" width="960" /></p>
+</div>
+<div id="grouping-daily-data-multiple-lines-facets-wrapping" class="section level2">
+<h2>Grouping Daily Data (Multiple Lines &amp; Facets Wrapping)</h2>
+<p>So we’ve plotted every day, and we’ve plotted every minute in our data. We’ve teased out a few simple patterns, but what about other distinctions in the data?</p>
+<p>One of the methods common in physical activity data analysis is to explore differences across different days of the week. Are individuals more active on certain days of the week? How about the difference between weekdays and weeekend days?</p>
+<p>To be able to create visualizations that help us understand these potential differences we’ll have to do a bit of work on the data.</p>
+<p>First, let’s create a <em>Day</em> variable for our Daily data set. Again, we’re turning to the <strong>lubridate</strong> package. Lubridate has function called <strong><em>wday</em></strong> which will return the day of the week.</p>
+<pre class="r"><code>DailySteps$Day &lt;- wday(DailySteps$Date, label = TRUE) # we use labels=true here to return day labels instead of numeric values. </code></pre>
+<p>Let’s see if we can plot differences between days:</p>
+<pre class="r"><code>ggplot(DailySteps, aes(x=Date, y=StepTotal, group=Day, colour=Day)) + geom_path() + geom_point() + scale_x_date(breaks=date_breaks(&quot;1 month&quot;))</code></pre>
+<p><img src="/post/2016-02-23-visualizing-time-series-data_files/figure-html/alldays_lineplot-1.png" width="960" /></p>
+<p>Well, that’s a mess. What if we graph each day individually? We can do this by calling creating multiple facets of the same plot.</p>
+<pre class="r"><code>ggplot(DailySteps, aes(x=Date, y=StepTotal, colour=Day)) + 
+  geom_path() + 
+  geom_point() + 
+  scale_x_date(breaks=date_breaks(&quot;1 month&quot;)) + 
   facet_grid(Day ~.) +
-  theme(legend.position=&quot;none&quot;)
-</code></pre>
+  theme(legend.position=&quot;none&quot;) </code></pre>
+<p><img src="/post/2016-02-23-visualizing-time-series-data_files/figure-html/alldays_facet-1.png" width="960" /></p>
+<p>That’s a bit better, but I personally think the week starts on Monday, not Sunday. Let’s fix that in our data.</p>
+<pre class="r"><code>DailySteps$Day2 &lt;- factor(DailySteps$Day, levels = c(&quot;Mon&quot;, &quot;Tues&quot;, &quot;Wed&quot;, &quot;Thurs&quot;, &quot;Fri&quot;, &quot;Sat&quot;, &quot;Sun&quot;))
 
-<p><img src="/figure/source/VisualizingTimeSeriesData/unnamed-chunk-10-1.png" alt="plot of chunk unnamed-chunk-10" /></p>
-
-<p>That&rsquo;s a bit better, but I personally think the week starts on Monday, not Sunday. Let&rsquo;s fix that in our data.</p>
-
-<pre><code class="language-r">DailySteps$Day2 &lt;- factor(DailySteps$Day, levels = c(&quot;Mon&quot;, &quot;Tues&quot;, &quot;Wed&quot;, &quot;Thurs&quot;, &quot;Fri&quot;, &quot;Sat&quot;, &quot;Sun&quot;))
-
-ggplot(DailySteps, aes(x=Date, y=StepTotal, colour=Day2)) +
-  geom_path() +
-  geom_point() +
-  scale_x_date(breaks=date_breaks(&quot;1 month&quot;)) +
+ggplot(DailySteps, aes(x=Date, y=StepTotal, colour=Day2)) + 
+  geom_path() + 
+  geom_point() + 
+  scale_x_date(breaks=date_breaks(&quot;1 month&quot;)) + 
   facet_grid(Day2 ~.) +
-  theme(legend.position=&quot;none&quot;)
-</code></pre>
-
-<p><img src="/figure/source/VisualizingTimeSeriesData/unnamed-chunk-11-1.png" alt="plot of chunk unnamed-chunk-11" /></p>
-
-<p>Okay, that was fun. But let&rsquo;s get to the minute data. We&rsquo;re basically going to do the same type of processing on the minute level data to get day of the week and then we&rsquo;ll create a few different plots.</p>
-
-<pre><code class="language-r">MinuteSteps$Day &lt;- wday(MinuteSteps$Date, label = TRUE)
-MinuteSteps$Day2 &lt;- factor(DailySteps$Day, levels = c(&quot;Mon&quot;, &quot;Tues&quot;, &quot;Wed&quot;, &quot;Thurs&quot;, &quot;Fri&quot;, &quot;Sat&quot;, &quot;Sun&quot;))
-</code></pre>
-
-<p>As you might be able to guess, plotting all the minute-level data points, even when coloured by group, is a complete mess. We&rsquo;ll start with a facetted plot.</p>
-
-<pre><code class="language-r">ggplot(MinuteSteps, aes(x=Time, y=Steps, colour=Day2)) +
-  geom_point(size=.5, alpha = 0.1) +
+  theme(legend.position=&quot;none&quot;) </code></pre>
+<p><img src="/post/2016-02-23-visualizing-time-series-data_files/figure-html/alldays_facet_M-S-1.png" width="960" /></p>
+</div>
+<div id="grouping-minute-data-multiple-lines-facets-wrapping" class="section level2">
+<h2>Grouping Minute Data (Multiple Lines &amp; Facets Wrapping)</h2>
+<p>Okay, that was fun. But let’s get to the minute data. We’re basically going to do the same type of processing on the minute level data to get day of the week and then we’ll create a few different plots.</p>
+<pre class="r"><code>MinuteSteps$Day &lt;- wday(MinuteSteps$Date, label = TRUE) 
+MinuteSteps$Day2 &lt;- factor(DailySteps$Day, levels = c(&quot;Mon&quot;, &quot;Tues&quot;, &quot;Wed&quot;, &quot;Thurs&quot;, &quot;Fri&quot;, &quot;Sat&quot;, &quot;Sun&quot;))</code></pre>
+<p>As you might be able to guess, plotting all the minute-level data points, even when coloured by group, is a complete mess. We’ll start with a facetted plot.</p>
+<pre class="r"><code>ggplot(MinuteSteps, aes(x=Time, y=Steps, colour=Day2)) + 
+  geom_point(size=.5, alpha = 0.1) + 
   scale_x_datetime(breaks=date_breaks(&quot;2 hour&quot;), labels=date_format(&quot;%H:%M&quot;)) +
   facet_grid(Day2 ~.) +
-  theme(legend.position=&quot;none&quot;)
-</code></pre>
+  theme(legend.position=&quot;none&quot;) </code></pre>
+<p><img src="/post/2016-02-23-visualizing-time-series-data_files/figure-html/minute_point_facet-1.png" width="960" /></p>
+<p>Well, that’s nice to look at, but still hard to understand any type of trends or patterns. Since we have so much data, we can probably better understand what’s going on by collapsing it. For instance, we might want to know what an “average Monday” might look like. That’s easy to do!</p>
+<pre class="r"><code>MinuteSteps.AvgDays &lt;- aggregate(Steps ~ Time + Day2, MinuteSteps, mean)
 
-<p><img src="/figure/source/VisualizingTimeSeriesData/unnamed-chunk-13-1.png" alt="plot of chunk unnamed-chunk-13" /></p>
-
-<p>Well, that&rsquo;s nice to look at, but still hard to understand any type of trends or patterns. Since we have so much data, we can probably better understand what&rsquo;s going on by collapsing it. For instance, we might want to know what an &ldquo;average Monday&rdquo; might look like. That&rsquo;s easy to do!</p>
-
-<pre><code class="language-r">MinuteSteps.AvgDays &lt;- aggregate(Steps ~ Time + Day2, MinuteSteps, mean)
-
-ggplot(MinuteSteps.AvgDays, aes(x=Time, y=Steps, colour=Day2)) +
-  geom_path() +
+ggplot(MinuteSteps.AvgDays, aes(x=Time, y=Steps, colour=Day2)) + 
+  geom_path() + 
   scale_x_datetime(breaks=date_breaks(&quot;2 hour&quot;), labels=date_format(&quot;%H:%M&quot;)) +
   facet_grid(Day2 ~.) +
-  theme(legend.position=&quot;none&quot;)
-</code></pre>
-
-<p><img src="/figure/source/VisualizingTimeSeriesData/unnamed-chunk-14-1.png" alt="plot of chunk unnamed-chunk-14" /></p>
+  theme(legend.position=&quot;none&quot;) </code></pre>
+<p><img src="/post/2016-02-23-visualizing-time-series-data_files/figure-html/minute_path_facet-1.png" width="960" /></p>
+</div>
+</div>
 
 </main>
 
