@@ -1,0 +1,49 @@
+---
+// Headshot wrapped in fitness-tracker style activity rings.
+const rings = [
+  { label: "Research", pct: 0.86, cls: "r1" },
+  { label: "Writing", pct: 0.42, cls: "r2" },
+  { label: "Family", pct: 1, cls: "r3" },
+];
+const size = 340;
+const stroke = 16;
+const gap = 4;
+---
+
+<figure class="rings">
+  <div class="rings-art">
+    <svg viewBox={`0 0 ${size} ${size}`} aria-hidden="true">
+      {
+        rings.map((ring, i) => {
+          const r = size / 2 - stroke / 2 - i * (stroke + gap);
+          const c = 2 * Math.PI * r;
+          return (
+            <g class={ring.cls}>
+              <circle class="track" cx={size / 2} cy={size / 2} r={r} stroke-width={stroke} />
+              <circle
+                class="fill"
+                cx={size / 2}
+                cy={size / 2}
+                r={r}
+                stroke-width={stroke}
+                stroke-dasharray={c}
+                stroke-dashoffset={c * (1 - ring.pct)}
+                style={`--c:${c}; --delay:${i * 180}ms`}
+              />
+            </g>
+          );
+        })
+      }
+    </svg>
+    <img src="/images/er_headshot.png" alt="Ernesto Ramirez" width="220" height="220" />
+  </div>
+  <figcaption>
+    {
+      rings.map((ring) => (
+        <span class={ring.cls}>
+          <i /> {ring.label} <b>{Math.round(ring.pct * 100)}%</b>
+        </span>
+      ))
+    }
+  </figcaption>
+</figure>

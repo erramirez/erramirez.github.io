@@ -1,0 +1,10 @@
+// Cloudflare Workers static-assets config. Cloudflare runs `npm run build`,
+// then `npx wrangler deploy` uploads dist/ (including _redirects and 404.html).
+{
+  "name": "ernestoramirez-com",
+  "compatibility_date": "2026-10-01",
+  "assets": {
+    "directory": "./dist",
+    "not_found_handling": "404-page"
+  }
+}

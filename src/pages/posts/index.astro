@@ -1,0 +1,42 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { formatDate, getPosts, postUrl, tagUrl } from "../../lib/utils";
+
+const posts = await getPosts();
+const byYear = Object.entries(
+  Object.groupBy(posts, (p) => String(p.data.pubDate.getUTCFullYear())),
+).sort(([a], [b]) => Number(b) - Number(a));
+---
+
+<BaseLayout title="Writing | Ernesto Ramirez" description="Essays, notes, and R experiments by Ernesto Ramirez.">
+  <section class="page wide-page">
+    <h1>Essays, notes, and the occasional R experiment.</h1>
+    {
+      byYear.map(([year, items]) => (
+        <section class="year-group">
+          <h2 class="year">{year}</h2>
+          <div class="post-list">
+            {items!.map((post) => (
+              <article>
+                <p class="meta">
+                  {formatDate(post.data.pubDate)}
+                  {post.data.kind === "note" && <span class="badge">note</span>}
+                  {post.data.draft && <span class="badge warn">draft</span>}
+                </p>
+                <h3><a href={postUrl(post.id)}>{post.data.title}</a></h3>
+                <p>{post.data.description}</p>
+                {post.data.tags.length > 0 && (
+                  <ul class="tag-list">
+                    {post.data.tags.map((tag) => (
+                      <li><a href={tagUrl(tag)}>{tag}</a></li>
+                    ))}
+                  </ul>
+                )}
+              </article>
+            ))}
+          </div>
+        </section>
+      ))
+    }
+  </section>
+</BaseLayout>

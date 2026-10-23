@@ -1,0 +1,33 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { formatDate, getPosts, postUrl, slugify } from "../../lib/utils";
+
+export async function getStaticPaths() {
+  const posts = await getPosts();
+  const tags = [...new Set(posts.flatMap((p) => p.data.tags))];
+  return tags.map((tag) => ({
+    params: { tag: slugify(tag) },
+    props: { tag, posts: posts.filter((p) => p.data.tags.includes(tag)) },
+  }));
+}
+
+const { tag, posts } = Astro.props;
+---
+
+<BaseLayout title={`#${tag} | Ernesto Ramirez`}>
+  <section class="page">
+    <h1>#{tag}</h1>
+    <div class="post-list">
+      {
+        posts.map((post) => (
+          <article>
+            <p class="meta">{formatDate(post.data.pubDate)}</p>
+            <h3><a href={postUrl(post.id)}>{post.data.title}</a></h3>
+            <p>{post.data.description}</p>
+          </article>
+        ))
+      }
+    </div>
+    <p><a href="/posts/">← All writing</a></p>
+  </section>
+</BaseLayout>

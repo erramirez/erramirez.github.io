@@ -1,0 +1,53 @@
+---
+import { render } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { formatDate, getPosts, tagUrl } from "../../lib/utils";
+
+export async function getStaticPaths() {
+  const posts = await getPosts();
+  return posts.map((post, i) => ({
+    params: { slug: post.id },
+    props: { post, newer: posts[i - 1], older: posts[i + 1] },
+  }));
+}
+
+const { post, newer, older } = Astro.props;
+const { Content } = await render(post);
+const words = post.body?.split(/\s+/).length ?? 0;
+const minutes = Math.max(1, Math.round(words / 230));
+---
+
+<BaseLayout title={`${post.data.title} | Ernesto Ramirez`} description={post.data.description}>
+  <article class="page">
+    <h1 class="post-title">{post.data.title}</h1>
+    <p class="meta post-meta">
+      <time datetime={post.data.pubDate.toISOString()}>{formatDate(post.data.pubDate)}</time>
+      <span>· {minutes} min read</span>
+    </p>
+    {
+      post.data.archive && (
+        <p class="archive-note">
+          <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><rect x="2" y="5" width="20" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="8" cy="12" r="2.4" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="16" cy="12" r="2.4" fill="none" stroke="currentColor" stroke-width="1.8"/></svg>
+          <span>From the archive. This was written in {post.data.pubDate.getUTCFullYear()}, and some
+          links, tools, and opinions may have aged.</span>
+        </p>
+      )
+    }
+    <div class="article-body">
+      <Content />
+    </div>
+    {
+      post.data.tags.length > 0 && (
+        <ul class="tag-list">
+          {post.data.tags.map((tag) => (
+            <li><a href={tagUrl(tag)}>{tag}</a></li>
+          ))}
+        </ul>
+      )
+    }
+    <nav class="post-nav" aria-label="More posts">
+      {newer ? <a href={`/posts/${newer.id}/`}>← {newer.data.title}</a> : <span />}
+      {older && <a href={`/posts/${older.id}/`}>{older.data.title} →</a>}
+    </nav>
+  </article>
+</BaseLayout>

@@ -1,0 +1,32 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
+const research = (await getCollection("research"))
+  .filter((item) => !item.data.draft)
+  .sort((a, b) => Number(b.data.featured) - Number(a.data.featured));
+---
+
+<BaseLayout title="Research | Ernesto Ramirez" description="Selected research and case studies by Ernesto Ramirez.">
+  <section class="page wide-page">
+    <h1>Applied research, data practice, and digital health evidence.</h1>
+    <p class="lede">
+      A small portfolio of projects and case studies: the problem, my role, the approach, and what
+      changed.
+    </p>
+    <div class="research-list">
+      {
+        research.map((item) => (
+          <article class="research-item">
+            <p class="meta">{item.data.role} · {item.data.timeframe}</p>
+            <h2><a href={`/research/${item.id}/`}>{item.data.title}</a></h2>
+            <p>{item.data.description}</p>
+            <ul class="tag-list">
+              {item.data.areas.map((area) => <li>{area}</li>)}
+            </ul>
+          </article>
+        ))
+      }
+    </div>
+  </section>
+</BaseLayout>

@@ -1,0 +1,147 @@
+# Pages CMS config: https://pagescms.org/docs/configuration/
+# Sign in at https://app.pagescms.org with GitHub and open this repo.
+# Every save is a commit; Cloudflare rebuilds the site automatically.
+
+media:
+  input: public/images
+  output: /images
+
+content:
+  - name: posts
+    label: Writing
+    type: collection
+    path: src/content/posts
+    filename: "{primary}.md"
+    view:
+      fields: [title, pubDate, kind, draft]
+      primary: title
+      sort: [pubDate, title]
+      default:
+        sort: pubDate
+        order: desc
+    fields:
+      - name: title
+        label: Title
+        type: string
+        required: true
+      - name: description
+        label: Summary
+        description: One or two sentences shown in lists and link previews.
+        type: text
+      - name: pubDate
+        label: Published
+        type: date
+        required: true
+        options:
+          format: yyyy-MM-dd
+      - name: updatedDate
+        label: Updated
+        type: date
+        options:
+          format: yyyy-MM-dd
+      - name: kind
+        label: Type
+        type: select
+        default: post
+        options:
+          values: [post, note]
+      - name: tags
+        label: Tags
+        type: string
+        list: true
+      - name: draft
+        label: Draft (hidden from the live site)
+        type: boolean
+        default: false
+      - name: archive
+        label: From the old site
+        type: boolean
+        hidden: true
+      - name: body
+        label: Post
+        type: rich-text
+
+  - name: research
+    label: Research
+    type: collection
+    path: src/content/research
+    filename: "{primary}.md"
+    view:
+      fields: [title, timeframe, featured]
+      primary: title
+    fields:
+      - name: title
+        label: Title
+        type: string
+        required: true
+      - name: description
+        label: Summary
+        type: text
+        required: true
+      - name: role
+        label: Role
+        type: string
+        required: true
+      - name: timeframe
+        label: Timeframe
+        type: string
+        required: true
+      - name: areas
+        label: Areas
+        type: string
+        list: true
+      - name: featured
+        label: Show on homepage
+        type: boolean
+      - name: draft
+        label: Draft
+        type: boolean
+      - name: body
+        label: Write-up
+        type: rich-text
+
+  - name: pages
+    label: Pages
+    type: collection
+    path: src/content/pages
+    filename: "{primary}.md"
+    view:
+      fields: [label, title]
+      primary: label
+    fields:
+      - name: label
+        label: Name (browser tab)
+        type: string
+      - name: title
+        label: Headline
+        type: string
+        required: true
+      - name: description
+        label: Summary for search and link previews
+        type: text
+      - name: updatedDate
+        label: Last updated (shown on the Now page)
+        type: date
+        options:
+          format: yyyy-MM-dd
+      - name: body
+        label: Content
+        type: rich-text
+
+  - name: vitals
+    label: Homepage readouts
+    type: file
+    path: src/data/vitals.json
+    fields:
+      - name: status
+        label: Status line
+        type: string
+      - name: readouts
+        label: Readouts
+        type: object
+        list: true
+        fields:
+          - name: label
+            type: string
+          - name: value
+            type: string

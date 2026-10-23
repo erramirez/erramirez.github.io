@@ -1,0 +1,21 @@
+# Old Hugo/blogdown URLs (2014–2017) -> new Astro URLs
+/post/2014/03/02/living-with-data/*  /posts/living-with-data/  301
+/post/2014/03/11/the-data-dilemma/*  /posts/the-data-dilemma/  301
+/post/2014/03/18/hardware-is-hard/*  /posts/hardware-is-hard/  301
+/post/2014/03/19/ode-to-the-outshot/*  /posts/ode-to-the-outshot/  301
+/post/2016/01/25/visualizing-time-series-data/*  /posts/visualizing-time-series-data/  301
+/post/2016/05/27/im-the-doctor-now/*  /posts/im-the-doctor-now/  301
+/post/2016/06/04/how-much-fun-is-maximum-fun/*  /posts/how-much-fun-is-maximum-fun/  301
+/post/2017/09/10/examining-variability-in-physical-activity-data-with-r/*  /posts/examining-variability-in-physical-activity-data-with-r/  301
+/post/2017/09/10/examining-variability-in-physical-activity-with-r/*  /posts/examining-variability-in-physical-activity-data-with-r/  301
+/post/2017/08/12/examining-variability-in-physical-activity-with-r/*  /posts/examining-variability-in-physical-activity-data-with-r/  301
+/note/2017/07/04/fun-on-the-fourth/*  /posts/fun-on-the-fourth/  301
+/post  /posts/  301
+/post/  /posts/  301
+/note  /posts/  301
+/note/  /posts/  301
+/categories/r/*  /tags/r/  301
+/categories/*  /posts/  301
+/index.xml  /rss.xml  301
+/note/index.xml  /rss.xml  301
+/post/index.xml  /rss.xml  301
