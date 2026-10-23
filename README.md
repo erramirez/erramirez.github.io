@@ -6,7 +6,8 @@ Personal site for Ernesto Ramirez, built with [Astro](https://astro.build), edit
 ## Writing
 
 The easy way: sign in at [app.pagescms.org](https://app.pagescms.org) with GitHub, open this
-repo, and edit. Each save is a commit to `main`, and Cloudflare redeploys in about a minute.
+repo, and edit. Each save is a commit to the branch you have open, and Cloudflare redeploys in
+about a minute. See [EDITING.md](EDITING.md) for a short guide.
 
 The hands-on way: add or edit Markdown files directly.
 
@@ -33,7 +34,7 @@ The SQL box's `posts` and `lab` tables are generated from the content at build t
 
 ## Local development
 
-Requires Node 22.12+ (see `.node-version`).
+Requires Node 24 (see `.node-version`).
 
 ```sh
 npm install
@@ -43,7 +44,7 @@ npm run build    # type-check and build to dist/
 
 ## Hosting (Cloudflare)
 
-Cloudflare Workers Builds is connected to this repo. Build command `npm run build`, deploy
+Connect Cloudflare Workers Builds to this repo. Build command `npm run build`, deploy
 command `npx wrangler deploy` (config in `wrangler.jsonc`). Pushes to `main` deploy to
 production; other branches get preview URLs. Old Hugo URLs redirect via `public/_redirects`.
 

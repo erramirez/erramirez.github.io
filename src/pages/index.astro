@@ -6,9 +6,13 @@ import { formatDate, getLab, getPosts, labUrl, postUrl } from "../lib/utils";
 
 const posts = (await getPosts()).filter((p) => !p.data.draft).slice(0, 4);
 const lab = (await getLab()).slice(0, 4);
-const [before, after] = home.intro.includes(home.highlight)
-  ? home.intro.split(home.highlight)
+// Fields left empty in the CMS are removed from home.json, so treat them as optional.
+const highlight: string = home.highlight ?? "";
+const at = highlight ? home.intro.indexOf(highlight) : -1;
+const [before, after] = at >= 0
+  ? [home.intro.slice(0, at), home.intro.slice(at + highlight.length)]
   : [home.intro, undefined];
+const photoLabel: string[] = home.photoLabel ?? [];
 ---
 
 <BaseLayout>
@@ -19,14 +23,14 @@ const [before, after] = home.intro.includes(home.highlight)
       </h1>
       <p class="sub">{home.tagline}</p>
       <p class="lede">
-        {before}{after !== undefined && <><mark>{home.highlight}</mark>{after}</>}
+        {before}{after !== undefined && <><mark>{highlight}</mark>{after}</>}
       </p>
-      <p class="hand" style="margin-top:18px">↓ {home.handNote}</p>
+      {home.handNote && <p class="hand" style="margin-top:18px">↓ {home.handNote}</p>}
     </div>
     <figure class="specimen">
       <div class="duo"><img src={home.photo} alt="Ernesto Ramirez" width="520" height="734" /></div>
       <div class="tag">
-        {home.photoLabel.map((line, i) => (i === 0 ? <i>{line}</i> : <><br />{line}</>))}
+        {photoLabel.map((line, i) => (i === 0 ? <i>{line}</i> : <><br />{line}</>))}
       </div>
     </figure>
   </div>

@@ -6,13 +6,15 @@ import dataset from "../data/dataset.json";
 import home from "../data/home.json";
 import { getLab, getPosts } from "../lib/utils";
 
+// A list emptied in the CMS is removed from dataset.json, so default each one.
+const starters: { label: string; sql: string }[] = dataset.starters ?? [];
 const posts = (await getPosts()).filter((p) => !p.data.draft);
 const lab = await getLab();
 
 const tables: Record<string, Record<string, unknown>[]> = {
-  me: dataset.me,
-  jobs: dataset.jobs.map((j) => ({ end_year: null, ...j })),
-  interests: dataset.interests,
+  me: dataset.me ?? [],
+  jobs: (dataset.jobs ?? []).map((j) => ({ end_year: null, ...j })),
+  interests: dataset.interests ?? [],
   posts: posts.map((p) => ({
     date: p.data.pubDate.toISOString().slice(0, 10),
     title: p.data.title,
@@ -21,7 +23,7 @@ const tables: Record<string, Record<string, unknown>[]> = {
   })),
   lab: lab.map((l) => ({ slug: l.id, title: l.data.title, status: l.data.status })),
 };
-const initial = dataset.starters[1]?.sql ?? "SELECT * FROM me;";
+const initial = starters[1]?.sql ?? "SELECT * FROM me;";
 const [titleBefore, titleAfter] = home.consoleHighlight && home.consoleTitle.includes(home.consoleHighlight)
   ? home.consoleTitle.split(home.consoleHighlight)
   : [home.consoleTitle, undefined];
@@ -37,7 +39,7 @@ const [titleBefore, titleAfter] = home.consoleHighlight && home.consoleTitle.inc
       <button class="run" type="button" data-run>Run query ▸</button><span class="kbd">or ⌘/Ctrl + Enter</span>
     </div>
     <div class="chips">
-      {dataset.starters.map((s) => <button class="chip" type="button" data-q={s.sql}>{s.label}</button>)}
+      {starters.map((s) => <button class="chip" type="button" data-q={s.sql}>{s.label}</button>)}
     </div>
     <div class="out" aria-live="polite" data-out></div>
   </div>

@@ -1,20 +1,30 @@
 # Pages CMS config: https://pagescms.org/docs/configuration/
 # Sign in at https://app.pagescms.org with GitHub and open this repo.
-# Every save is a commit; Cloudflare rebuilds the site automatically.
+# Every save is a commit to the branch you have open; Cloudflare rebuilds the
+# site from it automatically. See EDITING.md for a short guide.
 
 media:
   input: public/images
   output: /images
+  categories: [image]
+  rename: safe
 
 content:
   - name: posts
     label: Writing
+    description: >-
+      Blog posts and short notes. Each one lives at /posts/<file-name>/, and the
+      file name is made from the title when you create it. Tick Draft to keep a
+      post off the live site while you work on it.
     type: collection
     path: src/content/posts
-    filename: "{primary}.md"
+    filename:
+      template: "{primary}.md"
+      field: create
     view:
       fields: [title, pubDate, kind, draft]
       primary: title
+      search: [title, description, tags]
       sort: [pubDate, title]
       default:
         sort: pubDate
@@ -26,7 +36,7 @@ content:
         required: true
       - name: description
         label: Summary
-        description: One or two sentences shown in lists and link previews.
+        description: One or two sentences, shown in post lists, the RSS feed and link previews.
         type: text
       - name: pubDate
         label: Published
@@ -36,21 +46,28 @@ content:
           format: yyyy-MM-dd
       - name: updatedDate
         label: Updated
+        description: Optional. Fill this in when you revise an older post.
         type: date
         options:
           format: yyyy-MM-dd
       - name: kind
         label: Type
+        description: A note is a short post. Both appear on the Writing page.
         type: select
+        required: true
         default: post
         options:
-          values: [post, note]
+          values:
+            - { value: post, label: Post }
+            - { value: note, label: Note }
       - name: tags
         label: Tags
+        description: Lowercase words such as "fitbit" or "r". Each tag gets its own page and filter on Writing.
         type: string
         list: true
       - name: draft
-        label: Draft (hidden from the live site)
+        label: Draft
+        description: Drafts are hidden from the live site, the homepage and RSS.
         type: boolean
         default: false
       - name: archive
@@ -59,15 +76,21 @@ content:
         hidden: true
       - name: body
         label: Post
+        description: Use the toolbar, or switch to Markdown for code blocks and tables. Images you add are saved in public/images.
         type: rich-text
 
   - name: research
     label: Research
+    description: >-
+      Case studies for the Research page. Each one gets its own page at
+      /research/<file-name>/.
     type: collection
     path: src/content/research
-    filename: "{primary}.md"
+    filename:
+      template: "{primary}.md"
+      field: create
     view:
-      fields: [title, timeframe, featured]
+      fields: [title, timeframe, featured, draft]
       primary: title
     fields:
       - name: title
@@ -76,37 +99,51 @@ content:
         required: true
       - name: description
         label: Summary
+        description: One or two sentences shown on the Research page.
         type: text
         required: true
       - name: role
         label: Role
+        description: Your role on the work, e.g. "Principal investigator".
         type: string
         required: true
       - name: timeframe
         label: Timeframe
+        description: Free text, e.g. "2019 to present".
         type: string
         required: true
       - name: areas
         label: Areas
+        description: Short topic labels shown on the card.
         type: string
         list: true
       - name: featured
-        label: Show on homepage
+        label: Featured
+        description: Featured case studies are listed first on the Research page.
         type: boolean
+        default: false
       - name: draft
         label: Draft
+        description: Drafts are hidden from the live site.
         type: boolean
+        default: false
       - name: body
         label: Write-up
         type: rich-text
 
   - name: pages
     label: Pages
+    description: >-
+      About, Now, CV and Colophon. A page lives at /<file-name>/, so keep the
+      existing file names. You can add a new page here, but adding it to the top
+      navigation needs a code change.
     type: collection
     path: src/content/pages
-    filename: "{primary}.md"
+    filename:
+      template: "{primary}.md"
+      field: create
     view:
-      fields: [title]
+      fields: [title, updatedDate]
       primary: title
     fields:
       - name: title
@@ -114,10 +151,12 @@ content:
         type: string
         required: true
       - name: description
-        label: Summary for search and link previews
+        label: Summary
+        description: Used for search results and link previews.
         type: text
       - name: updatedDate
-        label: Last updated (shown on the Now page)
+        label: Last updated
+        description: Shown under the page title. Change it whenever you update the Now page.
         type: date
         options:
           format: yyyy-MM-dd
@@ -127,13 +166,22 @@ content:
 
   - name: lab
     label: Lab
+    description: >-
+      Cards for the Lab page. The app itself is code: put it in
+      public/lab/<file-name>/ (or add an Astro page), then set its status to Live.
+      An Idea or Building card is shown without a link.
     type: collection
     path: src/content/lab
-    filename: "{primary}.md"
+    filename:
+      template: "{primary}.md"
+      field: create
     view:
       fields: [title, status, order]
       primary: title
       sort: [order, title]
+      default:
+        sort: order
+        order: asc
     fields:
       - name: title
         label: Title
@@ -141,106 +189,180 @@ content:
         required: true
       - name: description
         label: One-line description
+        description: Shown on the card under the title.
         type: text
         required: true
       - name: status
         label: Status
+        description: Only Live cards link anywhere.
         type: select
+        required: true
         default: idea
         options:
-          values: [live, building, idea]
+          values:
+            - { value: live, label: "Live (linked)" }
+            - { value: building, label: Building }
+            - { value: idea, label: Idea }
       - name: url
-        label: Link (leave empty to use /lab/<file-name>/ once live)
+        label: Link
+        description: Optional. Leave empty to link to /lab/<file-name>/. Use a full URL for an app hosted elsewhere, or a path like /#ask.
         type: string
       - name: image
-        label: Card image (optional; a drawn thumbnail is used otherwise)
+        label: Card image
+        description: Optional screenshot, about 4:3. Without one, the card uses the drawn thumbnail below.
         type: image
       - name: thumb
-        label: Drawn thumbnail style
+        label: Drawn thumbnail
+        description: Placeholder drawing used when there is no card image.
         type: select
+        required: true
         default: line
         options:
-          values: [rings, table, line, bars]
+          values:
+            - { value: rings, label: Rings }
+            - { value: table, label: Table }
+            - { value: line, label: Line chart }
+            - { value: bars, label: Bar chart }
       - name: order
-        label: Sort order (lower comes first)
+        label: Sort order
+        description: Lower numbers come first.
         type: number
+        default: 100
       - name: body
-        label: Notes (not shown yet)
+        label: Notes
+        description: Private notes for yourself. Not shown on the site yet.
         type: rich-text
 
   - name: home
     label: Homepage
+    description: The text and photo at the top of the homepage, and the title of the SQL box.
     type: file
     path: src/data/home.json
     fields:
       - name: tagline
-        label: Tagline (blue italic line under your name)
+        label: Tagline
+        description: The blue italic line under your name.
         type: text
+        required: true
       - name: intro
         label: Intro paragraph
         type: text
+        required: true
       - name: highlight
         label: Phrase to highlight in the intro
+        description: Must match words in the intro exactly. Leave empty for no highlight.
         type: string
       - name: handNote
-        label: Handwritten note above the SQL box
+        label: Handwritten note
+        description: The handwritten note under the intro, pointing down to the SQL box. Leave empty to hide it.
         type: string
       - name: consoleTitle
         label: SQL box title
         type: string
+        required: true
       - name: consoleHighlight
-        label: Word in the SQL box title to color pink
+        label: Pink word in the SQL box title
+        description: Must match part of the title exactly. Leave empty for no color.
         type: string
       - name: photo
         label: Photo
+        description: A portrait about 520px wide. It is printed in pink and blue, so a plain background works best.
         type: image
       - name: photoLabel
-        label: Photo label lines
+        label: Photo label
+        description: The small lines printed beside the photo, one per line.
         type: string
         list: true
 
   - name: dataset
     label: SQL box data
+    description: >-
+      The tables visitors can query in the homepage SQL box. You can edit rows
+      here. The posts and lab tables are built from Writing and Lab
+      automatically. Adding a new table or column needs a code change.
     type: file
     path: src/data/dataset.json
     fields:
       - name: starters
         label: Starter questions
+        description: The buttons above the editor. Each one fills in a query.
         type: object
-        list: true
+        list:
+          collapsible:
+            collapsed: true
+            summary: "{fields.label}"
         fields:
           - name: label
+            label: Button text
             type: string
+            required: true
           - name: sql
+            label: Query
+            description: "Tables: me(field, value), jobs(start_year, end_year, title, org), interests(topic, level), posts(date, title, kind, tags), lab(slug, title, status)."
             type: text
+            required: true
       - name: me
         label: "Table: me"
+        description: Facts about you, one per row.
         type: object
-        list: true
+        list:
+          collapsible:
+            collapsed: true
+            summary: "{fields.field}: {fields.value}"
         fields:
           - name: field
+            label: Field
+            description: Lowercase with underscores, e.g. favorite_question.
             type: string
+            required: true
+            pattern:
+              regex: "^[a-z0-9_]+$"
+              message: Use lowercase letters, numbers and underscores.
           - name: value
+            label: Value
             type: string
+            required: true
       - name: jobs
         label: "Table: jobs"
         type: object
-        list: true
+        list:
+          collapsible:
+            collapsed: true
+            summary: "{fields.start_year} {fields.title}, {fields.org}"
         fields:
           - name: start_year
+            label: Start year
             type: number
+            required: true
           - name: end_year
+            label: End year
+            description: Leave empty for your current job.
             type: number
           - name: title
+            label: Title
             type: string
+            required: true
           - name: org
+            label: Organization
             type: string
+            required: true
       - name: interests
         label: "Table: interests"
         type: object
-        list: true
+        list:
+          collapsible:
+            collapsed: true
+            summary: "{fields.topic} ({fields.level})"
         fields:
           - name: topic
+            label: Topic
             type: string
+            required: true
           - name: level
+            label: Level
+            description: 1 to 10. The "Top interests" starter sorts by this.
             type: number
+            required: true
+            options:
+              min: 1
+              max: 10
