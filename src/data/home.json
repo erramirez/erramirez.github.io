@@ -4,5 +4,11 @@
   "highlight": "data are made of people",
   "handNote": "ask me something. it's a real database.",
   "photo": "/images/er_headshot.jpg",
-  "photoLabel": ["Ernesto Ramirez, Ph.D.", "Los Angeles, CA", "Research Science · Evidation"]
+  "photoLabel": [
+    "Ernesto Ramirez, Ph.D.",
+    "Los Angeles, CA",
+    "Research Science · Evidation"
+  ],
+  "consoleTitle": "SELECT * FROM ernesto;",
+  "consoleHighlight": "ernesto"
 }

@@ -185,6 +185,12 @@ content:
       - name: handNote
         label: Handwritten note above the SQL box
         type: string
+      - name: consoleTitle
+        label: SQL box title
+        type: string
+      - name: consoleHighlight
+        label: Word in the SQL box title to color pink
+        type: string
       - name: photo
         label: Photo
         type: image

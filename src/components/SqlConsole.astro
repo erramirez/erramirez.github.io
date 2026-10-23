@@ -3,6 +3,7 @@
 // me / jobs / interests come from src/data/dataset.json (editable in Pages CMS);
 // posts and lab are generated from the content collections at build time.
 import dataset from "../data/dataset.json";
+import home from "../data/home.json";
 import { getLab, getPosts } from "../lib/utils";
 
 const posts = (await getPosts()).filter((p) => !p.data.draft);
@@ -21,10 +22,13 @@ const tables: Record<string, Record<string, unknown>[]> = {
   lab: lab.map((l) => ({ slug: l.id, title: l.data.title, status: l.data.status })),
 };
 const initial = dataset.starters[1]?.sql ?? "SELECT * FROM me;";
+const [titleBefore, titleAfter] = home.consoleHighlight && home.consoleTitle.includes(home.consoleHighlight)
+  ? home.consoleTitle.split(home.consoleHighlight)
+  : [home.consoleTitle, undefined];
 ---
 
 <section class="console" id="ask" aria-label="Query my data">
-  <header><h2>Ask the <em>dataset</em></h2><small>SQLite, running in your browser</small></header>
+  <header><h2>{titleBefore}{titleAfter !== undefined && <><em>{home.consoleHighlight}</em>{titleAfter}</>}</h2><small>SQLite, running in your browser</small></header>
   <aside class="schema"><h3>TABLES</h3><div data-schema>loading…</div></aside>
   <div class="editor">
     <label for="sql" class="kbd">query.sql</label>
