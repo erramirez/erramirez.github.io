@@ -74,7 +74,7 @@ DailyStepsPlot <- ggplot(DailySteps, aes(x=Date, y=StepTotal)) #This will base p
 DailyStepsPlot + geom_bar(stat="identity") + scale_x_date(breaks=date_breaks("1 month"))
 ```
 
-![](/images/archive/posts/2016-02-23-visualizing-time-series-data/bar_plot-1.png)
+![](/images/posts/2016-02-23-visualizing-time-series-data/bar_plot-1.png)
 
 ## Line Plots
 
@@ -84,7 +84,7 @@ What about a line plot (with added points)?
 DailyStepsPlot + geom_line(colour="blue") + geom_point(colour="blue4") + scale_x_date(breaks=date_breaks("3 month"))
 ```
 
-![](/images/archive/posts/2016-02-23-visualizing-time-series-data/linepoint_plot-1.png)
+![](/images/posts/2016-02-23-visualizing-time-series-data/linepoint_plot-1.png)
 
 ## Multiple Line Plots
 
@@ -98,7 +98,7 @@ ggplot(MinuteSteps, aes(x=Time, y=Steps, group=Date)) +
   scale_x_datetime(breaks=date_breaks("2 hour"), labels=date_format("%H:%M"))
 ```
 
-![](/images/archive/posts/2016-02-23-visualizing-time-series-data/multiple_lines-1.png)
+![](/images/posts/2016-02-23-visualizing-time-series-data/multiple_lines-1.png)
 
 You can see some clear banding at 120 steps/min or so and another a bit lower around 75 steps/min. It also appears that there a few days with periods of high activity (>150 steps/min) just past 6PM (18:00). But, could it be clearer?
 
@@ -112,7 +112,7 @@ ggplot(MinuteSteps, aes(x=Time, y=Steps, group=Date)) +
   scale_x_datetime(breaks=date_breaks("2 hour"), labels=date_format("%H:%M"))
 ```
 
-![](/images/archive/posts/2016-02-23-visualizing-time-series-data/scatterplot-1.png)
+![](/images/posts/2016-02-23-visualizing-time-series-data/scatterplot-1.png)
 
 ## Grouping Daily Data (Multiple Lines & Facets Wrapping)
 
@@ -134,7 +134,7 @@ Let’s see if we can plot differences between days:
 ggplot(DailySteps, aes(x=Date, y=StepTotal, group=Day, colour=Day)) + geom_path() + geom_point() + scale_x_date(breaks=date_breaks("1 month"))
 ```
 
-![](/images/archive/posts/2016-02-23-visualizing-time-series-data/alldays_lineplot-1.png)
+![](/images/posts/2016-02-23-visualizing-time-series-data/alldays_lineplot-1.png)
 
 Well, that’s a mess. What if we graph each day individually? We can do this by calling creating multiple facets of the same plot.
 
@@ -147,7 +147,7 @@ ggplot(DailySteps, aes(x=Date, y=StepTotal, colour=Day)) +
   theme(legend.position="none")
 ```
 
-![](/images/archive/posts/2016-02-23-visualizing-time-series-data/alldays_facet-1.png)
+![](/images/posts/2016-02-23-visualizing-time-series-data/alldays_facet-1.png)
 
 That’s a bit better, but I personally think the week starts on Monday, not Sunday. Let’s fix that in our data.
 
@@ -162,7 +162,7 @@ ggplot(DailySteps, aes(x=Date, y=StepTotal, colour=Day2)) +
   theme(legend.position="none")
 ```
 
-![](/images/archive/posts/2016-02-23-visualizing-time-series-data/alldays_facet_M-S-1.png)
+![](/images/posts/2016-02-23-visualizing-time-series-data/alldays_facet_M-S-1.png)
 
 ## Grouping Minute Data (Multiple Lines & Facets Wrapping)
 
@@ -183,7 +183,7 @@ ggplot(MinuteSteps, aes(x=Time, y=Steps, colour=Day2)) +
   theme(legend.position="none")
 ```
 
-![](/images/archive/posts/2016-02-23-visualizing-time-series-data/minute_point_facet-1.png)
+![](/images/posts/2016-02-23-visualizing-time-series-data/minute_point_facet-1.png)
 
 Well, that’s nice to look at, but still hard to understand any type of trends or patterns. Since we have so much data, we can probably better understand what’s going on by collapsing it. For instance, we might want to know what an “average Monday” might look like. That’s easy to do!
 
@@ -197,4 +197,4 @@ ggplot(MinuteSteps.AvgDays, aes(x=Time, y=Steps, colour=Day2)) +
   theme(legend.position="none")
 ```
 
-![](/images/archive/posts/2016-02-23-visualizing-time-series-data/minute_path_facet-1.png)
+![](/images/posts/2016-02-23-visualizing-time-series-data/minute_path_facet-1.png)

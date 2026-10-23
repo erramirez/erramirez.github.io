@@ -75,7 +75,7 @@ mf.stacked.bar <- ggplot(MaximumFun, aes(monthyear)) + geom_bar() +
 mf.stacked.bar
 ```
 
-![](/images/archive/posts/2016-06-04-how-much-fun-is-maximum-fun/barchart-1.png)
+![](/images/posts/2016-06-04-how-much-fun-is-maximum-fun/barchart-1.png)
 
 That’s not bad, but what if we wanted to know which shows were on the network over time? We can use the “id” variable we created in the initial data scrapping process to label each show. This visualization needs a better color palette to better differentiate between each show, but I’ll leave it here for now:
 
@@ -90,7 +90,7 @@ mf.stacked.bar2 <- ggplot(MaximumFun, aes(monthyear, fill = id)) + geom_bar() +
 mf.stacked.bar2
 ```
 
-![](/images/archive/posts/2016-06-04-how-much-fun-is-maximum-fun/barchart_shows-1.png)
+![](/images/posts/2016-06-04-how-much-fun-is-maximum-fun/barchart_shows-1.png)
 
 What can we find out about each show? Let’s start with visualizing the total number of hours each podcast has published:
 
@@ -107,7 +107,7 @@ mf.stacked.bar4
 ## Warning: Removed 32 rows containing missing values (position_stack).
 ```
 
-![](/images/archive/posts/2016-06-04-how-much-fun-is-maximum-fun/show_hours-1.png)
+![](/images/posts/2016-06-04-how-much-fun-is-maximum-fun/show_hours-1.png)
 
 How about the number of episodes per show?
 
@@ -119,7 +119,7 @@ mf.stacked.bar5 <- ggplot(MaximumFun, aes(id)) + geom_bar() +
 mf.stacked.bar5
 ```
 
-![](/images/archive/posts/2016-06-04-how-much-fun-is-maximum-fun/show_episodes-1.png)
+![](/images/posts/2016-06-04-how-much-fun-is-maximum-fun/show_episodes-1.png)
 
 I also got around to reformatting the data so that we could look at the number of shows and amount of content produced by Maximum Fun over time. To do that we first have to create a new dataset that aggregates some of the information:
 
@@ -162,7 +162,7 @@ mf.stacked.bar5 <- ggplot(MaxFunShows, aes(monthyear, NumberofShows)) + geom_bar
 mf.stacked.bar5
 ```
 
-![](/images/archive/posts/2016-06-04-how-much-fun-is-maximum-fun/barchart_number_shows-1.png)
+![](/images/posts/2016-06-04-how-much-fun-is-maximum-fun/barchart_number_shows-1.png)
 
 What about the amount of content over time?
 
@@ -173,7 +173,7 @@ mf.stacked.bar5 <- ggplot(MaxFunShows, aes(monthyear, (DurationofShows/60))) + g
 mf.stacked.bar5
 ```
 
-![](/images/archive/posts/2016-06-04-how-much-fun-is-maximum-fun/barchart_networkhours-1.png)
+![](/images/posts/2016-06-04-how-much-fun-is-maximum-fun/barchart_networkhours-1.png)
 
 Unfortunately, this doesn’t include some of the great shows that have moved on to be either independtly operated or part of another network, but it’s still a pretty good approximation of the growth over time.
 

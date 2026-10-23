@@ -1,6 +1,5 @@
 ---
-title: What I'm doing now.
-label: Now
+title: Now
 description: What Ernesto Ramirez is focused on right now.
 updatedDate: 2026-10-23
 ---
@@ -20,3 +19,4 @@ We're a family of five in Los Angeles. Juggling three kids is a little chaotic, 
 
 - Rebuilding it after a long nap (the last post was in 2017).
 - Collecting the older writing that's still worth keeping.
+- Filling the [lab](/lab/) with small experiments.

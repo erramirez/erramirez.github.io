@@ -1,42 +1,70 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
-import { formatDate, getPosts, postUrl, tagUrl } from "../../lib/utils";
+import { formatDate, getPosts, postUrl } from "../../lib/utils";
 
 const posts = await getPosts();
-const byYear = Object.entries(
-  Object.groupBy(posts, (p) => String(p.data.pubDate.getUTCFullYear())),
-).sort(([a], [b]) => Number(b) - Number(a));
+const tags = [...new Set(posts.flatMap((p) => p.data.tags))].sort();
+const years = [...new Set(posts.map((p) => p.data.pubDate.getUTCFullYear()))].sort((a, b) => b - a);
+const first = Math.min(2014, ...years);
+const last = new Date().getUTCFullYear();
+const span = Array.from({ length: last - first + 1 }, (_, i) => first + i);
+const counts = span.map((y) => posts.filter((p) => !p.data.draft && p.data.pubDate.getUTCFullYear() === y).length);
+const max = Math.max(1, ...counts);
 ---
 
 <BaseLayout title="Writing | Ernesto Ramirez" description="Essays, notes, and R experiments by Ernesto Ramirez.">
-  <section class="page wide-page">
-    <h1>Essays, notes, and the occasional R experiment.</h1>
-    {
-      byYear.map(([year, items]) => (
-        <section class="year-group">
-          <h2 class="year">{year}</h2>
-          <div class="post-list">
-            {items!.map((post) => (
-              <article>
-                <p class="meta">
-                  {formatDate(post.data.pubDate)}
-                  {post.data.kind === "note" && <span class="badge">note</span>}
-                  {post.data.draft && <span class="badge warn">draft</span>}
-                </p>
-                <h3><a href={postUrl(post.id)}>{post.data.title}</a></h3>
-                <p>{post.data.description}</p>
-                {post.data.tags.length > 0 && (
-                  <ul class="tag-list">
-                    {post.data.tags.map((tag) => (
-                      <li><a href={tagUrl(tag)}>{tag}</a></li>
-                    ))}
-                  </ul>
-                )}
-              </article>
+  <h1 class="h-l">Writing</h1>
+  <p class="cap">Fig. 1. Posts per year, {first}–{last}.</p>
+  <div class="mini-chart" style="max-width:560px">
+    <div class="bars" style={`grid-template-columns:repeat(${span.length},1fr)`}>
+      {counts.map((n, i) => <i class={n ? "" : "z"} style={`height:${n ? Math.round((n / max) * 100) : 2}%`} title={`${span[i]}: ${n} posts`} />)}
+    </div>
+    <div class="lbl" style={`grid-template-columns:repeat(${span.length},1fr)`}>
+      {span.map((y) => <span>{String(y).slice(2)}</span>)}
+    </div>
+  </div>
+
+  <div class="chips" style="margin-top:24px" data-tag-chips>
+    <button class="chip" type="button" data-tag="" aria-pressed="true">all</button>
+    {tags.map((t) => <button class="chip" type="button" data-tag={t} aria-pressed="false">{t}</button>)}
+  </div>
+
+  {
+    years.map((y) => (
+      <section class="year-group" data-year>
+        <p class="year">{y}</p>
+        <ul class="log">
+          {posts
+            .filter((p) => p.data.pubDate.getUTCFullYear() === y)
+            .map((p) => (
+              <li data-tags={p.data.tags.join("|")}>
+                <time datetime={p.data.pubDate.toISOString()}>{formatDate(p.data.pubDate, "short")}</time>
+                <div>
+                  <a href={postUrl(p.id)}>{p.data.title}</a>
+                  {p.data.draft && <span class="status idea" style="margin-left:8px">draft</span>}
+                  {p.data.description && <p>{p.data.description}</p>}
+                  {p.data.tags.length > 0 && <div class="tags">{p.data.tags.join(", ")}</div>}
+                </div>
+              </li>
             ))}
-          </div>
-        </section>
-      ))
-    }
-  </section>
+        </ul>
+      </section>
+    ))
+  }
 </BaseLayout>
+
+<script>
+  const chips = document.querySelectorAll<HTMLButtonElement>("[data-tag-chips] button");
+  chips.forEach((chip) =>
+    chip.addEventListener("click", () => {
+      const tag = chip.dataset.tag;
+      chips.forEach((c) => c.setAttribute("aria-pressed", String(c === chip)));
+      document.querySelectorAll<HTMLElement>("[data-tags]").forEach((li) => {
+        li.hidden = !!tag && !li.dataset.tags!.split("|").includes(tag);
+      });
+      document.querySelectorAll<HTMLElement>("[data-year]").forEach((g) => {
+        g.hidden = !g.querySelector("[data-tags]:not([hidden])");
+      });
+    }),
+  );
+</script>

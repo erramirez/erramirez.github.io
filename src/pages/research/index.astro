@@ -8,25 +8,20 @@ const research = (await getCollection("research"))
 ---
 
 <BaseLayout title="Research | Ernesto Ramirez" description="Selected research and case studies by Ernesto Ramirez.">
-  <section class="page wide-page">
-    <h1>Applied research, data practice, and digital health evidence.</h1>
-    <p class="lede">
-      A small portfolio of projects and case studies: the problem, my role, the approach, and what
-      changed.
-    </p>
-    <div class="research-list">
-      {
-        research.map((item) => (
-          <article class="research-item">
-            <p class="meta">{item.data.role} · {item.data.timeframe}</p>
-            <h2><a href={`/research/${item.id}/`}>{item.data.title}</a></h2>
+  <h1 class="h-l">Research</h1>
+  <p class="lede" style="margin-top:6px">Selected work on digital health evidence, patient-generated data, and research communication.</p>
+  <ul class="log" style="margin-top:30px;max-width:46rem">
+    {
+      research.map((item) => (
+        <li>
+          <time>{item.data.timeframe}</time>
+          <div>
+            <a href={`/research/${item.id}/`}>{item.data.title}</a>
             <p>{item.data.description}</p>
-            <ul class="tag-list">
-              {item.data.areas.map((area) => <li>{area}</li>)}
-            </ul>
-          </article>
-        ))
-      }
-    </div>
-  </section>
+            <div class="tags">{item.data.areas.join(", ")}</div>
+          </div>
+        </li>
+      ))
+    }
+  </ul>
 </BaseLayout>

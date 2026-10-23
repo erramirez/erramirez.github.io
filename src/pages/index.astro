@@ -1,105 +1,71 @@
 ---
-import { getCollection } from "astro:content";
 import BaseLayout from "../layouts/BaseLayout.astro";
-import ActivityRings from "../components/ActivityRings.astro";
-import Vitals from "../components/Vitals.astro";
-import WritingHeatmap from "../components/WritingHeatmap.astro";
-import { formatDate, getPosts, postUrl } from "../lib/utils";
+import SqlConsole from "../components/SqlConsole.astro";
+import home from "../data/home.json";
+import { formatDate, getLab, getPosts, labUrl, postUrl } from "../lib/utils";
 
-const posts = await getPosts();
-const latest = posts.slice(0, 4);
-const featuredResearch = (await getCollection("research"))
-  .filter((item) => !item.data.draft && item.data.featured)
-  .slice(0, 3);
+const posts = (await getPosts()).filter((p) => !p.data.draft).slice(0, 4);
+const lab = (await getLab()).slice(0, 4);
+const [before, after] = home.intro.includes(home.highlight)
+  ? home.intro.split(home.highlight)
+  : [home.intro, undefined];
 ---
 
 <BaseLayout>
-  <section class="hero">
-    <div class="hero-copy">
-      <h1>Hi, I'm <em>Ernesto</em>.</h1>
-      <p class="lede">
-        I work where digital health, patient-generated data, and decentralized research meet. I
-        try to do research that matters, because data are made of people.
-      </p>
-      <div class="actions">
-        <a class="button primary" href="/research/">Selected research</a>
-        <a class="button" href="/posts/">Read the writing</a>
-      </div>
-    </div>
-    <ActivityRings />
-  </section>
-
-  <Vitals />
-
-  <section class="band">
-    <h2>What I think about</h2>
-    <ul class="questions">
-      <li>
-        <a href="/about/#digital-health">
-          <h3>Digital health</h3>
-          <p>How can sensors, devices, and patient-generated data produce evidence people can use?</p>
-        </a>
-      </li>
-      <li>
-        <a href="/about/#research-methods">
-          <h3>Research methods</h3>
-          <p>How do you turn ambiguous objectives into rigorous evidence?</p>
-        </a>
-      </li>
-      <li>
-        <a href="/about/#data-communication">
-          <h3>Data communication</h3>
-          <p>How do you tell the story of the data you've collected?</p>
-        </a>
-      </li>
-    </ul>
-  </section>
-
-  <section class="band">
-    <div class="section-heading">
-      <h2>Selected research</h2>
-      <a href="/research/">View all</a>
-    </div>
-    <div class="research-list">
-      {
-        featuredResearch.map((item) => (
-          <article class="research-item">
-            <p class="meta">{item.data.role} · {item.data.timeframe}</p>
-            <h3><a href={`/research/${item.id}/`}>{item.data.title}</a></h3>
-            <p>{item.data.description}</p>
-            <ul class="tag-list">
-              {item.data.areas.map((area) => <li>{area}</li>)}
-            </ul>
-          </article>
-        ))
-      }
-    </div>
-  </section>
-
-  <section class="band split">
+  <div class="hero">
     <div>
-      <div class="section-heading">
-        <h2>Latest writing</h2>
-        <a href="/posts/">View all</a>
+      <h1 class="h-xl">
+        <span class="p">Ernesto<br />Ramirez</span><span class="b" aria-hidden="true">Ernesto<br />Ramirez</span>
+      </h1>
+      <p class="sub">{home.tagline}</p>
+      <p class="lede">
+        {before}{after !== undefined && <><mark>{home.highlight}</mark>{after}</>}
+      </p>
+      <p class="hand" style="margin-top:18px">↓ {home.handNote}</p>
+    </div>
+    <figure class="specimen">
+      <div class="duo"><img src={home.photo} alt="Ernesto Ramirez" width="520" height="734" /></div>
+      <div class="tag">
+        {home.photoLabel.map((line, i) => (i === 0 ? <i>{line}</i> : <><br />{line}</>))}
       </div>
-      <div class="post-list">
+    </figure>
+  </div>
+
+  <SqlConsole />
+
+  <div class="two">
+    <div>
+      <h2 class="h-m">Latest writing</h2>
+      <p class="cap">Essays, notes, and R experiments.</p>
+      <ul class="log">
         {
-          latest.map((post) => (
-            <article>
-              <p class="meta">
-                {formatDate(post.data.pubDate)}
-                {post.data.kind === "note" && <span class="badge">note</span>}
-              </p>
-              <h3><a href={postUrl(post.id)}>{post.data.title}</a></h3>
-              <p>{post.data.description}</p>
-            </article>
+          posts.map((p) => (
+            <li>
+              <time datetime={p.data.pubDate.toISOString()}>{p.data.pubDate.toISOString().slice(0, 10)}</time>
+              <a href={postUrl(p.id)} title={formatDate(p.data.pubDate)}>{p.data.title}</a>
+            </li>
           ))
         }
-      </div>
+      </ul>
+      <a class="more" href="/posts/">All writing →</a>
     </div>
-    <WritingHeatmap posts={posts}>
-      <b>My writing streak, honestly reported.</b> Each square is a month. The long quiet stretch
-      after 2017 is technically known as "having kids."
-    </WritingHeatmap>
-  </section>
+    <div>
+      <h2 class="h-m">From the lab</h2>
+      <p class="cap">Small apps and data toys.</p>
+      <ul class="log">
+        {
+          lab.map((l) => {
+            const href = labUrl(l) ?? "/lab/";
+            return (
+              <li>
+                <time><span class={`status ${l.data.status}`}>{l.data.status}</span></time>
+                <a href={href}>{l.data.title}</a>
+              </li>
+            );
+          })
+        }
+      </ul>
+      <a class="more" href="/lab/">Visit the lab →</a>
+    </div>
+  </div>
 </BaseLayout>

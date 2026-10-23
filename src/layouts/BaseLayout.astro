@@ -1,6 +1,5 @@
 ---
 import "../styles/global.css";
-import StepCounter from "../components/StepCounter.astro";
 
 interface Props {
   title?: string;
@@ -9,17 +8,20 @@ interface Props {
 
 const {
   title = "Ernesto Ramirez",
-  description = "Ernesto Ramirez: data, digital health, research, and the people behind the numbers.",
+  description = "Ernesto Ramirez: public health researcher, writer, and builder of small data experiments.",
 } = Astro.props;
 
 const navItems = [
-  { href: "/research/", label: "Research" },
   { href: "/posts/", label: "Writing" },
+  { href: "/lab/", label: "Lab", cls: "lab" },
+  { href: "/research/", label: "Research" },
   { href: "/about/", label: "About" },
   { href: "/now/", label: "Now" },
   { href: "/cv/", label: "CV" },
 ];
 const path = Astro.url.pathname;
+const current = (href: string) =>
+  path.startsWith(href) || (href === "/posts/" && path.startsWith("/tags/"));
 const canonical = new URL(path, Astro.site);
 ---
 
@@ -27,53 +29,51 @@ const canonical = new URL(path, Astro.site);
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="alternate" type="application/rss+xml" title="Ernesto Ramirez" href="/rss.xml" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
-    <meta property="og:image" content={new URL("/images/er_headshot.png", Astro.site)} />
+    <meta property="og:image" content={new URL("/images/er_headshot.jpg", Astro.site)} />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible+Next:ital,wght@0,400..800;1,400..800&family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=JetBrains+Mono:wght@400;600&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Spectral:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Mono:wght@400;600&family=Reenie+Beanie&display=swap"
     />
     <title>{title}</title>
   </head>
   <body>
     <a class="skip" href="#main">Skip to content</a>
-    <header class="site-header">
-      <a class="brand" href="/" aria-label="Ernesto Ramirez home">
-        <svg viewBox="0 0 64 24" aria-hidden="true" class="pulse">
-          <polyline points="0,14 14,14 19,4 25,22 30,9 34,14 64,14" />
-        </svg>
-        <span>ernesto<b>ramirez</b></span>
-      </a>
-      <nav aria-label="Primary">
-        {
-          navItems.map((item) => (
-            <a href={item.href} aria-current={path.startsWith(item.href) ? "page" : undefined}>
-              {item.label}
-            </a>
-          ))
-        }
-      </nav>
-    </header>
-    <main id="main">
-      <slot />
-    </main>
-    <footer class="site-footer">
-      <p class="motto">Data are made of people.</p>
-      <div class="footer-links">
-        <a href="/rss.xml">RSS</a>
-        <a href="https://github.com/erramirez">GitHub</a>
-        <a href="/colophon/">Colophon</a>
+    <header class="mast gut">
+      <div class="wrap">
+        <a class="mark" href="/">Ernesto Ramirez<span>.</span></a>
+        <nav class="nav" aria-label="Primary">
+          {
+            navItems.map((item) => (
+              <a href={item.href} class={item.cls} aria-current={current(item.href) ? "page" : undefined}>
+                {item.label}
+              </a>
+            ))
+          }
+        </nav>
       </div>
-      <p class="fine">© {new Date().getFullYear()} Ernesto Ramirez. Code by a 🤖, words by a human.</p>
+    </header>
+    <main id="main" class="gut">
+      <div class="wrap">
+        <slot />
+      </div>
+    </main>
+    <footer class="gut">
+      <div class="wrap">
+        <span>Data are made of people.</span>
+        <span>
+          <a href="/rss.xml">RSS</a> · <a href="https://github.com/erramirez">GitHub</a> · <a href="/colophon/">Colophon</a> ·
+          © {new Date().getFullYear()}
+        </span>
+      </div>
     </footer>
-    <StepCounter />
   </body>
 </html>

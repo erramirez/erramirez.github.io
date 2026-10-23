@@ -1,6 +1,5 @@
 ---
-title: Curriculum vitae
-label: CV
+title: CV
 description: CV and professional details for Ernesto Ramirez.
 ---
 

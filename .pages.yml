@@ -106,14 +106,11 @@ content:
     path: src/content/pages
     filename: "{primary}.md"
     view:
-      fields: [label, title]
-      primary: label
+      fields: [title]
+      primary: title
     fields:
-      - name: label
-        label: Name (browser tab)
-        type: string
       - name: title
-        label: Headline
+        label: Title
         type: string
         required: true
       - name: description
@@ -128,20 +125,116 @@ content:
         label: Content
         type: rich-text
 
-  - name: vitals
-    label: Homepage readouts
-    type: file
-    path: src/data/vitals.json
+  - name: lab
+    label: Lab
+    type: collection
+    path: src/content/lab
+    filename: "{primary}.md"
+    view:
+      fields: [title, status, order]
+      primary: title
+      sort: [order, title]
     fields:
-      - name: status
-        label: Status line
+      - name: title
+        label: Title
         type: string
-      - name: readouts
-        label: Readouts
+        required: true
+      - name: description
+        label: One-line description
+        type: text
+        required: true
+      - name: status
+        label: Status
+        type: select
+        default: idea
+        options:
+          values: [live, building, idea]
+      - name: url
+        label: Link (leave empty to use /lab/<file-name>/ once live)
+        type: string
+      - name: image
+        label: Card image (optional; a drawn thumbnail is used otherwise)
+        type: image
+      - name: thumb
+        label: Drawn thumbnail style
+        type: select
+        default: line
+        options:
+          values: [rings, table, line, bars]
+      - name: order
+        label: Sort order (lower comes first)
+        type: number
+      - name: body
+        label: Notes (not shown yet)
+        type: rich-text
+
+  - name: home
+    label: Homepage
+    type: file
+    path: src/data/home.json
+    fields:
+      - name: tagline
+        label: Tagline (blue italic line under your name)
+        type: text
+      - name: intro
+        label: Intro paragraph
+        type: text
+      - name: highlight
+        label: Phrase to highlight in the intro
+        type: string
+      - name: handNote
+        label: Handwritten note above the SQL box
+        type: string
+      - name: photo
+        label: Photo
+        type: image
+      - name: photoLabel
+        label: Photo label lines
+        type: string
+        list: true
+
+  - name: dataset
+    label: SQL box data
+    type: file
+    path: src/data/dataset.json
+    fields:
+      - name: starters
+        label: Starter questions
         type: object
         list: true
         fields:
           - name: label
             type: string
+          - name: sql
+            type: code
+      - name: me
+        label: "Table: me"
+        type: object
+        list: true
+        fields:
+          - name: field
+            type: string
           - name: value
             type: string
+      - name: jobs
+        label: "Table: jobs"
+        type: object
+        list: true
+        fields:
+          - name: start_year
+            type: number
+          - name: end_year
+            type: number
+          - name: title
+            type: string
+          - name: org
+            type: string
+      - name: interests
+        label: "Table: interests"
+        type: object
+        list: true
+        fields:
+          - name: topic
+            type: string
+          - name: level
+            type: number

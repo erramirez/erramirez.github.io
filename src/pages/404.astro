@@ -2,19 +2,10 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 ---
 
-<BaseLayout title="Lost signal | Ernesto Ramirez">
-  <section class="page lost">
-    <h1>Signal lost.</h1>
-    <svg viewBox="0 0 400 60" class="flatline" aria-hidden="true">
-      <polyline points="0,30 90,30 105,8 120,52 135,30 400,30" />
-    </svg>
-    <p class="lede">
-      This page has no data. It may have moved when the site was rebuilt, or it may never have
-      existed. Either way, it's not your fault.
-    </p>
-    <div class="actions">
-      <a class="button primary" href="/">Back to the homepage</a>
-      <a class="button" href="/posts/">Browse the writing</a>
-    </div>
-  </section>
+<BaseLayout title="Not found | Ernesto Ramirez">
+  <div class="lost">
+    <h1 class="h-l">Page not found</h1>
+    <svg viewBox="0 0 400 60" aria-hidden="true"><polyline points="0,30 90,30 105,8 120,52 135,30 400,30" /></svg>
+    <p class="lede">This page may have moved when the site was rebuilt. Try the <a href="/posts/">writing</a>, the <a href="/lab/">lab</a>, or the <a href="/">homepage</a>.</p>
+  </div>
 </BaseLayout>

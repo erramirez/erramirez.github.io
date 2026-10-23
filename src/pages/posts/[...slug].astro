@@ -18,36 +18,36 @@ const minutes = Math.max(1, Math.round(words / 230));
 ---
 
 <BaseLayout title={`${post.data.title} | Ernesto Ramirez`} description={post.data.description}>
-  <article class="page">
-    <h1 class="post-title">{post.data.title}</h1>
-    <p class="meta post-meta">
-      <time datetime={post.data.pubDate.toISOString()}>{formatDate(post.data.pubDate)}</time>
-      <span>· {minutes} min read</span>
-    </p>
-    {
-      post.data.archive && (
-        <p class="archive-note">
-          <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><rect x="2" y="5" width="20" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="8" cy="12" r="2.4" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="16" cy="12" r="2.4" fill="none" stroke="currentColor" stroke-width="1.8"/></svg>
-          <span>From the archive. This was written in {post.data.pubDate.getUTCFullYear()}, and some
-          links, tools, and opinions may have aged.</span>
-        </p>
-      )
-    }
-    <div class="article-body">
-      <Content />
-    </div>
+  <p class="meta-line" style="margin-top:32px"><a href="/posts/">← Writing</a></p>
+  <h1 class="h-l" style="margin-top:16px">{post.data.title}</h1>
+  <p class="meta-line">
+    <time datetime={post.data.pubDate.toISOString()}>{formatDate(post.data.pubDate)}</time> · {minutes} min read
     {
       post.data.tags.length > 0 && (
-        <ul class="tag-list">
-          {post.data.tags.map((tag) => (
-            <li><a href={tagUrl(tag)}>{tag}</a></li>
+        <>
+          {" · "}
+          {post.data.tags.map((t, i) => (
+            <>
+              {i > 0 && ", "}
+              <a class="tags" href={tagUrl(t)}>{t}</a>
+            </>
           ))}
-        </ul>
+        </>
       )
     }
-    <nav class="post-nav" aria-label="More posts">
-      {newer ? <a href={`/posts/${newer.id}/`}>← {newer.data.title}</a> : <span />}
-      {older && <a href={`/posts/${older.id}/`}>{older.data.title} →</a>}
-    </nav>
+  </p>
+  {
+    post.data.archive && (
+      <p class="archive">
+        From the archive: written in {post.data.pubDate.getUTCFullYear()} on the old site. Some links and tools may have aged.
+      </p>
+    )
+  }
+  <article class="prose" style="margin-top:32px">
+    <Content />
   </article>
+  <nav class="post-nav" aria-label="More posts">
+    {newer ? <a href={`/posts/${newer.id}/`}>← {newer.data.title}</a> : <span />}
+    {older && <a href={`/posts/${older.id}/`}>{older.data.title} →</a>}
+  </nav>
 </BaseLayout>

@@ -42,4 +42,20 @@ const pages = defineCollection({
   }),
 });
 
-export const collections = { posts, research, pages };
+// Lab: small apps and experiments. Each app lives at /lab/<slug>/ (drop a static
+// build into public/lab/<slug>/ or add an Astro page) and gets a card from this entry.
+const lab = defineCollection({
+  loader: glob({ pattern: "**/*.md", base: "./src/content/lab" }),
+  schema: z.object({
+    title: z.string(),
+    description: z.string(),
+    status: z.enum(["live", "building", "idea"]).default("idea"),
+    // Where the card links. Defaults to /lab/<slug>/ for live apps.
+    url: z.string().optional(),
+    image: z.string().optional(),
+    thumb: z.enum(["rings", "table", "line", "bars"]).default("line"),
+    order: z.number().default(100),
+  }),
+});
+
+export const collections = { posts, research, pages, lab };

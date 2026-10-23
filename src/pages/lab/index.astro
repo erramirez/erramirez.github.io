@@ -1,0 +1,34 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import LabCard from "../../components/LabCard.astro";
+import { getLab } from "../../lib/utils";
+
+const lab = await getLab();
+const statuses = ["live", "building", "idea"].filter((s) => lab.some((l) => l.data.status === s));
+---
+
+<BaseLayout title="Lab | Ernesto Ramirez" description="Small apps, data toys, and experiments by Ernesto Ramirez.">
+  <h1 class="h-l">Lab</h1>
+  <p class="lede" style="margin-top:6px">
+    Small apps, data toys, and experiments. Some are useful, some are just for fun, and all of them are works in progress.
+  </p>
+  <div class="chips" style="margin:22px 0" data-lab-chips>
+    <button class="chip" type="button" data-s="" aria-pressed="true">everything</button>
+    {statuses.map((s) => <button class="chip" type="button" data-s={s} aria-pressed="false">{s}</button>)}
+  </div>
+  <div class="lab-grid">
+    {lab.map((item) => <LabCard item={item} />)}
+  </div>
+</BaseLayout>
+
+<script>
+  const chips = document.querySelectorAll<HTMLButtonElement>("[data-lab-chips] button");
+  chips.forEach((chip) =>
+    chip.addEventListener("click", () => {
+      chips.forEach((c) => c.setAttribute("aria-pressed", String(c === chip)));
+      document.querySelectorAll<HTMLElement>(".lab-grid [data-status]").forEach((card) => {
+        card.hidden = !!chip.dataset.s && card.dataset.status !== chip.dataset.s;
+      });
+    }),
+  );
+</script>

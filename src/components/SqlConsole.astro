@@ -1,0 +1,127 @@
+---
+// "Ask the dataset": an in-browser SQLite database built from site data.
+// me / jobs / interests come from src/data/dataset.json (editable in Pages CMS);
+// posts and lab are generated from the content collections at build time.
+import dataset from "../data/dataset.json";
+import { getLab, getPosts } from "../lib/utils";
+
+const posts = (await getPosts()).filter((p) => !p.data.draft);
+const lab = await getLab();
+
+const tables: Record<string, Record<string, unknown>[]> = {
+  me: dataset.me,
+  jobs: dataset.jobs.map((j) => ({ end_year: null, ...j })),
+  interests: dataset.interests,
+  posts: posts.map((p) => ({
+    date: p.data.pubDate.toISOString().slice(0, 10),
+    title: p.data.title,
+    kind: p.data.kind,
+    tags: p.data.tags.join(", "),
+  })),
+  lab: lab.map((l) => ({ slug: l.id, title: l.data.title, status: l.data.status })),
+};
+const initial = dataset.starters[1]?.sql ?? "SELECT * FROM me;";
+---
+
+<section class="console" id="ask" aria-label="Query my data">
+  <header><h2>Ask the <em>dataset</em></h2><small>SQLite, running in your browser</small></header>
+  <aside class="schema"><h3>TABLES</h3><div data-schema>loading…</div></aside>
+  <div class="editor">
+    <label for="sql" class="kbd">query.sql</label>
+    <textarea id="sql" spellcheck="false" data-sql>{initial}</textarea>
+    <div class="row">
+      <button class="run" type="button" data-run>Run query ▸</button><span class="kbd">or ⌘/Ctrl + Enter</span>
+    </div>
+    <div class="chips">
+      {dataset.starters.map((s) => <button class="chip" type="button" data-q={s.sql}>{s.label}</button>)}
+    </div>
+    <div class="out" aria-live="polite" data-out></div>
+  </div>
+  <script type="application/json" data-tables set:html={JSON.stringify(tables)} />
+</section>
+
+<script>
+  import initSqlJs from "sql.js";
+  import wasmUrl from "sql.js/dist/sql-wasm-browser.wasm?url";
+
+  const root = document.querySelector<HTMLElement>("#ask")!;
+  const q = <T extends Element>(s: string) => root.querySelector<T>(s)!;
+  const sqlBox = q<HTMLTextAreaElement>("[data-sql]");
+  const out = q<HTMLElement>("[data-out]");
+  const schema = q<HTMLElement>("[data-schema]");
+  const tables: Record<string, Record<string, unknown>[]> = JSON.parse(q("[data-tables]").textContent || "{}");
+  const esc = (v: unknown) =>
+    String(v ?? "NULL").replace(/[&<>]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;" })[c]!);
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  let db: any;
+
+  function renderSchema() {
+    const names: string[] = db.exec("SELECT name FROM sqlite_master WHERE type='table' ORDER BY name")[0]?.values.flat() ?? [];
+    schema.innerHTML =
+      names
+        .map((t) => {
+          const cols: string[] = db.exec(`PRAGMA table_info(${t})`)[0]?.values.map((v: unknown[]) => v[1]) ?? [];
+          return `<button type="button" data-t="${t}">${t}</button><ul>${cols.map((c) => `<li>${c}</li>`).join("")}</ul>`;
+        })
+        .join("") || "<p>No tables left. Refresh to restore them.</p>";
+    schema.querySelectorAll<HTMLButtonElement>("button").forEach((b) => {
+      b.onclick = () => {
+        sqlBox.value = `SELECT * FROM ${b.dataset.t};`;
+        run();
+      };
+    });
+  }
+
+  function run() {
+    if (!db) return;
+    const query = sqlBox.value.trim();
+    try {
+      const res = db.exec(query);
+      if (/^\s*(drop|delete|update|insert|alter|create)/i.test(query)) {
+        out.innerHTML = `<p class="note">Done. Changes only last until you refresh.</p>`;
+        renderSchema();
+        return;
+      }
+      if (!res.length) {
+        out.innerHTML = `<p class="note">No rows matched.</p>`;
+        return;
+      }
+      const { columns, values } = res[res.length - 1];
+      out.innerHTML = `<table><thead><tr>${columns.map((c: string) => `<th>${esc(c)}</th>`).join("")}</tr></thead><tbody>${values
+        .map((r: unknown[]) => `<tr>${r.map((v) => `<td>${esc(v)}</td>`).join("")}</tr>`)
+        .join("")}</tbody></table><p class="count">${values.length} row${values.length === 1 ? "" : "s"}</p>`;
+    } catch (e) {
+      out.innerHTML = `<p class="note">${esc((e as Error).message)}. Check the table names on the left.</p>`;
+    }
+  }
+
+  root.querySelectorAll<HTMLButtonElement>("[data-q]").forEach((b) => {
+    b.onclick = () => {
+      sqlBox.value = b.dataset.q!;
+      run();
+    };
+  });
+  q<HTMLButtonElement>("[data-run]").onclick = run;
+  sqlBox.addEventListener("keydown", (e) => {
+    if ((e.metaKey || e.ctrlKey) && e.key === "Enter") run();
+  });
+
+  initSqlJs({ locateFile: () => wasmUrl })
+    .then((SQL) => {
+      db = new SQL.Database();
+      for (const [name, rows] of Object.entries(tables)) {
+        const cols = [...new Set(rows.flatMap((r) => Object.keys(r)))];
+        if (!cols.length) continue;
+        db.run(`CREATE TABLE ${name} (${cols.join(", ")})`);
+        const st = db.prepare(`INSERT INTO ${name} VALUES (${cols.map(() => "?").join(",")})`);
+        rows.forEach((r) => st.run(cols.map((c) => (r[c] ?? null) as never)));
+        st.free();
+      }
+      renderSchema();
+      run();
+    })
+    .catch(() => {
+      schema.textContent = "The database couldn't load.";
+    });
+</script>

@@ -14,20 +14,20 @@ export async function getStaticPaths() {
 const { tag, posts } = Astro.props;
 ---
 
-<BaseLayout title={`#${tag} | Ernesto Ramirez`}>
-  <section class="page">
-    <h1>#{tag}</h1>
-    <div class="post-list">
-      {
-        posts.map((post) => (
-          <article>
-            <p class="meta">{formatDate(post.data.pubDate)}</p>
-            <h3><a href={postUrl(post.id)}>{post.data.title}</a></h3>
-            <p>{post.data.description}</p>
-          </article>
-        ))
-      }
-    </div>
-    <p><a href="/posts/">← All writing</a></p>
-  </section>
+<BaseLayout title={`Tagged ${tag} | Ernesto Ramirez`}>
+  <p class="meta-line" style="margin-top:32px"><a href="/posts/">← Writing</a></p>
+  <h1 class="h-l" style="margin-top:16px">{tag}</h1>
+  <ul class="log">
+    {
+      posts.map((p) => (
+        <li>
+          <time datetime={p.data.pubDate.toISOString()}>{formatDate(p.data.pubDate, "short")}</time>
+          <div>
+            <a href={postUrl(p.id)}>{p.data.title}</a>
+            {p.data.description && <p>{p.data.description}</p>}
+          </div>
+        </li>
+      ))
+    }
+  </ul>
 </BaseLayout>

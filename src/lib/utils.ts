@@ -14,3 +14,10 @@ export async function getPosts() {
     (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
   );
 }
+
+export async function getLab() {
+  return (await getCollection("lab")).sort((a, b) => a.data.order - b.data.order);
+}
+
+export const labUrl = (item: { id: string; data: { url?: string; status: string } }) =>
+  item.data.url ?? (item.data.status === "live" ? `/lab/${item.id}/` : undefined);

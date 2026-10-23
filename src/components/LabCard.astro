@@ -1,0 +1,23 @@
+---
+import type { CollectionEntry } from "astro:content";
+import LabThumb from "./LabThumb.astro";
+import { labUrl } from "../lib/utils";
+
+interface Props {
+  item: CollectionEntry<"lab">;
+}
+const { item } = Astro.props;
+const href = labUrl(item);
+const Tag = href ? "a" : "div";
+---
+
+<Tag class:list={["exp", { static: !href }]} href={href} data-status={item.data.status}>
+  <div class="thumb">
+    {item.data.image ? <img src={item.data.image} alt="" loading="lazy" style="width:100%;height:100%;object-fit:cover" /> : <LabThumb kind={item.data.thumb} />}
+  </div>
+  <div class="body">
+    <h2>{item.data.title}</h2>
+    <p>{item.data.description}</p>
+    <span class={`status ${item.data.status}`} style="margin-top:auto">{item.data.status}</span>
+  </div>
+</Tag>

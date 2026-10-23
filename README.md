@@ -15,10 +15,21 @@ The hands-on way: add or edit Markdown files directly.
 | Posts and notes | `src/content/posts/*.md` |
 | Research case studies | `src/content/research/*.md` |
 | About, Now, CV, Colophon | `src/content/pages/*.md` |
-| Homepage readouts | `src/data/vitals.json` |
+| Homepage text and photo | `src/data/home.json` |
+| SQL box tables and starter questions | `src/data/dataset.json` |
+| Lab cards | `src/content/lab/*.md` |
 | Images | `public/images/` |
 
 Set `draft: true` to keep a post off the live site (drafts still show in `npm run dev`).
+
+## Lab apps
+
+Each experiment lives at `/lab/<slug>/`. Either drop a built static app (an `index.html` plus
+its assets) into `public/lab/<slug>/`, or add Astro pages under `src/pages/lab/<slug>/`. Then
+add or edit its card in `src/content/lab/<slug>.md` (title, description, status). Cards for
+`live` apps link to `/lab/<slug>/` automatically; set `url` to point somewhere else.
+
+The SQL box's `posts` and `lab` tables are generated from the content at build time.
 
 ## Local development
 

@@ -1,0 +1,34 @@
+{
+  "starters": [
+    { "label": "About me", "sql": "SELECT * FROM me;" },
+    { "label": "Career", "sql": "SELECT title, org, start_year\nFROM jobs\nORDER BY start_year;" },
+    { "label": "Posts per year", "sql": "SELECT substr(date, 1, 4) AS year, COUNT(*) AS posts\nFROM posts\nGROUP BY year;" },
+    { "label": "Top interests", "sql": "SELECT topic FROM interests\nORDER BY level DESC\nLIMIT 3;" },
+    { "label": "What's in the lab", "sql": "SELECT title, status FROM lab;" }
+  ],
+  "me": [
+    { "field": "name", "value": "Ernesto Ramirez" },
+    { "field": "title", "value": "Senior Director, Research Science" },
+    { "field": "employer", "value": "Evidation" },
+    { "field": "city", "value": "Los Angeles" },
+    { "field": "degree", "value": "Ph.D., Public Health (SDSU / UC San Diego)" },
+    { "field": "kids", "value": "3" },
+    { "field": "in_digital_health_since", "value": "2008" }
+  ],
+  "jobs": [
+    { "start_year": 2008, "end_year": 2012, "title": "Graduate Research Assistant", "org": "UC San Diego" },
+    { "start_year": 2012, "end_year": 2014, "title": "Community Organizer", "org": "Quantified Self Labs" },
+    { "start_year": 2014, "end_year": 2016, "title": "Program Director", "org": "Quantified Self Labs" },
+    { "start_year": 2016, "end_year": 2017, "title": "Director of Research & Development", "org": "Fitabase" },
+    { "start_year": 2017, "title": "Senior Director, Research Science", "org": "Evidation" }
+  ],
+  "interests": [
+    { "topic": "digital health", "level": 10 },
+    { "topic": "research methods", "level": 9 },
+    { "topic": "data visualization", "level": 9 },
+    { "topic": "podcasts", "level": 8 },
+    { "topic": "running relays", "level": 7 },
+    { "topic": "the R language", "level": 7 },
+    { "topic": "sci-fi novels", "level": 7 }
+  ]
+}

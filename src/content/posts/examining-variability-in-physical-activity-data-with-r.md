@@ -104,7 +104,7 @@ daily_steps_plot <- ggplot(Daily_Steps, aes(days, StepTotal)) +
 daily_steps_plot
 ```
 
-![](/images/archive/posts/2017-09-10-examining-variability-in-phsyical-activity-with-r/dailysteps-1.png)
+![](/images/posts/2017-09-10-examining-variability-in-phsyical-activity-with-r/dailysteps-1.png)
 
 ### 2. Phase Mean and Phase Median Lines
 
@@ -150,7 +150,7 @@ phase_mean_plot <- ggplot(Daily_Steps, aes(days, StepTotal)) +
 phase_mean_plot
 ```
 
-![](/images/archive/posts/2017-09-10-examining-variability-in-phsyical-activity-with-r/phase_means-1.png)
+![](/images/posts/2017-09-10-examining-variability-in-phsyical-activity-with-r/phase_means-1.png)
 
 ```
 # create a plot with median steps per day per observation period
@@ -180,7 +180,7 @@ phase_median_plot <- ggplot(Daily_Steps, aes(days, StepTotal)) +
 phase_median_plot
 ```
 
-![](/images/archive/posts/2017-09-10-examining-variability-in-phsyical-activity-with-r/phase_medians-1.png)
+![](/images/posts/2017-09-10-examining-variability-in-phsyical-activity-with-r/phase_medians-1.png)
 
 ### 3. Daily Average per Week and Weekly Median
 
@@ -284,7 +284,7 @@ Mean_Week <- ggplot(Mean_Median_Week, aes(weeknum, mean, group = observation)) +
 Mean_Week
 ```
 
-![](/images/archive/posts/2017-09-10-examining-variability-in-phsyical-activity-with-r/mean_week_plot-1.png)
+![](/images/posts/2017-09-10-examining-variability-in-phsyical-activity-with-r/mean_week_plot-1.png)
 
 ```
 # plot the median step counts per week
@@ -309,7 +309,7 @@ annotate("text", x = c(2.25, 16, 42),
 Median_Week
 ```
 
-![](/images/archive/posts/2017-09-10-examining-variability-in-phsyical-activity-with-r/median_week_plot-1.png)
+![](/images/posts/2017-09-10-examining-variability-in-phsyical-activity-with-r/median_week_plot-1.png)
 
 ### 4. Weekly Cumulative
 
@@ -349,7 +349,7 @@ Weekly_Cumulative <- ggplot(Daily_Steps_Week_Cumulative, aes(days, cs, group = w
 Weekly_Cumulative
 ```
 
-![](/images/archive/posts/2017-09-10-examining-variability-in-phsyical-activity-with-r/weekly_cumulative-1.png)
+![](/images/posts/2017-09-10-examining-variability-in-phsyical-activity-with-r/weekly_cumulative-1.png)
 
 ### 5. Proportion of Baseline Mean and Proportion of Baseline Median
 
@@ -419,7 +419,7 @@ Proportion_Mean_Plot <- ggplot(proportions, aes(days2, proportion_mean, group = 
 Proportion_Mean_Plot
 ```
 
-![](/images/archive/posts/2017-09-10-examining-variability-in-phsyical-activity-with-r/proportion_mean_plot-1.png)
+![](/images/posts/2017-09-10-examining-variability-in-phsyical-activity-with-r/proportion_mean_plot-1.png)
 
 ```
 # create median proportion plot
@@ -456,7 +456,7 @@ Proportion_Median_Plot <- ggplot(proportions, aes(days2, proportion_median, grou
 Proportion_Median_Plot
 ```
 
-![](/images/archive/posts/2017-09-10-examining-variability-in-phsyical-activity-with-r/proportion_median_plot-1.png)
+![](/images/posts/2017-09-10-examining-variability-in-phsyical-activity-with-r/proportion_median_plot-1.png)
 
 ### 6. 7-Day Moving Average
 
@@ -498,7 +498,7 @@ movingavg_plot <- ggplot(Daily_Steps_7DMAV, aes(days, sevenmav)) +
 movingavg_plot
 ```
 
-![](/images/archive/posts/2017-09-10-examining-variability-in-phsyical-activity-with-r/movingavg-1.png)
+![](/images/posts/2017-09-10-examining-variability-in-phsyical-activity-with-r/movingavg-1.png)
 
 ### 7. Confidence Intervals
 
@@ -562,7 +562,7 @@ CI_plot <- ggplot(Daily_Steps_CI, aes(days, StepTotal)) +
 CI_plot
 ```
 
-![](/images/archive/posts/2017-09-10-examining-variability-in-phsyical-activity-with-r/CI_plot-1.png)
+![](/images/posts/2017-09-10-examining-variability-in-phsyical-activity-with-r/CI_plot-1.png)
 
 ### 8. Change-point Detection
 
@@ -581,7 +581,7 @@ change <- cpt.mean(Daily_Steps$StepTotal, method="BinSeg", Q=2)
 plot(change) # the default changepoint plot
 ```
 
-![](/images/archive/posts/2017-09-10-examining-variability-in-phsyical-activity-with-r/changepoint-1.png)
+![](/images/posts/2017-09-10-examining-variability-in-phsyical-activity-with-r/changepoint-1.png)
 
 ```
 change
@@ -651,7 +651,7 @@ changepoint_plot <- ggplot(Daily_Steps, aes(days, StepTotal)) +
 changepoint_plot
 ```
 
-![](/images/archive/posts/2017-09-10-examining-variability-in-phsyical-activity-with-r/changepoint-2.png)
+![](/images/posts/2017-09-10-examining-variability-in-phsyical-activity-with-r/changepoint-2.png)
 
 ## Wrapping Up
 

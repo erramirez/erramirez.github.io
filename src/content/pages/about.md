@@ -1,6 +1,5 @@
 ---
-title: Data, research, and storytelling.
-label: About
+title: About
 description: About Ernesto Ramirez, data scientist and public health researcher.
 ---
 
@@ -10,7 +9,7 @@ I'm currently the Senior Director of Research Science at [Evidation](https://evi
 
 Before Evidation I led research and development at Fitabase, ran programs at Quantified Self Labs, and earned my Ph.D. in public health from the SDSU/UC San Diego Joint Doctoral Program, where my dissertation looked at how people use physical activity trackers.
 
-> To learn more about me, check out what I'm up to [now](/now/).
+To see what I'm focused on right now, check out the [now page](/now/).
 
 ## Digital health
 
