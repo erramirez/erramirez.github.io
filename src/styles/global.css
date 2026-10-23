@@ -4,7 +4,7 @@
   color-scheme:light;
   --paper:#f3f4ef;--grid:#dde3e6;--card:#fffffd;--ink:#1a1d24;--muted:#5b6170;
   --pink:#ff3fa4;--pink-ink:#b30f66;--blue:#1f5fbf;--hi:#fff27a;--red:#d22f27;--green:#17704a;
-  --display:"Archivo",ui-sans-serif,system-ui,sans-serif;--serif:"Spectral",Georgia,serif;--mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;--hand:"Reenie Beanie","Comic Sans MS",cursive;
+  --display:"Archivo Variable","Archivo",ui-sans-serif,system-ui,sans-serif;--serif:"Spectral",Georgia,serif;--mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;--hand:"Reenie Beanie","Comic Sans MS",cursive;
 }
 *{box-sizing:border-box}
 html{overflow-x:hidden}
@@ -64,6 +64,7 @@ sup a{font-family:var(--mono);font-size:12px;color:var(--red);text-decoration:no
 .schema h3{font-family:var(--mono);font-size:11px;letter-spacing:.08em;color:var(--muted);margin:0 0 8px;font-weight:600}
 .schema button{all:unset;cursor:pointer;display:block;font-weight:600;color:var(--blue)}
 .schema button:hover,.schema button:focus-visible{background:var(--hi)}
+.schema button:focus-visible{outline:3px solid var(--pink);outline-offset:2px}
 .schema ul{list-style:none;margin:0 0 12px;padding:0 0 0 12px;color:var(--muted)}
 .editor{padding:16px 18px;min-width:0}
 textarea{width:100%;min-height:96px;resize:vertical;border:1.5px solid var(--ink);background:#fbfbf7;font-family:var(--mono);font-size:15px;line-height:1.6;padding:10px 12px;color:var(--ink);caret-color:var(--pink);outline:none}

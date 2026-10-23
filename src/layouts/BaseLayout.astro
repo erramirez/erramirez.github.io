@@ -1,4 +1,14 @@
 ---
+// Self-hosted fonts (no Google Fonts request). Archivo is variable in width and weight.
+import "@fontsource-variable/archivo/wdth.css";
+import "@fontsource/spectral/400.css";
+import "@fontsource/spectral/400-italic.css";
+import "@fontsource/spectral/600.css";
+import "@fontsource/ibm-plex-mono/400.css";
+import "@fontsource/ibm-plex-mono/600.css";
+import "@fontsource/reenie-beanie/400.css";
+import archivoLatin from "@fontsource-variable/archivo/files/archivo-latin-wdth-normal.woff2?url";
+import spectralLatin from "@fontsource/spectral/files/spectral-latin-400-normal.woff2?url";
 import "../styles/global.css";
 
 interface Props {
@@ -37,12 +47,8 @@ const canonical = new URL(path, Astro.site);
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:image" content={new URL("/images/er_headshot.jpg", Astro.site)} />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Spectral:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Mono:wght@400;600&family=Reenie+Beanie&display=swap"
-    />
+    <link rel="preload" href={archivoLatin} as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href={spectralLatin} as="font" type="font/woff2" crossorigin />
     <title>{title}</title>
   </head>
   <body>

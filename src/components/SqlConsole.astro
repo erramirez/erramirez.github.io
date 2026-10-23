@@ -47,7 +47,6 @@ const [titleBefore, titleAfter] = home.consoleHighlight && home.consoleTitle.inc
 </section>
 
 <script>
-  import initSqlJs from "sql.js";
   import wasmUrl from "sql.js/dist/sql-wasm-browser.wasm?url";
 
   const root = document.querySelector<HTMLElement>("#ask")!;
@@ -98,7 +97,7 @@ const [titleBefore, titleAfter] = home.consoleHighlight && home.consoleTitle.inc
         .map((r: unknown[]) => `<tr>${r.map((v) => `<td>${esc(v)}</td>`).join("")}</tr>`)
         .join("")}</tbody></table><p class="count">${values.length} row${values.length === 1 ? "" : "s"}</p>`;
     } catch (e) {
-      out.innerHTML = `<p class="note">${esc((e as Error).message)}. Check the table names on the left.</p>`;
+      out.innerHTML = `<p class="note">${esc((e as Error).message)}. Check the table names in the schema.</p>`;
     }
   }
 
@@ -113,7 +112,10 @@ const [titleBefore, titleAfter] = home.consoleHighlight && home.consoleTitle.inc
     if ((e.metaKey || e.ctrlKey) && e.key === "Enter") run();
   });
 
-  initSqlJs({ locateFile: () => wasmUrl })
+  // sql.js and its ~650 KB wasm load only once the console is near the screen,
+  // so they don't compete with the rest of the page on first load.
+  const boot = () => import("sql.js")
+    .then(({ default: initSqlJs }) => initSqlJs({ locateFile: () => wasmUrl }))
     .then((SQL) => {
       db = new SQL.Database();
       for (const [name, rows] of Object.entries(tables)) {
@@ -130,4 +132,20 @@ const [titleBefore, titleAfter] = home.consoleHighlight && home.consoleTitle.inc
     .catch(() => {
       schema.textContent = "The database couldn't load.";
     });
+
+  const consoleEl = document.getElementById("ask")!;
+  let booted = false;
+  const start = () => {
+    if (booted) return;
+    booted = true;
+    observer.disconnect();
+    boot();
+  };
+  const observer = new IntersectionObserver((entries) => {
+    if (entries.some((e) => e.isIntersecting)) start();
+  }, { rootMargin: "300px" });
+  consoleEl.addEventListener("focusin", start, { once: true });
+  consoleEl.addEventListener("pointerdown", start, { once: true });
+  if (document.readyState === "complete") observer.observe(consoleEl);
+  else window.addEventListener("load", () => observer.observe(consoleEl), { once: true });
 </script>

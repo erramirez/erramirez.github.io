@@ -28,7 +28,7 @@ const photoLabel: string[] = home.photoLabel ?? [];
       {home.handNote && <p class="hand" style="margin-top:18px">↓ {home.handNote}</p>}
     </div>
     <figure class="specimen">
-      <div class="duo"><img src={home.photo} alt="Ernesto Ramirez" width="520" height="734" /></div>
+      <div class="duo"><img src={home.photo} alt="Ernesto Ramirez" width="520" height="734" fetchpriority="high" /></div>
       <div class="tag">
         {photoLabel.map((line, i) => (i === 0 ? <i>{line}</i> : <><br />{line}</>))}
       </div>
