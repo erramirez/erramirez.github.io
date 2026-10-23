@@ -1,0 +1,61 @@
+# Warns when an uploaded image is too big. Runs on every push that adds or
+# changes a file in public/images. If it finds one, the check fails and an issue
+# is opened and assigned to you, so you get a GitHub notification and email.
+name: Image size check
+
+on:
+  push:
+    paths:
+      - "public/images/**"
+      - ".github/workflows/image-size.yml"
+      - "scripts/check-images.mjs"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .node-version
+          cache: npm
+
+      - run: npm ci
+
+      - name: Find changed images
+        id: changed
+        run: |
+          if [ "${{ github.event_name }}" = "push" ] && [ "${{ github.event.before }}" != "0000000000000000000000000000000000000000" ]; then
+            git diff --name-only --diff-filter=AM "${{ github.event.before }}" "${{ github.sha }}" -- public/images > changed.txt
+          else
+            find public/images -type f > changed.txt
+          fi
+          echo "count=$(wc -l < changed.txt | tr -d ' ')" >> "$GITHUB_OUTPUT"
+
+      - name: Check sizes
+        id: check
+        if: steps.changed.outputs.count != '0'
+        env:
+          REPORT_FILE: report.md
+        run: xargs -a changed.txt -d '\n' node scripts/check-images.mjs
+
+      - name: Open an issue
+        if: failure() && steps.check.outcome == 'failure'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          {
+            cat report.md
+            echo
+            echo "Found by the image size check on \`${{ github.ref_name }}\` ([run](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}))."
+          } > body.md
+          cat body.md >> "$GITHUB_STEP_SUMMARY"
+          gh issue create --title "Image too big on ${{ github.ref_name }}" --body-file body.md --assignee "${{ github.repository_owner }}"
