@@ -212,7 +212,7 @@ content:
           - name: label
             type: string
           - name: sql
-            type: code
+            type: text
       - name: me
         label: "Table: me"
         type: object
